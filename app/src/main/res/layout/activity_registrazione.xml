@@ -4,122 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
-    android:padding="30dp"
-    android:orientation="vertical"
-    tools:context=".Registrazione">
+    android:background="@android:color/background_light">
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/first_name_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_image"
-        app:layout_constraintVertical_bias="0.100000024">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/firstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="First name"
-            android:inputType="text"
-
-            android:textColorHint="@color/colorAccent"
-            android:textSize="22sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/last_name_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_name_layout"
-        app:layout_constraintVertical_bias="0.062">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Last name"
-            android:inputType="text"
-            android:textColorHint="@color/colorAccent"
-            android:textSize="22sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/student_id_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/last_name_layout"
-        app:layout_constraintVertical_bias="0.100000024">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/studentId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Student id"
-            android:inputType="number"
-            android:textColorHint="@color/colorAccent"
-            android:textSize="22sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/register_button"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_rounded"
-        android:onClick="registraValori"
-        android:text="Register"
-        android:textColor="#ffffff"
-        android:textSize="22sp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/student_id_layout"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/user_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04000002"
-        app:srcCompat="@drawable/user_icon" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/camera_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/background_light"
-        android:clickable="true"
-        android:onClick="openCamera"
-        app:backgroundTint="#00FD4747"
-        app:layout_constraintBottom_toBottomOf="@+id/user_image"
-        app:layout_constraintEnd_toEndOf="@+id/user_image"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/user_image"
-        app:layout_constraintTop_toTopOf="@+id/user_image"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/camera_icon" />
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/button_rounded"
+                android:onClick="registraValori"
+                android:text="Register"
+                android:textColor="#ffffff"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/student_id_layout" />
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="32dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/user_icon" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/camera_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/background_light"
+                android:clickable="true"
+                android:onClick="openCamera"
+                app:backgroundTint="#00FD4747"
+                app:layout_constraintBottom_toBottomOf="@+id/user_image"
+                app:layout_constraintEnd_toEndOf="@+id/user_image"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/user_image"
+                app:layout_constraintTop_toTopOf="@+id/user_image"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/camera_icon" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/last_name_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/first_name_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last name"
+                    android:inputType="text"
+                    android:textColorHint="@color/colorAccent"
+                    android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/student_id_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/last_name_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/studentId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Student id"
+                    android:inputType="number"
+                    android:textColorHint="@color/colorAccent"
+                    android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/first_name_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_image">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First name"
+                    android:inputType="text"
+
+                    android:textColorHint="@color/colorAccent"
+                    android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
