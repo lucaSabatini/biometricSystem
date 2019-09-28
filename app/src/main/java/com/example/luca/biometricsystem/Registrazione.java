@@ -3,14 +3,17 @@ package com.example.luca.biometricsystem;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,7 +38,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -56,6 +62,7 @@ public class Registrazione extends AppCompatActivity {
     private String lastNameValue;
     private String studentIdValue;
     private Bitmap photo;
+    private Context context;
 
     //For REST API requests
     RequestQueue queue;
@@ -70,6 +77,7 @@ public class Registrazione extends AppCompatActivity {
         firstName = findViewById(R.id.first_name_layout);
         lastName = findViewById(R.id.last_name_layout);
         studentId = findViewById(R.id.student_id_layout);
+        context = this;
 
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
     }
@@ -80,7 +88,7 @@ public class Registrazione extends AppCompatActivity {
                 studentId.getEditText().getText()+
                 "&name=" + firstName.getEditText().getText() +
                 "&surname=" + lastName.getEditText().getText() +
-                "&photo=" + bitmapToBase64(photo);
+                "&photo=" + photo;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestString,
                 new Response.Listener<String>() {
                     @Override
@@ -160,45 +168,76 @@ public class Registrazione extends AppCompatActivity {
     }
 
     public void registraValori(View view){
-        /*
-        if( !validateFirstName() | !validateLastName() | !validateStudentId()){
+
+        if( !validateStudentId()){
             return;
         }
-        */
 
-        //saveUser();
-        Thread thread = new Thread(new Runnable() {
+        TextView matricolaTv = findViewById(R.id.studentId);
+        String matricola = matricolaTv.getText().toString();
 
-            @Override
-            public void run() {
-                try  {
+        MyTaskParams mtp = new MyTaskParams();
+        mtp.matricola = matricola;
+        mtp.path = this.getFileStreamPath(matricola + ".png").toPath();
+        try {
 
-                    //String SERVICE_ACCOUNT_JSON_PATH = "assets/";
+            Storage storage =
+                    StorageOptions.newBuilder()
+                            .setCredentials(
+                                    ServiceAccountCredentials.fromStream(
+                                            getAssets().open("credentials.json")))
+                            .build()
+                            .getService();
+            mtp.storage = storage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-                    Storage storage =
-                            StorageOptions.newBuilder()
-                                    .setCredentials(
-                                            ServiceAccountCredentials.fromStream(
-                                                    getAssets().open("credentials.json")))
-                                    .build()
-                                    .getService();
+        mtp.photo = photo;
 
-                    BlobId blobId = BlobId.of("mobile-app-5c2bf.appspot.com", "blob_name");
-
-                    BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
-                    Blob blob = storage.create(blobInfo, "Hello, Cloud Storage!".getBytes(UTF_8));
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
+        new caricaFoto().execute(mtp);
 
 
         Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+     class caricaFoto extends AsyncTask<MyTaskParams, Void, Void> {
+        @Override
+        protected Void doInBackground(MyTaskParams... mtp) {
+            try {
+                Storage storage = mtp[0].storage;
+
+
+                BlobId blobId = BlobId.of("mobile-app-5c2bf.appspot.com", mtp[0].matricola + ".png");
+
+                BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/png").build();
+                Blob blob = storage.create(blobInfo, bo(mtp[0].photo));
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(context, "scaricato", Toast.LENGTH_LONG);
+        }
+
+        private byte[] bo   (Bitmap bitmap) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            return baos.toByteArray();
+        }
+
+
     }
 
     @Override
@@ -212,14 +251,22 @@ public class Registrazione extends AppCompatActivity {
             photo = imageBitmap;
 
 
-
         }
     }
 
-    private String bitmapToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    public static byte[] convertBitmapToByteArrayUncompressed(Bitmap bitmap){
+        ByteBuffer byteBuffer = ByteBuffer.allocate(bitmap.getByteCount());
+        bitmap.copyPixelsToBuffer(byteBuffer);
+        byteBuffer.rewind();
+        return byteBuffer.array();
     }
+
+    class MyTaskParams{
+        public Path path;
+        public String matricola;
+        public Storage storage;
+        public Bitmap photo;
+    }
+
+
 }
