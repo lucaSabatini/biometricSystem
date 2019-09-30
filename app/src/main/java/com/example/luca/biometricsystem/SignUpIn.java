@@ -2,19 +2,17 @@ package com.example.luca.biometricsystem;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.luca.biometricsystem.biometricsystem.SignUpFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ParseEmailPassword {
+public class SignUpIn {
     private static String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private TextInputLayout email;
     private TextInputLayout password;
@@ -23,7 +21,7 @@ public class ParseEmailPassword {
     private Activity activity;
     private FirebaseAuth auth;
 
-    public ParseEmailPassword(TextInputLayout email, TextInputLayout password){
+    public SignUpIn(TextInputLayout email, TextInputLayout password){
         this.email = email;
         this.password = password;
         auth = FirebaseAuth.getInstance();
@@ -69,7 +67,30 @@ public class ParseEmailPassword {
     }
 
     public void signIn(){
-
+        auth.signInWithEmailAndPassword(emailValue, passwordValue)
+                .addOnCompleteListener(activity , new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            // there was an error
+                            if (passwordValue.length() < 6) {
+                                password.setError("Password too short, enter minimum 6 characters!");
+                            }else {
+                                Toast.makeText(activity, "Authentication failed, sign up", Toast.LENGTH_LONG).show();
+                            }
+                        }else if(!auth.getCurrentUser().isEmailVerified()){
+                            Toast.makeText(activity, "e-mail is not verified", Toast.LENGTH_LONG).show();
+                            clear();
+                        } else {
+                            Intent intent = new Intent(activity, RegistrazioneFoto.class);
+                            activity.startActivity(intent);
+                            activity.finish();
+                        }
+                    }
+                });
     }
 
     public void signUpUser(){
@@ -82,7 +103,7 @@ public class ParseEmailPassword {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     auth.getCurrentUser().sendEmailVerification();
-                    activity.startActivity(new Intent( activity , Appello.class));
+                    activity.startActivity(new Intent( activity , RegistrazioneFoto.class));
                     activity.finish();
                 }
             }
@@ -90,9 +111,17 @@ public class ParseEmailPassword {
     }
 
     public void changeActivity(Activity activity){
-        Intent foto = new Intent(activity, Appello.class);
+        Intent foto = new Intent(activity, RegistrazioneFoto.class);
         clear();
         activity.startActivity(foto);
+    }
+
+    public void takeLastName(){
+
+    }
+
+    public void takeStudentiId(){
+
     }
 
 

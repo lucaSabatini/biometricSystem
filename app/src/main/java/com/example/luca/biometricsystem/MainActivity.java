@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openAppelloActivity(View view){
-        Intent appelloActivity = new Intent(this, Appello.class);
+        Intent appelloActivity = new Intent(this, RegistrazioneFoto.class);
         startActivity(appelloActivity);
     }
 }

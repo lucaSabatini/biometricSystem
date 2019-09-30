@@ -22,7 +22,7 @@
             android:name=".Registrazione"
             android:label="@string/title_activity_registrazione"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Appello" />
+        <activity android:name=".RegistrazioneFoto" />
         <activity android:name=".MainActivity">
 
         </activity>

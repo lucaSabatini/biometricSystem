@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.luca.biometricsystem.ParseEmailPassword;
+import com.example.luca.biometricsystem.SignUpIn;
 import com.example.luca.biometricsystem.R;
 
 
@@ -32,9 +32,11 @@ public class LoginFragment extends Fragment implements OnLoginListener{
 
     @Override
     public void login() {
-        ParseEmailPassword parseEmailPassword = new ParseEmailPassword(getActivity().findViewById(R.id.email_login), getActivity().findViewById(R.id.password_login));
-        if(parseEmailPassword.confermaInput()) return;
-        parseEmailPassword.changeActivity(getActivity());
+        SignUpIn signUpIn = new SignUpIn(getActivity().findViewById(R.id.email_login), getActivity().findViewById(R.id.password_login));
+        if(signUpIn.confermaInput()) return;
+        signUpIn.setActivity(getActivity());
+        signUpIn.signIn();
+        //parseEmailPassword.changeActivity(getActivity());
         Toast.makeText(getContext(), "Login", Toast.LENGTH_SHORT).show();
     }
 }

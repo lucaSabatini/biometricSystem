@@ -10,14 +10,14 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 
-public class Appello extends AppCompatActivity {
+public class RegistrazioneFoto extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appello);
+        setContentView(R.layout.activity_registrazione_foto);
         imageView = findViewById(R.id.imageView);
     }
 

@@ -1,8 +1,5 @@
 package com.example.luca.biometricsystem.biometricsystem;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.luca.biometricsystem.Appello;
-import com.example.luca.biometricsystem.ParseEmailPassword;
+import com.example.luca.biometricsystem.SignUpIn;
 import com.example.luca.biometricsystem.R;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.w3c.dom.Text;
 
 public class SignUpFragment extends Fragment implements OnSignUpListener{
     private static final String TAG = "SignUpFragment";
@@ -50,12 +44,12 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
 
     @Override
     public void signUp() {
-        ParseEmailPassword parseEmailPassword = new ParseEmailPassword(getActivity().findViewById(R.id.email), getActivity().findViewById(R.id.password));
-        if(parseEmailPassword.confermaInput()){
+        SignUpIn signUpIn = new SignUpIn(getActivity().findViewById(R.id.email), getActivity().findViewById(R.id.password));
+        if(signUpIn.confermaInput()){
             return;
         }
-        parseEmailPassword.setActivity(getActivity());
-        parseEmailPassword.signUpUser();
+        signUpIn.setActivity(getActivity());
+        signUpIn.signUpUser();
         //parseEmailPassword.changeActivity(getActivity());
         Toast.makeText(getContext(), "Sign up", Toast.LENGTH_SHORT).show();
     }
