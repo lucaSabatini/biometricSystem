@@ -2,8 +2,10 @@ package com.example.luca.biometricsystem;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -32,6 +34,18 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding.loginFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyBoard(view);
+            }
+        });
+        binding.signUpFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyBoard(view);
+            }
+        });
         LoginFragment topLoginFragment = new LoginFragment();
         SignUpFragment topSignUpFragment = new SignUpFragment();
 
@@ -60,6 +74,14 @@ public class LogIn extends AppCompatActivity {
         binding.loginFragment.setPivotY(binding.loginFragment.getHeight());
         binding.signUpFragment.setPivotX(binding.signUpFragment.getWidth() / 2);
         binding.signUpFragment.setPivotY(binding.signUpFragment.getHeight());
+    }
+
+    private void hideKeyBoard(View view){
+        // Get the input method manager
+        InputMethodManager inputMethodManager = (InputMethodManager)
+                view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        // Hide the soft keyboard
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 
     public void switchFragment(View v) {

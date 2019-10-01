@@ -48,9 +48,9 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
         if(signUpIn.confermaInput()){
             return;
         }
+
         signUpIn.setActivity(getActivity());
         signUpIn.signUpUser();
         //parseEmailPassword.changeActivity(getActivity());
-        Toast.makeText(getContext(), "Sign up", Toast.LENGTH_SHORT).show();
     }
 }

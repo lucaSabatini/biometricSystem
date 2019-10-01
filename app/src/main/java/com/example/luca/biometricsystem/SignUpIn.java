@@ -2,6 +2,7 @@ package com.example.luca.biometricsystem;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpIn {
-    private static String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private static String emailPattern = "([a-z]+[.][0-9]+@studenti[.]uniroma1[.]it)|([a-z]+@di[.]uniroma1[.]it)";
     private TextInputLayout email;
     private TextInputLayout password;
     private String emailValue;
@@ -36,11 +37,11 @@ public class SignUpIn {
         if (emailValue.isEmpty()) {
             email.setError("Field can't be empty");
             return false;
-        } /*else if(!emailValue.matches(emailPattern)){
+        } else if(!emailValue.matches(emailPattern)){
             clear();
             email.setError("invalid e-mail");
             return false;
-        }*/ else{
+        } else{
             email.setError(null);
             return true;
         }
@@ -66,7 +67,13 @@ public class SignUpIn {
         return (!validateEmail() | !validatePassword());
     }
 
-    public void signIn(){
+    public void signIn(Activity activity){
+        if(confermaInput()) return;
+        TextInputLayout textInputLayout = activity.findViewById(R.id.email_login);
+        Persona persona = new Persona(textInputLayout.getEditText().getText().toString().trim());
+        Log.i("LOGIN", "email= "+persona.getEmail() );
+        Log.i("LOGIN", "lastName= "+persona.getLastName());
+        Log.i("LOGIN", "studentId= "+persona.getStudentId() );
         auth.signInWithEmailAndPassword(emailValue, passwordValue)
                 .addOnCompleteListener(activity , new OnCompleteListener<AuthResult>() {
                     @Override
@@ -85,9 +92,10 @@ public class SignUpIn {
                             Toast.makeText(activity, "e-mail is not verified", Toast.LENGTH_LONG).show();
                             clear();
                         } else {
-                            Intent intent = new Intent(activity, RegistrazioneFoto.class);
+                            Intent intent = new Intent(activity, Appello.class);
+                            intent.putExtra("Persona",persona);
+                            Toast.makeText(activity, "Login", Toast.LENGTH_SHORT).show();
                             activity.startActivity(intent);
-                            activity.finish();
                         }
                     }
                 });
@@ -103,8 +111,8 @@ public class SignUpIn {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     auth.getCurrentUser().sendEmailVerification();
+                    Toast.makeText(activity, "Sign up", Toast.LENGTH_SHORT).show();
                     activity.startActivity(new Intent( activity , RegistrazioneFoto.class));
-                    activity.finish();
                 }
             }
         });
@@ -114,14 +122,6 @@ public class SignUpIn {
         Intent foto = new Intent(activity, RegistrazioneFoto.class);
         clear();
         activity.startActivity(foto);
-    }
-
-    public void takeLastName(){
-
-    }
-
-    public void takeStudentiId(){
-
     }
 
 
