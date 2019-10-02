@@ -45,12 +45,7 @@ public class SignUpFragment extends Fragment implements OnSignUpListener{
     @Override
     public void signUp() {
         SignUpIn signUpIn = new SignUpIn(getActivity().findViewById(R.id.email), getActivity().findViewById(R.id.password));
-        if(signUpIn.confermaInput()){
-            return;
-        }
-
-        signUpIn.setActivity(getActivity());
-        signUpIn.signUpUser();
+        signUpIn.signUpUser(getActivity());
         //parseEmailPassword.changeActivity(getActivity());
     }
 }

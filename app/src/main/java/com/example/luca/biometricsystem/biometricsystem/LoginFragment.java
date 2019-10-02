@@ -1,6 +1,7 @@
 package com.example.luca.biometricsystem.biometricsystem;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.example.luca.biometricsystem.ForgotPassword;
 import com.example.luca.biometricsystem.Persona;
 import com.example.luca.biometricsystem.SignUpIn;
 import com.example.luca.biometricsystem.R;
@@ -33,7 +35,7 @@ public class LoginFragment extends Fragment implements OnLoginListener{
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_login, container, false);
         inflate.findViewById(R.id.forgot_password).setOnClickListener(v ->
-                Toast.makeText(getContext(), "Forgot password clicked", Toast.LENGTH_SHORT).show());
+            getActivity().startActivity(new Intent(getActivity(), ForgotPassword.class )));
         return inflate;
     }
 

@@ -3,6 +3,7 @@ package com.example.luca.biometricsystem;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.TextClock;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,17 +29,23 @@ public class SignUpIn {
         auth = FirebaseAuth.getInstance();
     }
 
+    public SignUpIn(TextInputLayout email){
+        this.email = email;
+        auth = FirebaseAuth.getInstance();
+    }
+
     public void setActivity(Activity activity){
         this.activity = activity;
     }
 
     private boolean validateEmail(){
+        Log.i("FORGOT", "validate email");
         emailValue = email.getEditText().getText().toString().trim();
         if (emailValue.isEmpty()) {
             email.setError("Field can't be empty");
             return false;
         } else if(!emailValue.matches(emailPattern)){
-            clear();
+            clearEmail();
             email.setError("invalid e-mail");
             return false;
         } else{
@@ -58,9 +65,17 @@ public class SignUpIn {
         }
     }
 
-    private void clear(){
+    private void clearEmail(){
         email.getEditText().getText().clear();
+    }
+
+    private void clearPassword(){
         password.getEditText().getText().clear();
+    }
+
+    private void clear(){
+        clearEmail();
+        clearPassword();
     }
 
     public Boolean confermaInput(){
@@ -69,8 +84,8 @@ public class SignUpIn {
 
     public void signIn(Activity activity){
         if(confermaInput()) return;
-        TextInputLayout textInputLayout = activity.findViewById(R.id.email_login);
-        Persona persona = new Persona(textInputLayout.getEditText().getText().toString().trim());
+        //TextInputLayout textInputLayout = activity.findViewById(R.id.email_login);
+        Persona persona = new Persona(emailValue);
         Log.i("LOGIN", "email= "+persona.getEmail() );
         Log.i("LOGIN", "lastName= "+persona.getLastName());
         Log.i("LOGIN", "studentId= "+persona.getStudentId() );
@@ -101,7 +116,8 @@ public class SignUpIn {
                 });
     }
 
-    public void signUpUser(){
+    public void signUpUser(Activity activity){
+        if(confermaInput())return;
         auth.createUserWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -113,6 +129,21 @@ public class SignUpIn {
                     auth.getCurrentUser().sendEmailVerification();
                     Toast.makeText(activity, "Sign up", Toast.LENGTH_SHORT).show();
                     activity.startActivity(new Intent( activity , RegistrazioneFoto.class));
+                }
+            }
+        });
+    }
+
+    public void forgotPassword(Activity activity){
+        if(!validateEmail()) return;
+        auth.sendPasswordResetEmail(emailValue).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(activity, "Check email to reset your password!", Toast.LENGTH_SHORT).show();
+                    activity.finish();
+                } else {
+                    Toast.makeText(activity, "Fail to send reset password email!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
