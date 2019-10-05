@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 }
 
@@ -54,7 +55,16 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$support_version"
 
     testImplementation 'junit:junit:4.12'
+
+    //login
     implementation 'com.google.firebase:firebase-auth:19.1.0'
+
+    //beacons
+    implementation 'org.altbeacon:android-beacon-library:2+'
+
+
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

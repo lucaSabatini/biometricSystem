@@ -3,7 +3,6 @@ package com.example.luca.biometricsystem;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.TextClock;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -107,7 +106,7 @@ public class SignUpIn {
                             Toast.makeText(activity, "e-mail is not verified", Toast.LENGTH_LONG).show();
                             clear();
                         } else {
-                            Intent intent = new Intent(activity, Appello.class);
+                            Intent intent = new Intent(activity, AppelloProfessore.class);
                             intent.putExtra("Persona",persona);
                             Toast.makeText(activity, "Login", Toast.LENGTH_SHORT).show();
                             activity.startActivity(intent);
