@@ -1,10 +1,11 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.luca.biometricsystem.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class ForgotPassword extends AppCompatActivity {

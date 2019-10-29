@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 import android.content.Context;
 import android.util.AttributeSet;

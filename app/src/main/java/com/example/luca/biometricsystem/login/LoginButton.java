@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.luca.biometricsystem.OnButtonSwitchedListener;
 import com.example.luca.biometricsystem.R;
 
 import static android.graphics.Paint.Align.CENTER;

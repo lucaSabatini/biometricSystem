@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,16 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.databinding.ActivityLoginBinding;
-import com.example.luca.biometricsystem.biometricsystem.LoginFragment;
-import com.example.luca.biometricsystem.biometricsystem.SignUpFragment;
+import com.example.luca.biometricsystem.login.LoginFragment;
+import com.example.luca.biometricsystem.login.SignUpFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import static com.example.luca.biometricsystem.FlexibleFrameLayout.ORDER_LOGIN_STATE;
-import static com.example.luca.biometricsystem.FlexibleFrameLayout.ORDER_SIGN_UP_STATE;
+import static com.example.luca.biometricsystem.login.FlexibleFrameLayout.ORDER_LOGIN_STATE;
+import static com.example.luca.biometricsystem.login.FlexibleFrameLayout.ORDER_SIGN_UP_STATE;
 
 
 

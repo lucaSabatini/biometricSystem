@@ -1,13 +1,15 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.TextClock;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.luca.biometricsystem.Appello;
+import com.example.luca.biometricsystem.entities.Persona;
+import com.example.luca.biometricsystem.RegistrazioneFoto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;

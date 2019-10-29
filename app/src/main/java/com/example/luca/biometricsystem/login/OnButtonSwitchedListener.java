@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 
 public interface OnButtonSwitchedListener {

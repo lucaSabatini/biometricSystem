@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.luca.biometricsystem.entities.Persona;
+
 public class Appello extends AppCompatActivity {
 
     private TextView lastName;

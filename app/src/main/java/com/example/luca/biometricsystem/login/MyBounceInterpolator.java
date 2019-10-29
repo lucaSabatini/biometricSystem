@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 class MyBounceInterpolator implements android.view.animation.Interpolator {
     private double amplitude = 1;

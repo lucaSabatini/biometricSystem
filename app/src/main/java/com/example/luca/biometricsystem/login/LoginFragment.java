@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem.biometricsystem;
+package com.example.luca.biometricsystem.login;
 
 
 import android.content.Intent;
@@ -6,24 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
-import com.example.luca.biometricsystem.ForgotPassword;
-import com.example.luca.biometricsystem.Persona;
-import com.example.luca.biometricsystem.SignUpIn;
 import com.example.luca.biometricsystem.R;
-import com.google.android.material.textfield.TextInputLayout;
-
-import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
-public class LoginFragment extends Fragment implements OnLoginListener{
+public class LoginFragment extends Fragment implements OnLoginListener {
     private static final String TAG = "LoginFragment";
 
     public LoginFragment() {
