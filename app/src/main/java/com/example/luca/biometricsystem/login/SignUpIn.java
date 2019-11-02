@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.luca.biometricsystem.Appello;
+import com.example.luca.biometricsystem.ListaCorsi;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.RegistrazioneFoto;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -109,8 +110,15 @@ public class SignUpIn {
                             Toast.makeText(activity, "e-mail is not verified", Toast.LENGTH_LONG).show();
                             clear();
                         } else {
-                            Intent intent = new Intent(activity, Appello.class);
-                            intent.putExtra("Persona",persona);
+                            Intent intent;
+                            if(persona.isStudent()){
+                                intent = new Intent(activity, Appello.class);
+                                intent.putExtra("Persona",persona);
+                            }else{
+                                intent = new Intent(activity, ListaCorsi.class);
+                                intent.putExtra("Persona", persona);
+                            }
+
                             Toast.makeText(activity, "Login", Toast.LENGTH_SHORT).show();
                             activity.startActivity(intent);
                         }

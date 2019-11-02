@@ -119,6 +119,7 @@ public class LoginButton extends View {
         loginPaint = new Paint();
         loginPaint.setColor(ContextCompat.getColor(getContext(), R.color.text));
         loginPaint.setTextAlign(CENTER);
+        //loginPaint.setShadowLayer(1.5f, -1, 1, Color.LTGRAY);
         loginPaint.setTextSize(dpToPixels(16));
 
         orPaint = new Paint();
@@ -155,6 +156,7 @@ public class LoginButton extends View {
         startLeft = width - startRight;
 
         loginPaint.getTextBounds(getString(R.string.sign_up), 0, 7, r);
+
 
         currentLoginX = dpToPixels(92);
         int signUpWidth = r.right;
