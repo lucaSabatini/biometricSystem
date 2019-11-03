@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.luca.biometricsystem.entities.Persona;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -23,10 +24,7 @@ public class ListaCorsi extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<CorsoItem> listaCorsi;
 
-    private Button buttonInsert;
-    private Button buttonRemove;
-    private EditText editTextInsert;
-    private EditText editTextRemove;
+    private FloatingActionButton buttonInsert;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +55,7 @@ public class ListaCorsi extends AppCompatActivity {
     public void insertItem(int position){
         listaCorsi.add(position ,new CorsoItem(R.drawable.image_corso, "new corso"+position));
         listaCorsiAdapter.notifyItemInserted(position);
+        listaCorsiRecycler.scrollToPosition(position);
     }
 
     public void removeItem(int position){
@@ -85,7 +84,7 @@ public class ListaCorsi extends AppCompatActivity {
         listaCorsiRecycler.setLayoutManager(layoutManager);
         listaCorsiRecycler.setAdapter(listaCorsiAdapter);
         ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new SwipeToDelete(listaCorsiAdapter));
+                ItemTouchHelper(new SwipeToDelete(listaCorsiAdapter, this));
         itemTouchHelper.attachToRecyclerView(listaCorsiRecycler);
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
@@ -100,16 +99,21 @@ public class ListaCorsi extends AppCompatActivity {
         });
     }
 
+    public void aggiungiCorso(View view){
+        int position = listaCorsi.size();
+        insertItem(position);
+    }
+
     public void setButtons(){
-        editTextInsert = findViewById(R.id.edittext_insert);
+        //editTextInsert = findViewById(R.id.edittext_insert);
         //editTextRemove = findViewById(R.id.edittext_remove);
 
-        buttonInsert.setOnClickListener(new View.OnClickListener() {
+        /*buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = Integer.parseInt(editTextInsert.getText().toString());
                 insertItem(position);
             }
-        });
+        });*/
     }
 }
