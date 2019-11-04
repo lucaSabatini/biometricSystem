@@ -13,6 +13,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="color_button" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/black</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
