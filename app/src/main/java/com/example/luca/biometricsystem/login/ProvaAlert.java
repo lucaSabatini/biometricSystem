@@ -9,7 +9,10 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +20,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.luca.biometricsystem.MainActivity;
 import com.example.luca.biometricsystem.R;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 
 
 public class ProvaAlert extends DialogFragment {
@@ -33,14 +42,33 @@ public class ProvaAlert extends DialogFragment {
         this.namePositiveButton = "Aggiungi";
     }
 
+    int choosenYear = 2017;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.color_button);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.popup_add_corso, null);
+
+        /// Spinner code
+
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int nextYear = currentYear + 1;
+        ArrayList<Integer> spinnerArray = new ArrayList<>(Arrays.asList(currentYear, nextYear));
+
+        Spinner spinner = view.findViewById(R.id.spinner);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>
+                (this.getContext(), android.R.layout.simple_spinner_item,
+                        spinnerArray);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+
         builder.setView(view)
                 .setTitle(title)
         //builder.setMessage(Html.fromHtml(title))
@@ -49,7 +77,10 @@ public class ProvaAlert extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("alert", "onClick: ciao");
                         EditText nomeCorso = view.findViewById(R.id.edit_text_nome_corso);
-                        listener.getText(nomeCorso.getText().toString());
+                        if(nomeCorso.getText().toString().equals("")) return;
+                        Spinner spinner = view.findViewById(R.id.spinner);
+                        listener.getTextAndYear(nomeCorso.getText().toString(),
+                                (Integer) spinner.getSelectedItem());
                         //setNomeCorso(nomeCorso.getText().toString());
                     }
                 })
@@ -60,6 +91,7 @@ public class ProvaAlert extends DialogFragment {
                     }
                 });
                 //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
+
         return builder.create();
     }
 
@@ -75,7 +107,8 @@ public class ProvaAlert extends DialogFragment {
     }
 
     public interface ProvaAlertListener{
-        void getText(String nomeCorso);
+        void getTextAndYear(String nomeCorso, int year);
     }
+
 
 }

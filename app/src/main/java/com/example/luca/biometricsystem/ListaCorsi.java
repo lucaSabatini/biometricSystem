@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
@@ -30,6 +32,7 @@ import com.example.luca.biometricsystem.login.ProvaAlert;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAlertListener {
     private Activity activity = this;
@@ -37,7 +40,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     private CorsoAdapter listaCorsiAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<CorsoItem> listaCorsi;
-    private String nomeCorso;
+    //private String nomeCorso;
+
     private CorsoItem mRecentlyDeletedItem;
     private int mRecentlyDeletedItemPosition;
 
@@ -70,8 +74,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
     }
 
-    public void insertItem(int position){
-        listaCorsi.add(position ,new CorsoItem(R.drawable.image_corso, nomeCorso));
+    public void insertItem(int position, String nomeCorso, int year){
+        listaCorsi.add(position ,new CorsoItem(R.drawable.image_corso, nomeCorso + " " + year));
         listaCorsiAdapter.notifyItemInserted(position);
         listaCorsiRecycler.scrollToPosition(position);
     }
@@ -149,10 +153,10 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     }
 
     @Override
-    public void getText(String nomeCorso) {
-        this.nomeCorso = nomeCorso;
+    public void getTextAndYear(String nomeCorso, int year) {
+        //this.nomeCorso = nomeCorso;
         int position = listaCorsi.size();
-        insertItem(position);
-        Log.d("nomeC", "getText: "+this.nomeCorso);
+        insertItem(position, nomeCorso, year);
+        Log.d("nomeC", "getText: " + nomeCorso);
     }
 }
