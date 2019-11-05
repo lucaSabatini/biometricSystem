@@ -1,11 +1,9 @@
-package com.example.luca.biometricsystem.login;
+package com.example.luca.biometricsystem;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,23 +12,24 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.login.ProvaAlert;
 
-
-public class ProvaAlert extends DialogFragment {
-
+public class RemoveAlert extends DialogFragment {
     private String title;
     private String namePositiveButton;
     private String nameNegativeButton;
-    private ProvaAlertListener listener;
+    private String message;
+    private SwipeToDelete swipeToDelete;
+    private RemoveAlertListener listener;
 
-    public ProvaAlert(){
-        this.title = "Nuovo corso";
-        this.nameNegativeButton = "Annulla";
-        this.namePositiveButton = "Aggiungi";
+    public RemoveAlert(SwipeToDelete swipeToDelete){
+        title = "Rimuovi corso";
+        message = "Sei sicuro di rimuovere il corso?";
+        nameNegativeButton = "No";
+        namePositiveButton = "Si";
+        this.swipeToDelete = swipeToDelete;
     }
 
 
@@ -40,42 +39,40 @@ public class ProvaAlert extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.color_button);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.popup_add_corso, null);
+        View view = layoutInflater.inflate(R.layout.popup_remove_corso, null);
         builder.setView(view)
                 .setTitle(title)
-        //builder.setMessage(Html.fromHtml(title))
+                .setMessage(message)
                 .setPositiveButton(namePositiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("alert", "onClick: ciao");
-                        EditText nomeCorso = view.findViewById(R.id.edit_text_nome_corso);
-                        listener.getText(nomeCorso.getText().toString());
-                        //setNomeCorso(nomeCorso.getText().toString());
+                        Log.d("alert", "onClick: Rimouvi");
                     }
                 })
                 .setNegativeButton(nameNegativeButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("alert", "onClick: annulla");
+                        //listener.removeCorso(true);
+                        swipeToDelete.undoDelete();
+                        dialogInterface.cancel();
                     }
                 });
-                //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
+        //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
         return builder.create();
     }
 
-    @Override
+    /*@Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         try{
-            listener = (ProvaAlertListener) context;
+            listener = (RemoveAlertListener) context;
         } catch (ClassCastException e){
-            throw new ClassCastException(context.toString() + "implement ProvaAlertListener");
+            throw new ClassCastException(context.toString() + "implement RemoveAlert");
         }
-    }
+    }*/
 
-    public interface ProvaAlertListener{
-        void getText(String nomeCorso);
+    public interface RemoveAlertListener{
+        void removeCorso(boolean undo);
     }
-
 }

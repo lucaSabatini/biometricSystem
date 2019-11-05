@@ -38,6 +38,9 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<CorsoItem> listaCorsi;
     private String nomeCorso;
+    private CorsoItem mRecentlyDeletedItem;
+    private int mRecentlyDeletedItemPosition;
+
 
     private FloatingActionButton buttonInsert;
 
@@ -74,8 +77,15 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     }
 
     public void removeItem(int position){
+        mRecentlyDeletedItem = listaCorsi.get(position);
+        mRecentlyDeletedItemPosition = position;
         listaCorsi.remove(position);
         listaCorsiAdapter.notifyItemRemoved(position);
+    }
+
+    public void undoDelete(){
+        listaCorsi.add(mRecentlyDeletedItemPosition,mRecentlyDeletedItem);
+        listaCorsiAdapter.notifyItemInserted(mRecentlyDeletedItemPosition);
     }
 
     public void changeItem(int position, String text){
@@ -99,9 +109,9 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         listaCorsiRecycler.setLayoutManager(layoutManager);
         listaCorsiRecycler.setAdapter(listaCorsiAdapter);
         ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new SwipeToDelete(listaCorsiAdapter, this));
+                ItemTouchHelper(new SwipeToDelete(listaCorsiAdapter, this, this));
         itemTouchHelper.attachToRecyclerView(listaCorsiRecycler);
-        listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
+        /*listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
             public void onItemCLick(int position) {
                 changeItem(position, "Clicked");
@@ -111,7 +121,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
             public void onDeleteClick(int position) {
                 removeItem(position);
             }
-        });
+        });*/
     }
 
 
@@ -121,7 +131,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     }
 
     public void openDialog(){
-        ProvaAlert provaAlert = new ProvaAlert(this , "Nuovo corso","Aggiungi", "annulla");
+        ProvaAlert provaAlert = new ProvaAlert();
         provaAlert.show(getSupportFragmentManager(), "alert");
     }
 

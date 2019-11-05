@@ -13,16 +13,20 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SwipeToDelete extends ItemTouchHelper.SimpleCallback {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class SwipeToDelete extends ItemTouchHelper.SimpleCallback implements RemoveAlert.RemoveAlertListener {
     private CorsoAdapter mAdapter;
+    private ListaCorsi listaCorsi;
     private Activity activity;
     private Drawable icon;
     private final ColorDrawable background;
 
-    public SwipeToDelete(CorsoAdapter adapter, Activity activity){
+    public SwipeToDelete(CorsoAdapter adapter, Activity activity, ListaCorsi listaCorsi){
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         mAdapter = adapter;
         this.activity = activity;
+        this.listaCorsi = listaCorsi;
         icon = ContextCompat.getDrawable(activity, R.drawable.delete);
         background = new ColorDrawable(Color.RED);
     }
@@ -30,7 +34,13 @@ public class SwipeToDelete extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-        mAdapter.deleteItem(position);
+        //removeCorso(position);
+        listaCorsi.removeItem(position);
+        openRemoveDialog();
+    }
+
+    public void undoDelete(){
+        listaCorsi.undoDelete();
     }
 
     @Override
@@ -62,6 +72,7 @@ public class SwipeToDelete extends ItemTouchHelper.SimpleCallback {
 
             background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
                     itemView.getTop(), itemView.getRight(), itemView.getBottom());
+            //openRemoveDialog();
         } else { // view is unSwiped
             background.setBounds(0, 0, 0, 0);
         }
@@ -69,8 +80,20 @@ public class SwipeToDelete extends ItemTouchHelper.SimpleCallback {
         icon.draw(c);
     }
 
+    public void openRemoveDialog(){
+        RemoveAlert removeAlert = new RemoveAlert(this);;
+        removeAlert.show(listaCorsi.getSupportFragmentManager(), "RemoveAlert");
+    }
+
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         return false;
+    }
+
+    @Override
+    public void removeCorso(boolean undo) {
+        if(undo){
+            listaCorsi.undoDelete();
+        }
     }
 }
