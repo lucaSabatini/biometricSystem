@@ -9,23 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".logingeneroso.LoginActivity">
+        <activity android:name=".ListaCorsi">
+
+        </activity>
+        <activity android:name=".login.ForgotPassword" />
+        <activity android:name=".Appello" />
+        <activity android:name=".login.LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListaCorsi">
-
-        </activity>
-        <activity android:name=".Appello" />
         <activity
             android:name=".Registrazione"
             android:label="@string/title_activity_registrazione"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegistrazioneFoto" />
         <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
     <uses-feature

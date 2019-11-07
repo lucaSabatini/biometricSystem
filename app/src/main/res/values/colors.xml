@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#131A56</color>
+    <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#131A56</color>
-    <color name="secondPage">#8BC34A</color>
+    <color name="secondPage">#FFFFFF</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="text">#ffffff</color>
     <color name="text_two">#94ffffff</color>
     <color name="green">#940ce61f</color>
     <color name="red">#FFFFFF</color>
+    <color name="gray">#6F6F6F</color>
     <color name="rosso">#F44336</color>
 
 
