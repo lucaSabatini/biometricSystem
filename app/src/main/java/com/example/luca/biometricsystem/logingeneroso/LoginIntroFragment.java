@@ -20,41 +20,45 @@ import androidx.fragment.app.Fragment;
 
 import com.example.luca.biometricsystem.ListaCorsi;
 import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.logingeneroso.LoginRoutingInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+public class LoginIntroFragment extends Fragment implements OnCompleteListener<AuthResult>  {
 
-public class LoginSignInFragment extends Fragment implements OnCompleteListener<AuthResult> {
-
-    private static final String TAG = "LoginSignInFragment";
-    private LoginRoutingInterface callback;
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private Context context;
-
-    String action;
-
+    private static final String TAG = "LoginIntroFragment";
+    TextView newAccount;
+    Button login;
     EditText username;
-
     EditText password;
-
     Button signInOrCreate;
+    ProgressBar signInProgressBar;
 
-    TextView signInTextView;
-
-    ProgressBar signUpProgressBar;
+    private LoginRoutingInterface callback;
+    private Context context;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View inflate = inflater.inflate(R.layout.login_signin_fragment, container, false);
-        signUpProgressBar = inflate.findViewById(R.id.sign_up_progress_bar);
-        signInTextView = inflate.findViewById(R.id.textView);
+        View inflate = inflater.inflate(R.layout.login_intro_fragment, container, false);
+        signInProgressBar = inflate.findViewById(R.id.sign_in_progress_bar);
+        newAccount = inflate.findViewById(R.id.login_new_account);
+        //login = inflate.findViewById(R.id.login_button);
         signInOrCreate = inflate.findViewById(R.id.login_button);
         password = inflate.findViewById(R.id.password);
         username = inflate.findViewById(R.id.username);
+
+        newAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginNewAccount();
+            }
+        });
+
         signInOrCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,26 +66,19 @@ public class LoginSignInFragment extends Fragment implements OnCompleteListener<
             }
         });
 
-        if(action != null && action.equals("register")){
-            signInOrCreate.setText(R.string.login_create_account);
-            signInTextView.setText(getResources().getString(R.string.login_signup_text));
-        }
-
-        Log.d(TAG, "onCreateView: "+action);
-
         return inflate;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof LoginRoutingInterface)
-            callback = (LoginRoutingInterface) context;
+        if(context instanceof LoginRoutingInterface) {
+            this.callback = (LoginRoutingInterface) context;
+        }
         else {
-            callback = null;
+            this.callback = null;
         }
 
-        action = getArguments().getString("action");
         this.context = context;
     }
 
@@ -92,30 +89,19 @@ public class LoginSignInFragment extends Fragment implements OnCompleteListener<
         this.context = null;
     }
 
-    /*@Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if(action != null && action.equals("register")){
-            signInOrCreate.setText(R.string.login_create_account);
-            signInTextView.setText(getResources().getString(R.string.login_signup_text));
-        }
-    }*/
 
-    private void loginSignInButton(){
-        if(validate()) {
-            signUpProgressBar.setVisibility(View.VISIBLE);
-            if(action != null && action.equals("register")){
-                firebaseAuth.createUserWithEmailAndPassword(username.getEditableText().toString(), password.getEditableText().toString())
-                        .addOnCompleteListener((Activity) context, this);
-            } else{
-                firebaseAuth.signInWithEmailAndPassword(username.getEditableText().toString(), password.getEditableText().toString())
-                        .addOnCompleteListener((Activity) context, this);
-            }
-        }
-        else{
-            Toast.makeText(context, getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
+
+    public void loginNewAccount(){
+        if(callback != null)
+            callback.route("new_account");
+    }
+
+
+
 
     /// todo: ovviamente questo è da migliorare
     private boolean validate(){
@@ -137,15 +123,26 @@ public class LoginSignInFragment extends Fragment implements OnCompleteListener<
         return true;
     }
 
+    public void loginSignInButton(){
+        if(validate()) {
+            signInProgressBar.setVisibility(View.VISIBLE);
+            firebaseAuth.signInWithEmailAndPassword(username.getEditableText().toString(), password.getEditableText().toString())
+                    .addOnCompleteListener((Activity) context, this);
+        }
+        else{
+            Toast.makeText(context, getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
-        signUpProgressBar.setVisibility(View.INVISIBLE);
+        signInProgressBar.setVisibility(View.INVISIBLE);
         if (task.isSuccessful()) {
             startActivity(new Intent(context, ListaCorsi.class));
-
         } else {
             Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
             Log.w(TAG, "signInWithEmail:failure", task.getException());
         }
     }
+
 }

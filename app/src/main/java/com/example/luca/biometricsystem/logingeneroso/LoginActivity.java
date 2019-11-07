@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
             case "sign_in":
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("action", "");
-                LoginSignInFragment ciao = new LoginSignInFragment();
+                LoginIntroFragment ciao = new LoginIntroFragment();
                 ciao.setArguments(bundle1);
                 return ciao;
 
@@ -85,10 +85,10 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
             FragmentTransaction tr = fragmentManager.beginTransaction();
 
             /// qui inseriamo le transizioni, se necessario
-            if (dest.equals("sign_in") || dest.equals("new_account"))
+            if (dest.equals("new_account"))
                 tr.setCustomAnimations(R.anim.slideup_in, R.anim.slideup_out);
 
-            if (dest.equals("introduzione") && shown != null)
+            if (dest.equals("sign_in") && shown != null)
                 tr.setCustomAnimations(R.anim.slidedown_out, R.anim.slidedown_in);
 
             tr.replace(R.id.fragment_container, buildFragment(dest)).commit();
@@ -99,12 +99,12 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
 
     @Override
     public void onBackPressed() {
-        if(shown == null || shown.equals("introduzione")) {
+        if(shown == null || shown.equals("sign_in")) {
             finish();
             return;
         }
 
-        route("introduzione");
+        route("sign_in");
     }
 
     @Override
