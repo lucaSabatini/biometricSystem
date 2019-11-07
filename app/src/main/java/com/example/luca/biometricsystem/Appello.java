@@ -24,7 +24,7 @@ public class Appello extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appello);
+        setContentView(R.layout.activity_appello_old);
         Persona persona = (Persona) getIntent().getSerializableExtra("Persona");
         lastName = findViewById(R.id.last_name_appello);
         studentId = findViewById(R.id.student_id_appello);

@@ -4,10 +4,36 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
-    <string name="sign_up">Sign up</string>
     <string name="or">or</string>
+
+
+    <string name="login_welcome_title">Benvenuto!</string>
+    <string name="login_welcome_text">Hai già un account? Esegui il login!</string>
+    <string name="sign_in">sign in</string>
+    <string name="sign_up">sign up</string>
+    <string name="sign_in_facebook">sign in with facebook</string>
+    <string name="login_new_account">Nuovo account?</string>
+    <string name="login_signin_text">Effettua il login!</string>
+    <string name="login_signup_text">Non hai un account? Registrati!</string>
+    <string name="password">Password</string>
+    <string name="email">E-mail</string>
+    <string name="tutorial_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dolore magna aliquam erat volutpat.</string>
+    <string name="next">next</string>
+    <string name="demo_label">Ciao, Ciccio!! Usa lo switch</string>
+    <string name="no_permissions">No permissions</string>
+    <string name="error">error:</string>
+    <string name="add_boarding_pass">add boarding pass</string>
+    <string name="ar_label">AR</string>
+    <string name="boarding_pass_label">Add your flight information to see the boarding pass</string>
+
+    <string name="facebook_app_id">2270926746570408</string>
+    <string name="fb_login_protocol_scheme">fb2270926746570408</string>
+    <string name="login_error">Username and/or password incorrect</string>
+    <string name="login_create_account">Sign up</string>
+    <string name="preference_file_key">airmapp.sp</string>
+    <string name="loading">Caricamento mappa in corso. Attendere...</string>
+    <string name="controllo_credenziali">Controllo credenziali in corso</string>
+    <string name="not_valid_credentials">Credenziali non valide</string>
 </resources>

@@ -9,5 +9,14 @@
     <color name="green">#940ce61f</color>
     <color name="red">#FFFFFF</color>
     <color name="rosso">#F44336</color>
-    <color name="black">#000000</color>
+
+
+    <color name="white">#ddffffff</color>
+    <color name="black">#dd000000</color>
+    <color name="fb_blue">#0076f5</color>
+    <color name="signin">#d6eaff</color>
+    <color name="light_cyan">#ddd6eaff</color>
+    <color name="shadows_grey">#d5d5d5</color>
+    <color name="shadows_blue">#d3def6</color>
+
 </resources>
