@@ -15,6 +15,7 @@
 
     <style name="color_button" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/black</item>
+        <item name="android:windowBackground">@drawable/popup_background</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
