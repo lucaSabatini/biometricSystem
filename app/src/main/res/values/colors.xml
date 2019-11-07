@@ -13,7 +13,7 @@
 
 
     <color name="white">#ddffffff</color>
-    <color name="black">#dd000000</color>
+    <color name="black">#DD000000</color>
     <color name="fb_blue">#0076f5</color>
     <color name="signin">#d6eaff</color>
     <color name="light_cyan">#ddd6eaff</color>

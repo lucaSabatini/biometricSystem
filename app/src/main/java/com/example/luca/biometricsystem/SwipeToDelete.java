@@ -13,7 +13,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.luca.biometricsystem.list.CorsoAdapter;
+import com.example.luca.biometricsystem.list.ListaCorsi;
 
 public class SwipeToDelete extends ItemTouchHelper.SimpleCallback implements RemoveAlert.RemoveAlertListener {
     private CorsoAdapter mAdapter;
