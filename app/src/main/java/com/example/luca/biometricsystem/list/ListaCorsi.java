@@ -83,9 +83,6 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
 
     public void insertItem(int position, String nomeCorso, int year){
-        //listaCorsi.add(position ,new CorsoItem(R.drawable.image_corso, nomeCorso + " " + year));
-        //dateCourseMap.put(year, nomeCorso);
-        //ArrayList<C> key = dateCourseMap.get(year);
         Log.d(TAG, "insertItem: " + position);
         DateItem d = new DateItem(year);
         if(dateCourseMap.containsKey(d)){
@@ -105,10 +102,39 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     }
 
     public void removeItem(int position){
-        mRecentlyDeletedItem = listaCorsi.get(position);
+
+        mRecentlyDeletedItem = (CorsoItem) fromIndexToItem(position);
         mRecentlyDeletedItemPosition = position;
-        listaCorsi.remove(position);
+
+        removeItemFromMap(position);
         listaCorsiAdapter.notifyItemRemoved(position);
+    }
+
+    private ListItem fromIndexToItem(int position){
+        ArrayList<ListItem> items = new ArrayList<>();
+        for(DateItem key : dateCourseMap.keySet()){
+            items.add(key);
+            for(CorsoItem corso : dateCourseMap.get(key)){
+                items.add(corso);
+            }
+        }
+        return items.get(position);
+    }
+
+    private void removeItemFromMap(int position){
+        int i = 0;
+        for(DateItem key : dateCourseMap.keySet()){
+            i++;
+            int k = 0;
+            for(CorsoItem corso : dateCourseMap.get(key)){
+                if(i == position){
+                    dateCourseMap.get(key).remove(k);
+                    return;
+                }
+                k++;
+                i++;
+            }
+        }
     }
 
     public void undoDelete(){
