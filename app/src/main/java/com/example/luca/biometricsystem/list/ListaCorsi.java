@@ -59,6 +59,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         //buttonRemove = findViewById(R.id.button_remove);
         setButtons();
 
+        Log.d(TAG, "onCreate: " + items);
+        listaCorsiAdapter.printlist();
 
         /*buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,17 +79,17 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         //listaCorsi.add(position ,new CorsoItem(R.drawable.image_corso, nomeCorso + " " + year));
         //dateCourseMap.put(year, nomeCorso);
         //ArrayList<C> key = dateCourseMap.get(year);
+        Log.d(TAG, "insertItem: " + position);
         if(dateCourseMap.containsKey(year)){
             dateCourseMap.get(year).add(new Corso(nomeCorso));
-        } else dateCourseMap.put(year, new ArrayList<>( Arrays.asList(new Corso(nomeCorso))));
-        Log.d(TAG, "insertItem: " +dateCourseMap);
-        items.clear();
-        for(Integer key: dateCourseMap.keySet()){
-            items.add(new DateItem(key));
-            for(Corso course: dateCourseMap.get(key)){
-                items.add(new CorsoItem(course, R.drawable.image_corso));
-            }
+        } else {
+            Log.d(TAG, "insertItem: " + year);
+            items.add(position, new DateItem(year));
+            position++;
+            dateCourseMap.put(year, new ArrayList<>(Arrays.asList(new Corso(nomeCorso))));
         }
+        Log.d(TAG, "insertItem: " + position);
+        items.add(position, new CorsoItem(new Corso(nomeCorso), R.drawable.image_corso));
         listaCorsiAdapter.notifyItemInserted(position);
         listaCorsiRecycler.scrollToPosition(position);
     }
@@ -119,11 +121,11 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     public void creaItems(){
 
         ArrayList<Corso> corsi = new ArrayList<>();
-        corsi.add(new Corso("bo"));
-        corsi.add(new Corso("non lo so"));
+        corsi.add(new Corso("Fondamenti di Programmazione"));
+        corsi.add(new Corso("Computer Grafica"));
         ArrayList<Corso> corsi2 = new ArrayList<>();
-        corsi2.add(new Corso("altri"));
-        corsi2.add(new Corso("Corsi"));
+        corsi2.add(new Corso("Computer Vision"));
+        corsi2.add(new Corso("Sistemi Biometrici"));
         dateCourseMap.put(2018, corsi);
         dateCourseMap.put(2019, corsi2);
         Log.d(TAG, "creaItems: " + dateCourseMap);
@@ -192,10 +194,16 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         int position = 0;
         if(dateCourseMap.containsKey(year)){
             for(Integer key: dateCourseMap.keySet()){
-                if(key >= year ) position = position + dateCourseMap.get(year).size() + 1;
+                if(key >= year ) {
+                    Log.d(TAG, "getTextAndYear: " + key);
+                    Log.d(TAG, "getTextAndYear: " + dateCourseMap.get(key));
+                    position = position + dateCourseMap.get(key).size() + 1;
+                    Log.d(TAG, "getTextAndYear: " + dateCourseMap.get(key).size());
+                }
             }
         }
         insertItem(position, nomeCorso, year);
+        Log.d(TAG, "getTextAndYear: " + year);
         Log.d("nomeC", "getText: " + nomeCorso);
     }
 }

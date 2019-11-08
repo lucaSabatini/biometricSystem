@@ -57,7 +57,7 @@ public class ProvaAlert extends DialogFragment {
 
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int nextYear = currentYear + 1;
-        ArrayList<Integer> spinnerArray = new ArrayList<>(Arrays.asList(currentYear, nextYear));
+        ArrayList<Integer> spinnerArray = new ArrayList<>(Arrays.asList(2018, currentYear, nextYear));
 
         Spinner spinner = view.findViewById(R.id.spinner);
         ArrayAdapter<Integer> adapter = new ArrayAdapter<>

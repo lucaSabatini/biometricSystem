@@ -52,7 +52,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
  */
 
-    public CorsoAdapter(ArrayList<ListItem> listItems){this.listItems = listItems;}
+    public CorsoAdapter(ArrayList<ListItem> listItems){this.listItems = new ArrayList<>(listItems);}
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,7 +83,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         else if(type == ListItem.TYPE_HEADER){
             DateItem date = (DateItem) listItems.get(position);
             HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
-
+            Log.d(TAG, "onBindViewHolder: "+date.getYear());
             holder.date.setText("" + date.getYear());
 
         }
@@ -96,6 +96,9 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return listItems.get(position).getType();
     }
 
+    public void printlist(){
+        Log.d(TAG, "printlist: " + listItems);
+    }
 
     @Override
     public int getItemCount() {

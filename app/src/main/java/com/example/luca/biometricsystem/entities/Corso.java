@@ -1,10 +1,18 @@
 package com.example.luca.biometricsystem.entities;
 
+import androidx.annotation.NonNull;
+
 public class Corso {
 
     private String nomeCorso;
     public  Corso(String nomeCorso){
         this.nomeCorso = nomeCorso;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nomeCorso;
     }
 
     public String getNomeCorso() {
