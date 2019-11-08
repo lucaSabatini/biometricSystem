@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
@@ -36,9 +37,15 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<CorsoItem> listaCorsi;
     //private String nomeCorso;
-    ArrayList<ListItem> items;
+    //ArrayList<ListItem> items;
 
-    private TreeMap<Integer, List<Corso>> dateCourseMap = new TreeMap<>(Collections.reverseOrder());
+    private TreeMap<DateItem, List<CorsoItem>> dateCourseMap = new TreeMap<>(new Comparator<DateItem>() {
+        @Override
+        public int compare(DateItem d0, DateItem d1) {
+            //Log.d(TAG, "compare: " + (dt0.getYear() - t1.getYear()));
+            return d1.getYear() - d0.getYear();
+        }
+    });
 
     private CorsoItem mRecentlyDeletedItem;
     private int mRecentlyDeletedItemPosition;
@@ -59,8 +66,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         //buttonRemove = findViewById(R.id.button_remove);
         setButtons();
 
-        Log.d(TAG, "onCreate: " + items);
-        listaCorsiAdapter.printlist();
+        //Log.d(TAG, "onCreate: " + items);
+        //listaCorsiAdapter.printlist();
 
         /*buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,17 +87,20 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         //dateCourseMap.put(year, nomeCorso);
         //ArrayList<C> key = dateCourseMap.get(year);
         Log.d(TAG, "insertItem: " + position);
-        if(dateCourseMap.containsKey(year)){
-            dateCourseMap.get(year).add(new Corso(nomeCorso));
+        DateItem d = new DateItem(year);
+        if(dateCourseMap.containsKey(d)){
+            dateCourseMap.get(d).add(new CorsoItem(new Corso(nomeCorso), R.drawable.image_corso));
+            listaCorsiAdapter.notifyItemInserted(position);
         } else {
             Log.d(TAG, "insertItem: " + year);
-            items.add(position, new DateItem(year));
-            position++;
-            dateCourseMap.put(year, new ArrayList<>(Arrays.asList(new Corso(nomeCorso))));
+            //items.add(position, new DateItem(year));
+            //position++;
+            dateCourseMap.put(new DateItem(year), new ArrayList<>(Arrays.asList(new CorsoItem(new Corso(nomeCorso), R.drawable.image_corso))));
+            listaCorsiAdapter.notifyItemRangeInserted(position, 2);
         }
         Log.d(TAG, "insertItem: " + position);
-        items.add(position, new CorsoItem(new Corso(nomeCorso), R.drawable.image_corso));
-        listaCorsiAdapter.notifyItemInserted(position);
+        //items.add(position, new CorsoItem(new Corso(nomeCorso), R.drawable.image_corso));
+
         listaCorsiRecycler.scrollToPosition(position);
     }
 
@@ -119,15 +129,13 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     }
 
     public void creaItems(){
-
-        ArrayList<Corso> corsi = new ArrayList<>();
-        corsi.add(new Corso("Fondamenti di Programmazione"));
-        corsi.add(new Corso("Computer Grafica"));
-        ArrayList<Corso> corsi2 = new ArrayList<>();
-        corsi2.add(new Corso("Computer Vision"));
-        corsi2.add(new Corso("Sistemi Biometrici"));
-        dateCourseMap.put(2018, corsi);
-        dateCourseMap.put(2019, corsi2);
+        ArrayList<CorsoItem> corsi = new ArrayList<>();
+        corsi.add(new CorsoItem(new Corso("Fondamenti di Programmazione"), R.drawable.image_corso));
+        corsi.add(new CorsoItem(new Corso("Computer Grafica"), R.drawable.image_corso));
+        ArrayList<CorsoItem> corsi2 = new ArrayList<>();
+        corsi2.add(new CorsoItem(new Corso("Computer Vision"),R.drawable.image_corso));
+        dateCourseMap.put(new DateItem(2018), corsi);
+        dateCourseMap.put(new DateItem(2019), corsi2);
         Log.d(TAG, "creaItems: " + dateCourseMap);
     }
 
@@ -136,15 +144,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         //listaCorsiRecycler.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
 
-        items = new ArrayList();
-        for(Integer year: dateCourseMap.keySet()){
-            items.add(new DateItem(year));
-            for(Corso course: dateCourseMap.get(year)){
-                items.add(new CorsoItem(course, R.drawable.image_corso));
-            }
-        }
-
-        listaCorsiAdapter = new CorsoAdapter(items);
+        listaCorsiAdapter = new CorsoAdapter(dateCourseMap);
 
         listaCorsiRecycler.setLayoutManager(layoutManager);
         listaCorsiRecycler.setAdapter(listaCorsiAdapter);
@@ -192,9 +192,10 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     public void getTextAndYear(String nomeCorso, int year) {
         //this.nomeCorso = nomeCorso;
         int position = 0;
-        if(dateCourseMap.containsKey(year)){
-            for(Integer key: dateCourseMap.keySet()){
-                if(key >= year ) {
+        DateItem yearItem = new DateItem(year);
+        if(dateCourseMap.containsKey(yearItem)){
+            for(DateItem key: dateCourseMap.keySet()){
+                if(key.getYear() >= year ) {
                     Log.d(TAG, "getTextAndYear: " + key);
                     Log.d(TAG, "getTextAndYear: " + dateCourseMap.get(key));
                     position = position + dateCourseMap.get(key).size() + 1;

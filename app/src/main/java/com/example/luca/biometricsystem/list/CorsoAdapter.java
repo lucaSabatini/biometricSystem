@@ -15,8 +15,10 @@ import com.example.luca.biometricsystem.entities.Corso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TreeMap;
 
 public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "CorsoAdapter";
@@ -24,7 +26,9 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private OnItemClickListener mListener;
     private CorsoItem mRecentlyDeletedItem;
     private int mRecentlyDeletedItemPosition;
-    private ArrayList<ListItem> listItems;
+    //private ArrayList<ListItem> listItems;
+
+    private TreeMap<DateItem,List<CorsoItem>> dateCourseMap;
 
     public interface OnItemClickListener{
         void onItemCLick(int position);
@@ -52,7 +56,9 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
  */
 
-    public CorsoAdapter(ArrayList<ListItem> listItems){this.listItems = new ArrayList<>(listItems);}
+    //public CorsoAdapter(ArrayList<ListItem> listItems){this.listItems = new ArrayList<>(listItems);}
+
+    public CorsoAdapter(TreeMap<DateItem, List<CorsoItem>> dateCourseMap){ this.dateCourseMap = dateCourseMap;}
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,36 +79,47 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        int type = listItems.get(position).getType();
+        ListItem item = fromIndexToItem(position);
+        int type = item.getType();
         if(type == ListItem.TYPE_COURSE){
-            CorsoItem corso = (CorsoItem) listItems.get(position);
+            CorsoItem corso = (CorsoItem) item;
             CorsoViewHolder holder = (CorsoViewHolder) viewHolder;
             holder.imageCorso.setImageResource(corso.getImageResource());
             holder.nomeCorso.setText(corso.getNomeCorso());
         }
         else if(type == ListItem.TYPE_HEADER){
-            DateItem date = (DateItem) listItems.get(position);
+            DateItem date = (DateItem) item;
             HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
-            Log.d(TAG, "onBindViewHolder: "+date.getYear());
+            //Log.d(TAG, "onBindViewHolder: "+date.getYear());
             holder.date.setText("" + date.getYear());
 
         }
-        Log.d(TAG, "onBindViewHolder: " + listItems);
+        Log.d(TAG, "onBindViewHolder: " + item);
     }
 
+    private ListItem fromIndexToItem(int position){
+        ArrayList<ListItem> items = new ArrayList<>();
+        for(DateItem key : dateCourseMap.keySet()){
+            items.add(key);
+            for(CorsoItem corso : dateCourseMap.get(key)){
+                items.add(corso);
+            }
+        }
+        return items.get(position);
+    }
 
     @Override
     public int getItemViewType(int position) {
-        return listItems.get(position).getType();
-    }
-
-    public void printlist(){
-        Log.d(TAG, "printlist: " + listItems);
+        return fromIndexToItem(position).getType();
     }
 
     @Override
     public int getItemCount() {
-        return listItems.size();
+        int size = 0;
+        for(DateItem key : dateCourseMap.keySet()) {
+            size += dateCourseMap.get(key).size() + 1;
+        }
+        return size;
     }
 
     public static class CorsoViewHolder extends RecyclerView.ViewHolder{

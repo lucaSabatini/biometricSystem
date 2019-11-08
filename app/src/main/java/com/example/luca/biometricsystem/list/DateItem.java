@@ -1,9 +1,16 @@
 package com.example.luca.biometricsystem.list;
 
+import android.util.Log;
+import android.view.Menu;
+
+import androidx.annotation.NonNull;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class DateItem extends ListItem{
     private Integer year;
 
-    public DateItem(Integer year){
+    public DateItem(Integer year) {
         this.year = year;
     }
 
@@ -18,5 +25,11 @@ public class DateItem extends ListItem{
     @Override
     public int getType() {
         return TYPE_HEADER;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "" + getYear();
     }
 }
