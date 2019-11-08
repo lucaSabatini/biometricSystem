@@ -35,7 +35,7 @@ public class SwipeToDelete extends ItemTouchHelper.SimpleCallback implements Rem
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-        //removeCorso(position);
+
         listaCorsi.removeItem(position);
         openRemoveDialog();
     }

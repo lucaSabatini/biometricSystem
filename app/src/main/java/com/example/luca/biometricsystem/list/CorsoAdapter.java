@@ -90,7 +90,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         else if(type == ListItem.TYPE_HEADER){
             DateItem date = (DateItem) item;
             HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
-            //Log.d(TAG, "onBindViewHolder: "+date.getYear());
+            Log.d(TAG, "onBindViewHolder: "+date.getYear());
             holder.date.setText("" + date.getYear());
 
         }
@@ -112,6 +112,8 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemViewType(int position) {
         return fromIndexToItem(position).getType();
     }
+
+
 
     @Override
     public int getItemCount() {

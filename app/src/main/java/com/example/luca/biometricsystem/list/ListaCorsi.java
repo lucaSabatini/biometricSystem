@@ -107,7 +107,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         mRecentlyDeletedItemPosition = position;
 
         removeItemFromMap(position);
-        listaCorsiAdapter.notifyItemRemoved(position);
+        //listaCorsiAdapter.notifyItemRemoved(position);
     }
 
     private ListItem fromIndexToItem(int position){
@@ -124,16 +124,25 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     private void removeItemFromMap(int position){
         int i = 0;
         for(DateItem key : dateCourseMap.keySet()){
-            i++;
             int k = 0;
+            i++;
             for(CorsoItem corso : dateCourseMap.get(key)){
                 if(i == position){
+                    Log.d(TAG, "removeItemFromMap: " + dateCourseMap);
+                    if( dateCourseMap.get(key).size() == 1){
+                        dateCourseMap.remove(key);
+                        Log.d(TAG, "removeItemFromMap: " + dateCourseMap);
+                        listaCorsiAdapter.notifyItemRangeRemoved(position - 1, 2);
+                        return;
+                    }
                     dateCourseMap.get(key).remove(k);
+                    listaCorsiAdapter.notifyItemRemoved(position);
                     return;
                 }
                 k++;
                 i++;
             }
+
         }
     }
 
