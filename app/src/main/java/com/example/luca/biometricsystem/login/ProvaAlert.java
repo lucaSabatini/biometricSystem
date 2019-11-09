@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.luca.biometricsystem.MainActivity;
@@ -71,6 +73,7 @@ public class ProvaAlert extends DialogFragment {
 
         builder.setView(view)
                 .setTitle(title)
+                //.setCustomTitle(createTitle())
         //builder.setMessage(Html.fromHtml(title))
                 .setPositiveButton(namePositiveButton, new DialogInterface.OnClickListener() {
                     @Override
@@ -91,8 +94,26 @@ public class ProvaAlert extends DialogFragment {
                     }
                 });
                 //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
+        AlertDialog alertDialog = builder.create();
+        /*alertDialog.setT
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(),R.color.design_default_color_primary_dark));
+                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.design_default_color_primary_dark));
+            }
+        });*/
 
-        return builder.create();
+        return alertDialog;
+    }
+
+    private View createTitle(){
+        TextView textView = new TextView(getContext());
+        textView.setText(title);
+        textView.setPadding(20, 30, 20, 30);
+        textView.setTextSize(20F);
+        textView.setTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimaryDark));
+        return textView;
     }
 
     @Override

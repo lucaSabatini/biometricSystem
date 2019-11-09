@@ -18,6 +18,7 @@
     <string name="login_signin_text">Effettua il login!</string>
     <string name="login_signup_text">Non hai un account? Registrati!</string>
     <string name="password">Password</string>
+    <string name="nome_corso">nome corso</string>
     <string name="email">E-mail</string>
     <string name="tutorial_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dolore magna aliquam erat volutpat.</string>
     <string name="next">next</string>
