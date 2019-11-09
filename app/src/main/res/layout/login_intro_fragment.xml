@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/follow_me" />
+        app:srcCompat="@drawable/logo_appello" />
 
     <TextView
         android:id="@+id/login_welcome_title"
