@@ -12,6 +12,7 @@ public class CorsoItem extends ListItem{
 
     public CorsoItem(Corso corso, int imageResource){
         this.corso = corso;
+        this.imageResource = imageResource;
     }
 
     public int getImageResource(){

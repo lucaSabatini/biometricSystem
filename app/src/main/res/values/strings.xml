@@ -37,4 +37,7 @@
     <string name="loading">Caricamento mappa in corso. Attendere...</string>
     <string name="controllo_credenziali">Controllo credenziali in corso</string>
     <string name="not_valid_credentials">Credenziali non valide</string>
+    <string name="anno_corso">anno corso</string>
+    <string name="statistiche">STATISTICHE</string>
+    <string name="appello">APPELLO</string>
 </resources>

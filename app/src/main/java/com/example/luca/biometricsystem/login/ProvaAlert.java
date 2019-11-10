@@ -52,7 +52,7 @@ public class ProvaAlert extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.color_button);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MaterialComponents_Light_Dialog_Alert);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.popup_add_corso, null);
 

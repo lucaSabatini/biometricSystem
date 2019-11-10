@@ -10,12 +10,6 @@ public class Corso {
         this.nomeCorso = nomeCorso;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return nomeCorso;
-    }
-
     public String getNomeCorso() {
         return nomeCorso;
     }
@@ -23,4 +17,11 @@ public class Corso {
     public void setNomeCorso(String nomeCorso) {
         this.nomeCorso = nomeCorso;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nomeCorso;
+    }
+
 }

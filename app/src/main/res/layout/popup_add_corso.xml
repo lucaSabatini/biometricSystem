@@ -11,7 +11,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimary"
         android:ems="10"
         android:textColorHighlight="#543F51B5"
         android:textCursorDrawable="@null"
@@ -22,7 +22,7 @@
         android:padding="8dp"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@color/colorPrimary" />
 
     <Spinner
         android:id="@+id/spinner"

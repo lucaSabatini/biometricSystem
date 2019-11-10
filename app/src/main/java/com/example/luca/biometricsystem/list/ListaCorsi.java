@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.luca.biometricsystem.AppelloOrStatistica;
 import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.SwipeToDelete;
 import com.example.luca.biometricsystem.entities.Corso;
@@ -30,7 +32,10 @@ import java.util.TreeMap;
 
 public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAlertListener {
 
+    public static final String EXTRA_TEXT = "com.example.luca.biometricsystem.list.EXTRA_TEXT";
+
     private static final String TAG = "ListaCorsi";
+
     private Activity activity = this;
     private RecyclerView listaCorsiRecycler;
     private CorsoAdapter listaCorsiAdapter;
@@ -51,7 +56,6 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     private CorsoItem mRecentlyDeletedItem;
     private int mRecentlyDeletedItemPosition;
 
-
     private FloatingActionButton buttonInsert;
 
     @Override
@@ -59,13 +63,16 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_corsi);
         Persona persona = (Persona) getIntent().getSerializableExtra("Persona");
+
+        setButtons();
+
         creaItems();
         createListaCorsi();
         buildRecyclerView();
 
-        buttonInsert = findViewById(R.id.button_insert);
+
         //buttonRemove = findViewById(R.id.button_remove);
-        setButtons();
+
 
         //Log.d(TAG, "onCreate: " + items);
         //listaCorsiAdapter.printlist();
@@ -152,9 +159,12 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         listaCorsiAdapter.notifyItemInserted(mRecentlyDeletedItemPosition);
     }
 
-    public void changeItem(int position, String text){
-        //listaCorsi.get(position).changeText1(text);
-        listaCorsiAdapter.notifyItemChanged(position);
+    public void openActivity(String nomeCorso){
+        //listaCorsiAdapter.notifyItemChanged(position);
+        //String nomeCorso= listaCorsi.get(position-1).toString();
+        Intent intent = new Intent(this, AppelloOrStatistica.class);
+        intent.putExtra(EXTRA_TEXT, nomeCorso);
+        startActivity(intent);
     }
 
     public void createListaCorsi(){
@@ -187,17 +197,18 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new SwipeToDelete(listaCorsiAdapter, this, this));
         itemTouchHelper.attachToRecyclerView(listaCorsiRecycler);
-        /*listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
+        listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
-            public void onItemCLick(int position) {
-                changeItem(position, "Clicked");
+            public void onItemCLick(String nomeCorso) {
+                openActivity(nomeCorso);
+                //changeItem(position, "Clicked");
             }
 
             @Override
             public void onDeleteClick(int position) {
                 removeItem(position);
             }
-        });*/
+        });
     }
 
 
@@ -212,6 +223,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     }
 
     public void setButtons(){
+        buttonInsert = findViewById(R.id.button_insert);
+
         //editTextInsert = findViewById(R.id.edittext_insert);
         //editTextRemove = findViewById(R.id.edittext_remove);
 

@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.luca.biometricsystem">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SplashScreen"
+
+        <!--
+                PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
+                E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT
+        -->
+
+        <activity android:name=".AppelloOrStatistica"
+            android:parentActivityName=".list.ListaCorsi"></activity>
+
+        <activity
+            android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,15 +36,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".logingeneroso.LoginActivity">
-
-        </activity>
-        <activity android:name=".list.ListaCorsi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".list.ListaCorsi"></activity>
         <activity android:name=".Appello" />
         <activity
             android:name=".Registrazione"
@@ -41,11 +55,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
