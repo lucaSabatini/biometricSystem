@@ -10,6 +10,8 @@ import com.example.luca.biometricsystem.logingeneroso.LoginActivity;
 import com.example.luca.biometricsystem.logingeneroso.LoginIntroFragment;
 
 public class SplashScreen extends AppCompatActivity {
+
+    private static final String TAG = "RemoveAlert";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

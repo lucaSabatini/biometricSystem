@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private static final String TAG = "CorsoAdapter";
     //private ArrayList<CorsoItem> listaCorso;
     private OnItemClickListener mListener;

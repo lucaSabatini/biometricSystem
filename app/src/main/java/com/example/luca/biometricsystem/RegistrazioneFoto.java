@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class RegistrazioneFoto extends AppCompatActivity {
+
+    private static final String TAG = "RegistrazioneFoto";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imageView;
 

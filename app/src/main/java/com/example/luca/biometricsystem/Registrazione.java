@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class Registrazione extends AppCompatActivity {
 
+    private static final String TAG = "Registrazione";
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private FloatingActionButton cameraButton;

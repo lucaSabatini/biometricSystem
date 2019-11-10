@@ -15,6 +15,7 @@ import com.example.luca.biometricsystem.entities.Persona;
 
 public class Appello extends AppCompatActivity {
 
+    private static final String TAG = "Appello";
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private TextView lastName;

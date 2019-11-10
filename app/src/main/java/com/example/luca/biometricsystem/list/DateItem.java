@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class DateItem extends ListItem{
+
+    private static final String TAG = "DateItem";
     private Integer year;
 
     public DateItem(Integer year) {

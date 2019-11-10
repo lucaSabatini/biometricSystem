@@ -20,14 +20,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".logingeneroso.LoginActivity">
+
+        </activity>
+        <activity android:name=".list.ListaCorsi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-        <activity android:name=".list.ListaCorsi">
-
         </activity>
         <activity android:name=".Appello" />
         <activity

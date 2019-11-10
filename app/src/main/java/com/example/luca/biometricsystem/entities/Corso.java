@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 public class Corso {
 
+    private static final String TAG = "Corso";
     private String nomeCorso;
     public  Corso(String nomeCorso){
         this.nomeCorso = nomeCorso;

@@ -17,6 +17,8 @@ import androidx.fragment.app.DialogFragment;
 import com.example.luca.biometricsystem.login.ProvaAlert;
 
 public class RemoveAlert extends DialogFragment {
+
+    private static final String TAG = "RemoveAlert";
     private String title;
     private String namePositiveButton;
     private String nameNegativeButton;

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAlertListener {
+
     private static final String TAG = "ListaCorsi";
     private Activity activity = this;
     private RecyclerView listaCorsiRecycler;

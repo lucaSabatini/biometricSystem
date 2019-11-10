@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import com.example.luca.biometricsystem.entities.Corso;
 
 public class CorsoItem extends ListItem{
+
+    private static final String TAG = "ListItem";
     private int imageResource;
     private Corso corso;
 

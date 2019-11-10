@@ -5,6 +5,8 @@ import android.util.Log;
 import java.io.Serializable;
 
 public class Persona implements Serializable {
+
+    private static final String TAG = "Persona";
     private String email;
     private String lastName;
     private String studentId;

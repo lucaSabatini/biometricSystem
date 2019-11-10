@@ -17,6 +17,8 @@ import com.example.luca.biometricsystem.list.CorsoAdapter;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 
 public class SwipeToDelete extends ItemTouchHelper.SimpleCallback implements RemoveAlert.RemoveAlertListener {
+
+    private static final String TAG = "SwipeToDelete";
     private CorsoAdapter mAdapter;
     private ListaCorsi listaCorsi;
     private Activity activity;

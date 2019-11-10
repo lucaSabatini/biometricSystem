@@ -33,6 +33,7 @@ import java.util.Calendar;
 
 public class ProvaAlert extends DialogFragment {
 
+    private static final String TAG = "ProvaAlert";
     private String title;
     private String namePositiveButton;
     private String nameNegativeButton;
