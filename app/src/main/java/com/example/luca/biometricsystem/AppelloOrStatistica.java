@@ -19,11 +19,13 @@ public class AppelloOrStatistica extends AppCompatActivity {
         setContentView(R.layout.activity_appello_or_statistica);
         Intent intent = getIntent();
         String nomeCorso = intent.getStringExtra(ListaCorsi.EXTRA_TEXT);
+        Integer annoCorso = intent.getIntExtra(ListaCorsi.EXTRA_DATE, -1);
 
         nomeCorsoTextView = findViewById(R.id.nome_corso);
         annoCorsoTextView = findViewById(R.id.anno_corso);
 
         nomeCorsoTextView.setText(nomeCorso);
+        annoCorsoTextView.setText(""+annoCorso);
 
 
     }

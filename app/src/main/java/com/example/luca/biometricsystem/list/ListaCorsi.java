@@ -33,6 +33,7 @@ import java.util.TreeMap;
 public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAlertListener {
 
     public static final String EXTRA_TEXT = "com.example.luca.biometricsystem.list.EXTRA_TEXT";
+    public static final String EXTRA_DATE = "com.example.luca.biometricsystem.list.EXTRA_DATE";
 
     private static final String TAG = "ListaCorsi";
 
@@ -159,11 +160,13 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         listaCorsiAdapter.notifyItemInserted(mRecentlyDeletedItemPosition);
     }
 
-    public void openActivity(String nomeCorso){
+    public void openActivity(String nomeCorso, Integer date){
+        //Log.d(TAG, "openActivity: "+ date.toString());
         //listaCorsiAdapter.notifyItemChanged(position);
         //String nomeCorso= listaCorsi.get(position-1).toString();
         Intent intent = new Intent(this, AppelloOrStatistica.class);
         intent.putExtra(EXTRA_TEXT, nomeCorso);
+        intent.putExtra(EXTRA_DATE, date);
         startActivity(intent);
     }
 
@@ -199,8 +202,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         itemTouchHelper.attachToRecyclerView(listaCorsiRecycler);
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
-            public void onItemCLick(String nomeCorso) {
-                openActivity(nomeCorso);
+            public void onItemCLick(String nomeCorso, int position) {
+                openActivity(nomeCorso, fromIndexToKey(position));
                 //changeItem(position, "Clicked");
             }
 
@@ -211,6 +214,21 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         });
     }
 
+    private Integer fromIndexToKey(int position) {
+        int i = 0;
+        for(DateItem key : dateCourseMap.keySet()){
+            int k = 0;
+            i++;
+            for(CorsoItem corso : dateCourseMap.get(key)){
+                if(i == position){
+                    return key.getYear();
+                }
+                k++;
+                i++;
+            }
+        }
+        return null;
+    }
 
 
     public void aggiungiCorso(View view){

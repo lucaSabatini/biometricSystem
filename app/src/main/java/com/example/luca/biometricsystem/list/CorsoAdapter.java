@@ -32,7 +32,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private TreeMap<DateItem,List<CorsoItem>> dateCourseMap;
 
     public interface OnItemClickListener{
-        void onItemCLick(String nomeCorso);
+        void onItemCLick(String nomeCorso, int position);
         void onDeleteClick(int position);
     }
 /*
@@ -142,7 +142,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     if(listener != null){
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
-                            listener.onItemCLick(nomeCorso.getText().toString());
+                            listener.onItemCLick(nomeCorso.getText().toString(), position);
                             //Log.d(TAG, "onClick: "+ nomeCorso.getParent().toString());
                         }
                     }
