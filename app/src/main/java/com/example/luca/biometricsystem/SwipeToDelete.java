@@ -39,7 +39,7 @@ public class SwipeToDelete extends ItemTouchHelper.SimpleCallback implements Rem
         int position = viewHolder.getAdapterPosition();
 
         listaCorsi.removeItem(position);
-        openRemoveDialog();
+        //openRemoveDialog();
     }
 
     public void undoDelete(){
@@ -83,10 +83,10 @@ public class SwipeToDelete extends ItemTouchHelper.SimpleCallback implements Rem
         icon.draw(c);
     }
 
-    public void openRemoveDialog(){
+    /*public void openRemoveDialog(){
         RemoveAlert removeAlert = new RemoveAlert(this);;
         removeAlert.show(listaCorsi.getSupportFragmentManager(), "RemoveAlert");
-    }
+    }*/
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {

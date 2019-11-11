@@ -2,12 +2,15 @@ package com.example.luca.biometricsystem.list;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.luca.biometricsystem.R;
@@ -34,6 +37,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public interface OnItemClickListener{
         void onItemCLick(String nomeCorso, int position);
         void onDeleteClick(int position);
+        void onRenameClick(int position);
     }
 /*
     public void deleteItem(int position) {
@@ -58,6 +62,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
  */
 
     //public CorsoAdapter(ArrayList<ListItem> listItems){this.listItems = new ArrayList<>(listItems);}
+
 
     public CorsoAdapter(TreeMap<DateItem, List<CorsoItem>> dateCourseMap){ this.dateCourseMap = dateCourseMap;}
 
@@ -128,12 +133,14 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static class CorsoViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageCorso;
         public TextView nomeCorso;
+        public ImageButton trePunti;
 
 
         public CorsoViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
             imageCorso = itemView.findViewById(R.id.image_corso);
             nomeCorso = itemView.findViewById(R.id.nome_corso);
+            trePunti = itemView.findViewById(R.id.tre_punti);
             //deleteImage = itemView.findViewById(R.id.image_delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +153,38 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             //Log.d(TAG, "onClick: "+ nomeCorso.getParent().toString());
                         }
                     }
+                }
+            });
+
+            trePunti.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), trePunti);
+
+                    popupMenu.inflate(R.menu.option_menu);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if(listener != null){
+                                int position = getAdapterPosition();
+                                if(position != RecyclerView.NO_POSITION){
+                                    switch (item.getItemId()){
+                                        case R.id.renameCorso:
+                                            listener.onRenameClick(position);
+                                            return true;
+                                        case R.id.deleteCorso:
+                                            listener.onDeleteClick(position);
+                                            return true;
+                                        default:
+                                            return false;
+                                    }
+                                    //listener.onDeleteClick(position);
+                                }
+                            }
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
                 }
             });
 

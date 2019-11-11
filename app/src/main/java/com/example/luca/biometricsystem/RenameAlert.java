@@ -1,13 +1,14 @@
 package com.example.luca.biometricsystem;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,26 +18,27 @@ import androidx.fragment.app.DialogFragment;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.login.ProvaAlert;
 
-public class RemoveAlert extends DialogFragment {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 
-    private static final String TAG = "RemoveAlert";
+public class RenameAlert extends DialogFragment {
+    private static final String TAG ="ChangeNameAlert";
+
     private String title;
     private int position;
     private String namePositiveButton;
     private String nameNegativeButton;
-    private String message;
+    private ProvaAlert.ProvaAlertListener listener;
     private ListaCorsi listaCorsi;
-    private RemoveAlertListener listener;
 
-    public RemoveAlert(ListaCorsi listaCorsi, int position){
-        title = "Rimuovi corso";
-        message = "Sei sicuro di rimuovere il corso?";
-        nameNegativeButton = "No";
-        namePositiveButton = "Si";
+    public RenameAlert(ListaCorsi listaCorsi, int position){
+        title = "Rinomina corso";
+        nameNegativeButton = "Annulla";
+        namePositiveButton = "Rinomina";
         this.listaCorsi = listaCorsi;
         this.position = position;
     }
-
 
     @NonNull
     @Override
@@ -44,42 +46,28 @@ public class RemoveAlert extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MaterialComponents_Light_Dialog_Alert);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.popup_remove_corso, null);
+        View view = layoutInflater.inflate(R.layout.popup_rename_corso, null);
+
         builder.setView(view)
                 .setTitle(title)
-                .setMessage(message)
                 .setPositiveButton(namePositiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("alert", "onClick: Rimouvi");
-                        listaCorsi.removeItemFromMap(position);
-                        //listaCorsi.removeItem(position);
+                        Log.d("alert", "onClick: ciao");
+                        EditText nomeCorso = view.findViewById(R.id.edit_text_nome_corso);
+                        if(nomeCorso.getText().toString().equals("")) return;
+                        listaCorsi.changeNameItem(position, nomeCorso.getText().toString().trim());
                     }
                 })
                 .setNegativeButton(nameNegativeButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("alert", "onClick: annulla");
-                        //listener.removeCorso(true);
-                        //swipeToDelete.undoDelete();
-                        dialogInterface.cancel();
                     }
                 });
-        //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
-        return builder.create();
-    }
+        AlertDialog alertDialog = builder.create();
 
-    /*@Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try{
-            listener = (RemoveAlertListener) context;
-        } catch (ClassCastException e){
-            throw new ClassCastException(context.toString() + "implement RemoveAlert");
-        }
-    }*/
 
-    public interface RemoveAlertListener{
-        void removeCorso(boolean undo);
+        return alertDialog;
     }
 }

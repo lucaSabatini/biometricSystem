@@ -40,4 +40,6 @@
     <string name="anno_corso">anno corso</string>
     <string name="statistiche">STATISTICHE</string>
     <string name="appello">APPELLO</string>
+    <string name="rinomina">Rinomina</string>
+    <string name="eliminao">Elimina</string>
 </resources>

@@ -14,6 +14,8 @@ import android.view.View;
 
 import com.example.luca.biometricsystem.AppelloOrStatistica;
 import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.RemoveAlert;
+import com.example.luca.biometricsystem.RenameAlert;
 import com.example.luca.biometricsystem.SwipeToDelete;
 import com.example.luca.biometricsystem.entities.Corso;
 import com.example.luca.biometricsystem.entities.Persona;
@@ -28,6 +30,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAlertListener {
@@ -54,7 +57,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         }
     });
 
-    private CorsoItem mRecentlyDeletedItem;
+    private TreeMap<DateItem, List<CorsoItem>> mRecentlyDeletedItem;
     private int mRecentlyDeletedItemPosition;
 
     private FloatingActionButton buttonInsert;
@@ -71,22 +74,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         createListaCorsi();
         buildRecyclerView();
 
-
-        //buttonRemove = findViewById(R.id.button_remove);
-
-
         //Log.d(TAG, "onCreate: " + items);
         //listaCorsiAdapter.printlist();
-
-        /*buttonRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = Integer.parseInt(editTextRemove.getText().toString());
-                removeItem(position);
-            }
-        });*/
-
-
 
     }
 
@@ -111,12 +100,9 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     }
 
     public void removeItem(int position){
-
-        mRecentlyDeletedItem = (CorsoItem) fromIndexToItem(position);
-        mRecentlyDeletedItemPosition = position;
-
-        removeItemFromMap(position);
-        //listaCorsiAdapter.notifyItemRemoved(position);
+        RemoveAlert removeAlert = new RemoveAlert(this, position);
+        removeAlert.show(getSupportFragmentManager(), "RemoveAlert");
+        //removeItemFromMap(position);
     }
 
     private ListItem fromIndexToItem(int position){
@@ -130,7 +116,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         return items.get(position);
     }
 
-    private void removeItemFromMap(int position){
+    public void removeItemFromMap(int position){
         int i = 0;
         for(DateItem key : dateCourseMap.keySet()){
             int k = 0;
@@ -155,9 +141,12 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         }
     }
 
+
     public void undoDelete(){
-        listaCorsi.add(mRecentlyDeletedItemPosition,mRecentlyDeletedItem);
-        listaCorsiAdapter.notifyItemInserted(mRecentlyDeletedItemPosition);
+        //listaCorsi.add(mRecentlyDeletedItemPosition,mRecentlyDeletedItem);
+        //listaCorsiAdapter.notifyItemInserted(mRecentlyDeletedItemPosition);
+        dateCourseMap = mRecentlyDeletedItem;
+        listaCorsiAdapter.notifyDataSetChanged();
     }
 
     public void openActivity(String nomeCorso, Integer date){
@@ -170,11 +159,22 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         startActivity(intent);
     }
 
+    public void changeNameItem(int position, String nomeCorso){
+        if(fromIndexToItem(position).getType() == ListItem.TYPE_COURSE){
+            CorsoItem corsoItem = (CorsoItem) fromIndexToItem(position);
+            corsoItem.setNomeCorso(nomeCorso);
+            listaCorsiAdapter.notifyItemChanged(position);
+        }
+    }
+
+    public void openRenameItem(int position){
+        RenameAlert renameAlert = new RenameAlert(this, position);
+        renameAlert.show(getSupportFragmentManager(), "RenameAlert");
+    }
+
     public void createListaCorsi(){
         listaCorsi = new ArrayList<>();
-        //listaCorsi.add(new CorsoItem(R.drawable.image_corso, "Computer Vision"));
-        //listaCorsi.add(new CorsoItem(R.drawable.image_corso, "Models of Computation"));
-        //listaCorsi.add(new CorsoItem(R.drawable.image_corso, "Mobile applications and cloud computing"));
+
     }
 
     public void creaItems(){
@@ -210,6 +210,11 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
             @Override
             public void onDeleteClick(int position) {
                 removeItem(position);
+            }
+
+            @Override
+            public void onRenameClick(int position) {
+                openRenameItem(position);
             }
         });
     }

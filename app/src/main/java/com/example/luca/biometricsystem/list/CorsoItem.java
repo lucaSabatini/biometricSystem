@@ -23,6 +23,10 @@ public class CorsoItem extends ListItem{
         return corso.getNomeCorso();
     }
 
+    public void setNomeCorso(String nomeCorso){
+        corso.setNomeCorso(nomeCorso);
+    }
+
     @NonNull
     @Override
     public String toString() {
