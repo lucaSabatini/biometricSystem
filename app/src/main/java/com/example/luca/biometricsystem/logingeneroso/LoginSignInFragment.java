@@ -27,7 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class LoginSignInFragment extends Fragment implements OnCompleteListener<AuthResult> {
+public class LoginSignInFragment extends Fragment {
 
     private static final String TAG = "LoginSignInFragment";
     private LoginRoutingInterface callback;
@@ -104,10 +104,48 @@ public class LoginSignInFragment extends Fragment implements OnCompleteListener<
             signUpProgressBar.setVisibility(View.VISIBLE);
             if(action != null && action.equals("register")){
                 firebaseAuth.createUserWithEmailAndPassword(username.getEditText().getText().toString().trim(), password.getEditText().getText().toString().trim())
-                        .addOnCompleteListener((Activity) context, this);
+                        .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                signUpProgressBar.setVisibility(View.INVISIBLE);
+
+                                //Toast.makeText(context, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText( context , "SignUp failed." ,
+                                            Toast.LENGTH_SHORT).show();
+                                    Log.w(TAG, "signUpWithEmail:failure", task.getException());
+                                } else {
+                                    firebaseAuth.getCurrentUser().sendEmailVerification();
+                                    Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
+                                    context.startActivity(new Intent( context , LoginActivity.class));
+                                }
+                            }
+                        });
             } else{
                 firebaseAuth.signInWithEmailAndPassword(username.getEditText().getText().toString().trim(), password.getEditText().getText().toString().trim())
-                        .addOnCompleteListener((Activity) context, this);
+                        .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                signUpProgressBar.setVisibility(View.INVISIBLE);
+                                if (!task.isSuccessful()) {
+                                    // there was an error
+                                    if (password.getEditText().getText().length() < 6) {
+                                        password.setError("Password too short, enter minimum 6 characters!");
+                                    }else {
+                                        Toast.makeText(context, "Authentication failed, sign up", Toast.LENGTH_LONG).show();
+                                    }
+                                }else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                                    Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
+                                    clear();
+                                } else {
+                                    Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
+                                    context.startActivity(new Intent(context, ListaCorsi.class));
+                                }
+                            }
+                        });
             }
         }
         else{
@@ -115,25 +153,6 @@ public class LoginSignInFragment extends Fragment implements OnCompleteListener<
         }
     }
 
-    /// todo: ovviamente questo è da migliorare
-    /*private boolean validate(){
-        String sUsername = username.getText().toString();
-        if(sUsername.length() == 0)
-            return false;
-
-        int atIndex = sUsername.lastIndexOf('@');
-        int dotIndex = sUsername.lastIndexOf('.');
-
-        if(atIndex == -1 || dotIndex == -1 || atIndex > dotIndex)
-            return false;
-
-        // TODO: aggiungere questo caso: action != null && action.equals("register")
-        String sPassword = password.getText().toString();
-        if(sPassword.length() == 0)
-            return false;
-
-        return true;
-    }*/
 
     private boolean validateEmail(){
         String emailValue = username.getEditText().getText().toString().trim();
@@ -168,15 +187,24 @@ public class LoginSignInFragment extends Fragment implements OnCompleteListener<
     }
 
 
-    @Override
+    /*@Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         signUpProgressBar.setVisibility(View.INVISIBLE);
-        if (task.isSuccessful()) {
-            startActivity(new Intent(context, ListaCorsi.class));
-
-        } else {
+        if (!task.isSuccessful()) {
+            if (password.getEditText().getText().length() < 6) {
+                password.setError("Password too short, enter minimum 6 characters!");
+            }
             Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
             Log.w(TAG, "signInWithEmail:failure", task.getException());
+
+        }else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+            Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
+            clear();
         }
-    }
+        else {
+            firebaseAuth.getCurrentUser().sendEmailVerification();
+            Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(context, ListaCorsi.class));
+        }
+    }*/
 }

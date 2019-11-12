@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginIntroFragment extends Fragment implements OnCompleteListener<AuthResult>  {
+public class LoginIntroFragment extends Fragment {
 
     private static final String TAG = "LoginIntroFragment";
     private static String emailPattern = "([a-z]+[.][0-9]+@studenti[.]uniroma1[.]it)|([a-z]+@di[.]uniroma1[.]it)";
@@ -101,29 +100,6 @@ public class LoginIntroFragment extends Fragment implements OnCompleteListener<A
             callback.route("new_account");
     }
 
-
-
-
-    /// todo: ovviamente questo è da migliorare
-    /*private boolean validate(){
-        String sUsername = username.getText().toString();
-        if(sUsername.length() == 0)
-            return false;
-
-        int atIndex = sUsername.lastIndexOf('@');
-        int dotIndex = sUsername.lastIndexOf('.');
-
-        if(atIndex == -1 || dotIndex == -1 || atIndex > dotIndex)
-            return false;
-
-        // TODO: aggiungere questo caso: action != null && action.equals("register")
-        String sPassword = password.getEditText().getText().toString();
-        if(sPassword.length() == 0)
-            return false;
-
-        return true;
-    }*/
-
     private boolean validateEmail(){
         String emailValue = username.getEditText().getText().toString().trim();
         if (emailValue.isEmpty()) {
@@ -160,14 +136,35 @@ public class LoginIntroFragment extends Fragment implements OnCompleteListener<A
         if(!confermaInput()) {
             signInProgressBar.setVisibility(View.VISIBLE);
             firebaseAuth.signInWithEmailAndPassword(username.getEditText().getText().toString().trim(), password.getEditText().getText().toString().trim())
-                    .addOnCompleteListener((Activity) context, this);
+                    .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            signInProgressBar.setVisibility(View.INVISIBLE);
+                            if (!task.isSuccessful()) {
+                                // there was an error
+                                if (password.getEditText().getText().length() < 6) {
+                                    password.setError("Password too short, enter minimum 6 characters!");
+                                }else {
+                                    Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
+                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                }
+                            }else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                                Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                clear();
+                            } else {
+                                Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
+                                context.startActivity(new Intent(context, ListaCorsi.class));
+                            }
+                        }
+                    });
         }
         else{
             Toast.makeText(context, getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
+    /*@Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         signInProgressBar.setVisibility(View.INVISIBLE);
         if (task.isSuccessful()) {
@@ -176,6 +173,6 @@ public class LoginIntroFragment extends Fragment implements OnCompleteListener<A
             Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
             Log.w(TAG, "signInWithEmail:failure", task.getException());
         }
-    }
+    }*/
 
 }
