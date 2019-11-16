@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.luca.biometricsystem.Appello;
+import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -114,6 +116,8 @@ public class LoginIntroFragment extends Fragment {
             return true;
         }
     }
+
+
     private boolean validatePassword(){
         String passwordValue = password.getEditText().getText().toString().trim();
         if (passwordValue.isEmpty()){
@@ -124,13 +128,16 @@ public class LoginIntroFragment extends Fragment {
             return true;
         }
     }
+
     private void clear(){
         username.getEditText().getText().clear();
         password.getEditText().getText().clear();
     }
+
     public Boolean confermaInput(){
         return (!validateEmail() | !validatePassword());
     }
+
 
     public void loginSignInButton(){
         if(!confermaInput()) {
@@ -153,6 +160,12 @@ public class LoginIntroFragment extends Fragment {
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 clear();
                             } else {
+                                // se studente andare su activity per confermare presenza
+                                // altrimenti andare su ListaCorsi
+                                Persona persona = new Persona(username.getEditText().getText().toString().trim());
+                                if(persona.isStudent()){
+                                    context.startActivity(new Intent(context, Appello.class));
+                                }
                                 Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
                                 context.startActivity(new Intent(context, ListaCorsi.class));
                             }

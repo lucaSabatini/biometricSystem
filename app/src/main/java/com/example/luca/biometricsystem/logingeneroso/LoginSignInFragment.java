@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -115,6 +116,9 @@ public class LoginSignInFragment extends Fragment {
                                             Toast.LENGTH_SHORT).show();
                                     Log.w(TAG, "signUpWithEmail:failure", task.getException());
                                 } else {
+                                    // se Studente andare su activity per inserire foto
+                                    // altrimenti su LoginActivity
+                                    Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     firebaseAuth.getCurrentUser().sendEmailVerification();
                                     Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
                                     context.startActivity(new Intent( context , LoginActivity.class));
@@ -141,6 +145,9 @@ public class LoginSignInFragment extends Fragment {
                                     Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
                                     clear();
                                 } else {
+                                    // se studente andare su activity per confermare presenza
+                                    // altrimenti andare su ListaCorsi
+                                    Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
                                     context.startActivity(new Intent(context, ListaCorsi.class));
                                 }

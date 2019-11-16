@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
         appello = findViewById(R.id.appelloButton);
     }
 
-    public void openRegistrazioneActivity(View view){
+    /*public void openRegistrazioneActivity(View view){
         Intent registrazioneActivity = new Intent(this, Registrazione.class);
         startActivity(registrazioneActivity);
-    }
+    }*/
 
     public void openAppelloActivity(View view){
         Intent appelloActivity = new Intent(this, RegistrazioneFoto.class);
