@@ -7,6 +7,9 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
     <string name="or">or</string>
+    
+    <string name="preferences_name" translatable="false">com.example.luca.preference-file-key</string>
+
 
 
     <string name="login_welcome_title">Benvenuto!</string>

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.luca.biometricsystem.AppelloOrStatistica;
 import com.example.luca.biometricsystem.R;
@@ -20,6 +21,7 @@ import com.example.luca.biometricsystem.SwipeToDelete;
 import com.example.luca.biometricsystem.entities.Corso;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.login.ProvaAlert;
+import com.example.luca.biometricsystem.utils.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<CorsoItem> listaCorsi;
+
+    private final SharedPrefManager sp = new SharedPrefManager(this);
     //private String nomeCorso;
     //ArrayList<ListItem> items;
 
@@ -77,6 +81,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
     public void insertItem(int position, String nomeCorso, int year){
         Log.d(TAG, "insertItem: " + position);
+        Toast.makeText(this, sp.readString("uid"),Toast.LENGTH_LONG);
         DateItem d = new DateItem(year);
         if(dateCourseMap.containsKey(d)){
             dateCourseMap.get(d).add(new CorsoItem(new Corso(nomeCorso), R.drawable.image_corso));

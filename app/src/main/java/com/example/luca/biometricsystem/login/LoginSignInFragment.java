@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -42,6 +43,8 @@ public class LoginSignInFragment extends Fragment {
     private Button signInOrCreate;
     private TextView signInTextView;
     private ProgressBar signUpProgressBar;
+
+    private  SharedPrefManager sp;
 
     @Nullable
     @Override
@@ -79,8 +82,10 @@ public class LoginSignInFragment extends Fragment {
             callback = null;
         }
 
+
         action = getArguments().getString("action");
         this.context = context;
+        sp = new SharedPrefManager(context);
     }
 
     @Override
@@ -118,7 +123,8 @@ public class LoginSignInFragment extends Fragment {
                                     // se Studente andare su activity per inserire foto
                                     // altrimenti su LoginActivity
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
-                                    firebaseAuth.getCurrentUser().sendEmailVerification();
+                                    //firebaseAuth.getCurrentUser().sendEmailVerification();
+                                    sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
                                     Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
                                     context.startActivity(new Intent( context , LoginActivity.class));
                                 }
@@ -140,12 +146,16 @@ public class LoginSignInFragment extends Fragment {
                                     }else {
                                         Toast.makeText(context, "Authentication failed, sign up", Toast.LENGTH_LONG).show();
                                     }
-                                }else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
-                                    Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
-                                    clear();
-                                } else {
+                                }
+                                //TODO da reinserire alla fine
+                                //else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                                //    Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
+                                //    clear();
+
+                                 else {
                                     // se studente andare su activity per confermare presenza
                                     // altrimenti andare su ListaCorsi
+                                    sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
                                     context.startActivity(new Intent(context, ListaCorsi.class));
