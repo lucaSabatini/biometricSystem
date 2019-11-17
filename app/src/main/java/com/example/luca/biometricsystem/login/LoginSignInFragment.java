@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.luca.biometricsystem.RegistrazioneFoto;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
@@ -25,6 +26,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static com.example.luca.biometricsystem.login.LoginIntroFragment.EXTRA_ACTION;
 
 
 public class LoginSignInFragment extends Fragment {
@@ -118,9 +121,17 @@ public class LoginSignInFragment extends Fragment {
                                     // se Studente andare su activity per inserire foto
                                     // altrimenti su LoginActivity
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
-                                    firebaseAuth.getCurrentUser().sendEmailVerification();
-                                    Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
-                                    context.startActivity(new Intent( context , LoginActivity.class));
+                                    if(persona.isStudent()){
+                                        firebaseAuth.getCurrentUser().sendEmailVerification();
+                                        Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent( context , RegistrazioneFoto.class);
+                                        intent.putExtra(EXTRA_ACTION, "signup");
+                                        context.startActivity(intent);
+                                    }else{
+                                        firebaseAuth.getCurrentUser().sendEmailVerification();
+                                        Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
+                                        context.startActivity(new Intent( context , LoginActivity.class));
+                                    }
                                 }
                             }
                         });
@@ -147,8 +158,16 @@ public class LoginSignInFragment extends Fragment {
                                     // se studente andare su activity per confermare presenza
                                     // altrimenti andare su ListaCorsi
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
-                                    Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
-                                    context.startActivity(new Intent(context, ListaCorsi.class));
+                                    if(persona.isStudent()){
+                                        firebaseAuth.getCurrentUser().sendEmailVerification();
+                                        Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent( context , RegistrazioneFoto.class);
+                                        intent.putExtra(EXTRA_ACTION, "login");
+                                        context.startActivity(intent);
+                                    }else{
+                                        Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
+                                        context.startActivity(new Intent(context, ListaCorsi.class));
+                                    }
                                 }
                             }
                         });
