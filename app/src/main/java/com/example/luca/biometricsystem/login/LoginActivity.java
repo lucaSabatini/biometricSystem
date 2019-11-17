@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem.logingeneroso;
+package com.example.luca.biometricsystem.login;
 
 import android.content.Context;
 import android.content.Intent;

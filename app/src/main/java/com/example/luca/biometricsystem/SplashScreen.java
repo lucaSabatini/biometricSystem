@@ -6,10 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.luca.biometricsystem.list.ListaCorsi;
-import com.example.luca.biometricsystem.logingeneroso.LoginActivity;
-import com.example.luca.biometricsystem.logingeneroso.LoginIntroFragment;
-
 public class SplashScreen extends AppCompatActivity {
 
     private static final String TAG = "RemoveAlert";

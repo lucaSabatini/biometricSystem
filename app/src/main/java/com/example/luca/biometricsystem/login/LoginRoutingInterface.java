@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem.logingeneroso;
+package com.example.luca.biometricsystem.login;
 
 public interface LoginRoutingInterface {
     void route(String fragmentName);

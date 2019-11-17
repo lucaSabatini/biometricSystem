@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +15,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.login.ProvaAlert;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 
 public class RenameAlert extends DialogFragment {
     private static final String TAG ="ChangeNameAlert";

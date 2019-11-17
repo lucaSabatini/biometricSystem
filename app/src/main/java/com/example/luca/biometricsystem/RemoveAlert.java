@@ -1,13 +1,11 @@
 package com.example.luca.biometricsystem;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.luca.biometricsystem.list.ListaCorsi;
-import com.example.luca.biometricsystem.login.ProvaAlert;
 
 public class RemoveAlert extends DialogFragment {
 
