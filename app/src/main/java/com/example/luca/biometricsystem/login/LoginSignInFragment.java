@@ -157,6 +157,7 @@ public class LoginSignInFragment extends Fragment {
                                         password.setError("Password too short, enter minimum 6 characters!");
                                     }else {
                                         Toast.makeText(context, "Authentication failed, sign up", Toast.LENGTH_LONG).show();
+                                        Log.d(TAG, "onComplete: auth failed");
                                     }
                                 }/*else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
                                     Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
@@ -165,16 +166,18 @@ public class LoginSignInFragment extends Fragment {
                                     // se studente andare su activity per confermare presenza
                                     // altrimenti andare su ListaCorsi
                                     sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
+                                    Log.d(TAG, "onComplete: provola !");
                                     Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     if(persona.isStudent()){
+                                        Log.d(TAG, "onComplete: provolissima !");
                                         //firebaseAuth.getCurrentUser().sendEmailVerification();
-                                        Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "LoginStudente", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent( context , RegistrazioneFoto.class);
                                         intent.putExtra(EXTRA_ACTION, "login");
                                         context.startActivity(intent);
                                     }else{
-                                        Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText( context, "LoginProfessore", Toast.LENGTH_SHORT).show();
                                         context.startActivity(new Intent(context, ListaCorsi.class));
                                     }
                                 }

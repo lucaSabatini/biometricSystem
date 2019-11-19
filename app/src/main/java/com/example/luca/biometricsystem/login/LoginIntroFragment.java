@@ -22,6 +22,7 @@ import com.example.luca.biometricsystem.RegistrazioneFoto;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -43,6 +44,9 @@ public class LoginIntroFragment extends Fragment {
     private LoginRoutingInterface callback;
     private Context context;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+
+    private SharedPrefManager sp;
 
     @Nullable
     @Override
@@ -82,8 +86,8 @@ public class LoginIntroFragment extends Fragment {
         else {
             this.callback = null;
         }
-
         this.context = context;
+        sp = new SharedPrefManager(context);
     }
 
     @Override
@@ -165,6 +169,9 @@ public class LoginIntroFragment extends Fragment {
                                 // se studente andare su activity per confermare presenza
                                 // altrimenti andare su ListaCorsi
                                 Persona persona = new Persona(username.getEditText().getText().toString().trim());
+                                sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
+                                Log.d(TAG, "onComplete: provola !");
+                                Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
                                 if(persona.isStudent()){
                                     Intent intent = new Intent(context, RegistrazioneFoto.class);
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
