@@ -157,11 +157,11 @@ public class LoginIntroFragment extends Fragment {
                                     Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 }
-                            }else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                            }/*else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
                                 Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 clear();
-                            } else {
+                            }*/ else {
                                 // se studente andare su activity per confermare presenza
                                 // altrimenti andare su ListaCorsi
                                 Persona persona = new Persona(username.getEditText().getText().toString().trim());

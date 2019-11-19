@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.luca.biometricsystem.login.LoginActivity;
+import com.otaliastudios.cameraview.BitmapCallback;
 
 
 import static com.example.luca.biometricsystem.login.LoginIntroFragment.EXTRA_ACTION;
@@ -37,9 +38,9 @@ public class RegistrazioneFoto extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         buttonCamera = findViewById(R.id.button_camera);
         titolo = findViewById(R.id.titolo);
-        if(action.equals("login")){
+        /*if(action.equals("login")){
             titolo.setText("Login");
-        }
+        }*/
 
        if(Build.VERSION.SDK_INT >= 23){
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA }, 2);
@@ -48,7 +49,7 @@ public class RegistrazioneFoto extends AppCompatActivity {
 
     public void openCamera(View view){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePictureIntent, 100);
+        startActivityForResult(new Intent(this, CameraActivity.class), 100);
     }
 
 
@@ -56,7 +57,13 @@ public class RegistrazioneFoto extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100){
-            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            BitmapCallback bitmapCallback = new BitmapCallback() {
+                @Override
+                public void onBitmapReady(@Nullable Bitmap bitmap) {
+                    imageView.setImageBitmap(bitmap);
+                }
+            };
+            /*Bitmap captureImage = (Bitmap) data.getExtras().get("data");
             if(captureImage != null){
                 imageView.setImageBitmap(captureImage);
                 if(action.equals("signup")){
@@ -66,7 +73,7 @@ public class RegistrazioneFoto extends AppCompatActivity {
                 }else{
                     //interazione con AZZZZZZZZURE
                 }
-            }
+            }*/
         }
     }
 }

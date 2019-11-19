@@ -122,13 +122,13 @@ public class LoginSignInFragment extends Fragment {
                                     // altrimenti su LoginActivity
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     if(persona.isStudent()){
-                                        firebaseAuth.getCurrentUser().sendEmailVerification();
+                                        //firebaseAuth.getCurrentUser().sendEmailVerification();
                                         Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent( context , RegistrazioneFoto.class);
                                         intent.putExtra(EXTRA_ACTION, "signup");
                                         context.startActivity(intent);
                                     }else{
-                                        firebaseAuth.getCurrentUser().sendEmailVerification();
+                                        //firebaseAuth.getCurrentUser().sendEmailVerification();
                                         Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
                                         context.startActivity(new Intent( context , LoginActivity.class));
                                     }
@@ -151,15 +151,15 @@ public class LoginSignInFragment extends Fragment {
                                     }else {
                                         Toast.makeText(context, "Authentication failed, sign up", Toast.LENGTH_LONG).show();
                                     }
-                                }else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                                }/*else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
                                     Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
                                     clear();
-                                } else {
+                                }*/ else {
                                     // se studente andare su activity per confermare presenza
                                     // altrimenti andare su ListaCorsi
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     if(persona.isStudent()){
-                                        firebaseAuth.getCurrentUser().sendEmailVerification();
+                                        //firebaseAuth.getCurrentUser().sendEmailVerification();
                                         Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent( context , RegistrazioneFoto.class);
                                         intent.putExtra(EXTRA_ACTION, "login");
