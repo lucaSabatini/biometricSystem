@@ -16,7 +16,6 @@ import com.example.luca.biometricsystem.AppelloOrStatistica;
 import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.RemoveAlert;
 import com.example.luca.biometricsystem.RenameAlert;
-import com.example.luca.biometricsystem.SwipeToDelete;
 import com.example.luca.biometricsystem.entities.Corso;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.login.ProvaAlert;
@@ -192,9 +191,6 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
         listaCorsiRecycler.setLayoutManager(layoutManager);
         listaCorsiRecycler.setAdapter(listaCorsiAdapter);
-        ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new SwipeToDelete(listaCorsiAdapter, this, this));
-        itemTouchHelper.attachToRecyclerView(listaCorsiRecycler);
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
             public void onItemCLick(String nomeCorso, int position) {
