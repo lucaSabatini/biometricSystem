@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.luca.biometricsystem.Appello;
+import com.example.luca.biometricsystem.RegistrazioneFoto;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
@@ -30,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginIntroFragment extends Fragment {
 
     private static final String TAG = "LoginIntroFragment";
+    public final static String EXTRA_ACTION = "com.example.luca.biometricsystem.logingeneroso";
     private static String emailPattern = "([a-z]+[.][0-9]+@studenti[.]uniroma1[.]it)|([a-z]+@di[.]uniroma1[.]it)";
     private TextView newAccount;
     private Button login;
@@ -155,19 +157,24 @@ public class LoginIntroFragment extends Fragment {
                                     Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 }
-                            }else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                            }/*else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
                                 Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 clear();
-                            } else {
+                            }*/ else {
                                 // se studente andare su activity per confermare presenza
                                 // altrimenti andare su ListaCorsi
                                 Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                 if(persona.isStudent()){
-                                    context.startActivity(new Intent(context, Appello.class));
+                                    Intent intent = new Intent(context, RegistrazioneFoto.class);
+                                    Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
+                                    intent.putExtra(EXTRA_ACTION,"login");
+                                    context.startActivity(intent);
+                                }else{
+                                    Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
+                                    context.startActivity(new Intent(context, ListaCorsi.class));
                                 }
-                                Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
-                                context.startActivity(new Intent(context, ListaCorsi.class));
+
                             }
                         }
                     });

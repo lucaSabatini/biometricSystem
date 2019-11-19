@@ -21,8 +21,9 @@ public class Persona implements Serializable {
     private void setLastNameAndStudentId(){
         String lastNameAndStudentId = email.split("@")[0];
         if (lastNameAndStudentId.contains(".")) {
+            Log.d(TAG, "setLastNameAndStudentId: "+"studente");
             setLastName(lastNameAndStudentId.split("\\.")[0]);
-            if(getLastName().equals("sabatini")) return;
+            //if(getLastName().equals("sabatini")) return;
             setStudentId(lastNameAndStudentId.split("\\.")[1]);
         } else{
             setLastName(lastNameAndStudentId);

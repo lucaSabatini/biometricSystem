@@ -9,6 +9,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:allowBackup="true"
@@ -18,15 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".CameraActivity"></activity>
         <!--
                 PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
                 E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT
         -->
-
-        <activity android:name=".AppelloOrStatistica"
-            android:parentActivityName=".list.ListaCorsi"></activity>
-        <activity android:name=".login.ForgotPassword"></activity>
+        <activity
+            android:name=".AppelloOrStatistica"
+            android:parentActivityName=".list.ListaCorsi" />
+        <activity android:name=".login.ForgotPassword" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
@@ -43,7 +44,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".list.ListaCorsi"></activity>
+        <activity android:name=".list.ListaCorsi" />
         <activity android:name=".Appello" />
         <activity android:name=".RegistrazioneFoto" />
         <activity android:name=".MainActivity" />
@@ -52,5 +53,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    
+
 </manifest>
