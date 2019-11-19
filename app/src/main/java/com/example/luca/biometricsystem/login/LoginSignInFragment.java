@@ -39,7 +39,6 @@ public class LoginSignInFragment extends Fragment {
     private Context context;
     private static String emailPattern = "([a-z]+[.][0-9]+@studenti[.]uniroma1[.]it)|([a-z]+@di[.]uniroma1[.]it)";
 
-
     private String action;
     private TextInputLayout username;
     private TextInputLayout password;
@@ -127,8 +126,7 @@ public class LoginSignInFragment extends Fragment {
                                     // altrimenti su LoginActivity
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     //firebaseAuth.getCurrentUser().sendEmailVerification();
-                                    sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
-                                    Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
+
                                     context.startActivity(new Intent( context , LoginActivity.class));
                                     if(persona.isStudent()){
                                         //firebaseAuth.getCurrentUser().sendEmailVerification();
@@ -167,6 +165,7 @@ public class LoginSignInFragment extends Fragment {
                                     // se studente andare su activity per confermare presenza
                                     // altrimenti andare su ListaCorsi
                                     sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
+                                    Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
                                     if(persona.isStudent()){
                                         //firebaseAuth.getCurrentUser().sendEmailVerification();
