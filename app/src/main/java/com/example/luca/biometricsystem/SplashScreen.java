@@ -1,6 +1,7 @@
 package com.example.luca.biometricsystem;
 
 import android.content.Intent;
+import android.graphics.Camera;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,7 +16,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
         finish();
     }

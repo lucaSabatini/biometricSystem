@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,10 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.luca.biometricsystem.login.LoginActivity;
 import com.otaliastudios.cameraview.BitmapCallback;
 
 
+import static com.example.luca.biometricsystem.CameraActivity.EXTRA_BITMAP;
 import static com.example.luca.biometricsystem.login.LoginIntroFragment.EXTRA_ACTION;
 
 public class RegistrazioneFoto extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class RegistrazioneFoto extends AppCompatActivity {
         setContentView(R.layout.activity_registrazione_foto);
         action = getIntent().getStringExtra(EXTRA_ACTION);
         //Log.d(TAG, "onCreate: "+action);
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.pippo);
         buttonCamera = findViewById(R.id.button_camera);
         titolo = findViewById(R.id.titolo);
         /*if(action.equals("login")){
@@ -57,12 +58,11 @@ public class RegistrazioneFoto extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100){
-            BitmapCallback bitmapCallback = new BitmapCallback() {
-                @Override
-                public void onBitmapReady(@Nullable Bitmap bitmap) {
-                    imageView.setImageBitmap(bitmap);
-                }
-            };
+
+            byte[] array = data.getExtras().getByteArray(EXTRA_BITMAP);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(array, 0, array.length);
+            Bitmap bitmap1 = data.getParcelableExtra(EXTRA_BITMAP);
+            imageView.setImageBitmap(bitmap);
             /*Bitmap captureImage = (Bitmap) data.getExtras().get("data");
             if(captureImage != null){
                 imageView.setImageBitmap(captureImage);
@@ -76,4 +76,5 @@ public class RegistrazioneFoto extends AppCompatActivity {
             }*/
         }
     }
+
 }
