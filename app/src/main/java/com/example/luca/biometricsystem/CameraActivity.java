@@ -2,15 +2,23 @@ package com.example.luca.biometricsystem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.otaliastudios.cameraview.BitmapCallback;
@@ -33,6 +41,7 @@ public class CameraActivity extends AppCompatActivity {
     private Button riprova;
     private Button conferma;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +51,9 @@ public class CameraActivity extends AppCompatActivity {
         floatingActionButtonCamera = findViewById(R.id.floatingActionButtonCamera);
         riprova = findViewById(R.id.riprova);
         conferma = findViewById(R.id.conferma);
+        FocusView focusView = new FocusView(this);
+        fotoCamera.setScaleType(ImageView.ScaleType.CENTER);
+        camera.addView(focusView);
         camera.setLifecycleOwner(this);
         camera.setFacing(Facing.FRONT);
         camera.setMode(Mode.PICTURE); // for pictures
@@ -58,12 +70,7 @@ public class CameraActivity extends AppCompatActivity {
                     public void onBitmapReady(@Nullable Bitmap bitmap) {
                         Log.d(TAG, "onBitmapReady: " + bitmap.getByteCount());
                         fotoCamera.setImageBitmap(bitmap);
-                        camera.setVisibility(View.GONE);
-                        floatingActionButtonCamera.hide();
-                        riprova.setVisibility(View.VISIBLE);
-                        conferma.setVisibility(View.VISIBLE);
-                        fotoCamera.setVisibility(View.VISIBLE);
-
+                        visibleNotVisible("show_photo");
                     }
                 });
                 // If planning to save a file on a background thread,
@@ -84,17 +91,34 @@ public class CameraActivity extends AppCompatActivity {
 
     }
 
+    private Canvas temp;
+    private Paint paint;
+    private Paint p = new Paint();
+    private Paint transparentPaint;
+
+    private void init(){
+        Bitmap bitmap = Bitmap.createBitmap(camera.getWidth(), camera.getHeight(), Bitmap.Config.ARGB_8888);
+        temp = new Canvas(bitmap);
+        paint = new Paint();
+        paint.setColor(0xcc000000);
+        transparentPaint = new Paint();
+        transparentPaint.setColor(getResources().getColor(android.R.color.transparent, null));
+        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+    }
+
+    protected void onDraw(Canvas canvas) {
+        temp.drawRect(0, 0, temp.getWidth(), temp.getHeight(), paint);
+        temp.drawRect(camera.getWidth()/2 , camera.getHeight() / 2, camera.getWidth()/2 , camera.getHeight() / 2, transparentPaint);
+       // canvas.drawBitmap(biyt, 0, 0, p);
+    }
+
 
     public void takePicture(View view){
         camera.takePicture();
     }
 
     public void riprova(View view){
-        camera.setVisibility(View.VISIBLE);
-        floatingActionButtonCamera.show();
-        riprova.setVisibility(View.GONE);
-        conferma.setVisibility(View.GONE);
-        fotoCamera.setVisibility(View.GONE);
+        visibleNotVisible("try_again");
         camera.open();
     }
 
@@ -118,6 +142,24 @@ public class CameraActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         camera.destroy();
+    }
+
+    private void visibleNotVisible(String action){
+        if(action.equals("show_photo")){
+            camera.setVisibility(View.GONE);
+            floatingActionButtonCamera.hide();
+            riprova.setVisibility(View.VISIBLE);
+            conferma.setVisibility(View.VISIBLE);
+            fotoCamera.setVisibility(View.VISIBLE);
+
+        }else{
+            camera.setVisibility(View.VISIBLE);
+            floatingActionButtonCamera.show();
+            riprova.setVisibility(View.GONE);
+            conferma.setVisibility(View.GONE);
+            fotoCamera.setVisibility(View.GONE);
+
+        }
     }
 
 }
