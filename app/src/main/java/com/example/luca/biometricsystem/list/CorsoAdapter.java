@@ -1,6 +1,7 @@
 package com.example.luca.biometricsystem.list;
 
 import android.content.Context;
+import android.os.CpuUsageInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,8 +28,8 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
-        void onItemCLick(View v);
-        void onDeleteClick(View v);
+        void onItemCLick(Corso c);
+        void onDeleteClick(Corso c);
         void onRenameClick(View v);
     }
 
@@ -79,7 +80,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemCLick(view);
+                            listener.onItemCLick((Corso) nomeCorso.getTag());
                             //Log.d(TAG, "onClick: "+ name.getParent().toString());
                         }
                     }
@@ -105,7 +106,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
                                         case R.id.deleteCorso:
 
                                             Log.d(TAG, "onMenuItemClick:"+ view.findViewById(R.id.nome_corso));
-                                            listener.onDeleteClick(view.findViewById(R.id.nome_corso));
+                                            listener.onDeleteClick((Corso) nomeCorso.getTag());
                                             return true;
                                         default:
                                             return false;

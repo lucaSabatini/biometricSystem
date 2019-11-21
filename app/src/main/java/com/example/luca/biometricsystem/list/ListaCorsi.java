@@ -102,7 +102,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
             StringRequest postRequest = new StringRequest(
                     Request.Method.GET,
-                    RestConstants.getAllCoursesByIdUrl("nessuno", "francesco"),
+                    RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
                     callbackGet,
                     errorGet);
 
@@ -121,7 +121,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         mRealm = Realm.getDefaultInstance();
 
         //DB dei voli
-        final RealmResults<Corso> courses = mRealm.where(Corso.class).findAll();
+        final RealmResults<Corso> courses = mRealm.where(Corso.class).equalTo("uid", sp.readString("uid")).findAll();
 
         listaCorsiAdapter = new CorsoAdapter(this, courses);
 
@@ -140,17 +140,16 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
-            public void onItemCLick(View v) {
-                Corso corso = (Corso) v.getTag();
-                openActivity(corso.name,  corso.year);
+            public void onItemCLick(Corso c) {
+                //Corso corso = (Corso) v.getTag();
+                openActivity(c.name,  c.year);
                 //changeItem(position, "Clicked");
             }
 
             @Override
-            public void onDeleteClick(View v) {
-                Corso corso = (Corso) v.getTag();
-                Log.d(TAG, "onDeleteClick: " + corso);
-                removeItem(corso);
+            public void onDeleteClick(Corso c) {
+                Log.d(TAG, "onDeleteClick: " + c);
+                removeItem(c);
             }
 
             @Override
@@ -247,7 +246,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         toBeDeleted = c.id;
         StringRequest postRequest = new StringRequest(
                 Request.Method.DELETE,
-                RestConstants.deleteCourseUrl("noncista", "francesco", c.id),
+                RestConstants.deleteCourseUrl("noncista", sp.readString("uid"), c.id),
                 callbackDelete,
                 errorDelete);
         queue.add(postRequest);
@@ -372,7 +371,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         if (isOnline()) {
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST,
-                    RestConstants.postCourseUrl("nono", "francesco"),
+                    RestConstants.postCourseUrl("nono", sp.readString("uid")),
                     callbackPost,
                     errorGet) {
                 @Override
@@ -387,7 +386,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
                         Corso c = new Corso();
                         c.name = nomeCorso;
                         c.year = Long.valueOf(year);
-                        c.uid = "francesco";
+                        c.uid = sp.readString("uid");
                         return new Gson().toJson(c).getBytes();
                     } catch (Exception e) {
                         Log.d(TAG, "getBody: " + e.toString());
@@ -403,7 +402,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
             Corso c = new Corso();
             c.name = nomeCorso;
             c.year = Long.valueOf(year);
-            c.uid = "francesco";
+            c.uid = sp.readString("uid");
             mRealm.insertOrUpdate(c);
             mRealm.commitTransaction();
 
