@@ -12,8 +12,8 @@ public class RestConstants {
         return String.format("%s/createCourse?accessToken=%s&uid=%s", COURSE, accessToken, uid);
     }
 
-    public static String deleteCourseUrl(String accessToken, String uid){
-        return String.format("%s/deleteCourse?accessToken=%s&uid=%s", COURSE, accessToken, uid);
+    public static String deleteCourseUrl(String accessToken, String uid, Long id){
+        return String.format("%s/deleteCourse?accessToken=%s&uid=%s&courseId=%s", COURSE, accessToken, uid, id);
     }
 
     public static String getAllCoursesByIdUrl(String accessToken, String uid){

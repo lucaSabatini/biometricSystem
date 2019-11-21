@@ -140,19 +140,22 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
-            public void onItemCLick(String nomeCorso, int position) {
-                openActivity(nomeCorso, fromIndexToKey(position));
+            public void onItemCLick(View v) {
+                Corso corso = (Corso) v.getTag();
+                openActivity(corso.name,  corso.year);
                 //changeItem(position, "Clicked");
             }
 
             @Override
-            public void onDeleteClick(int position) {
-                removeItem(position);
+            public void onDeleteClick(View v) {
+                Corso corso = (Corso) v.getTag();
+                Log.d(TAG, "onDeleteClick: " + corso);
+                removeItem(corso);
             }
 
             @Override
-            public void onRenameClick(int position) {
-                openRenameItem(position);
+            public void onRenameClick(View v) {
+                openRenameItem(v);
             }
         });
     }
@@ -220,8 +223,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
 
 
 
-    public void removeItem(int position){
-        RemoveAlert removeAlert = new RemoveAlert(this, position);
+    public void removeItem(Corso c){
+        RemoveAlert removeAlert = new RemoveAlert(this, c);
         removeAlert.show(getSupportFragmentManager(), "RemoveAlert");
         //removeItemFromMap(position);
     }
@@ -237,40 +240,48 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         return items.get(position);
     }
 
-    public void removeItemFromMap(int position){
-        int i = 0;
-        for(DateItem key : dateCourseMap.keySet()){
-            int k = 0;
-            i++;
-            for(CorsoItem corso : dateCourseMap.get(key)){
-                if(i == position){
-                    Log.d(TAG, "removeItemFromMap: " + dateCourseMap);
-                    if( dateCourseMap.get(key).size() == 1){
-                        dateCourseMap.remove(key);
-                        Log.d(TAG, "removeItemFromMap: " + dateCourseMap);
-                        listaCorsiAdapter.notifyItemRangeRemoved(position - 1, 2);
-                        return;
-                    }
-                    dateCourseMap.get(key).remove(k);
-                    listaCorsiAdapter.notifyItemRemoved(position);
-                    return;
-                }
-                k++;
-                i++;
+    private Long toBeDeleted;
+
+    public void removeItemFromMap(Corso c){
+        Log.d(TAG, "removeItemFromMap: " + c);
+        toBeDeleted = c.id;
+        StringRequest postRequest = new StringRequest(
+                Request.Method.DELETE,
+                RestConstants.deleteCourseUrl("noncista", "francesco", c.id),
+                callbackDelete,
+                errorDelete);
+        queue.add(postRequest);
+    }
+
+    private Response.ErrorListener errorDelete = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            if(error.networkResponse != null) {
+                Log.e(TAG, "onErrorResponse: errorPost: " + new String(error.networkResponse.data));
+                Log.e(TAG, "onErrorResponse: errorPost: " + error.networkResponse.statusCode);
+            } else{
+                Log.e(TAG, "onErrorResponse: errorPost: " + error.getMessage());
+            }
+        }
+    };
+    private Response.Listener<String> callbackDelete = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            if(toBeDeleted != null){
+                mRealm.beginTransaction();
+                Corso c = mRealm.where(Corso.class).equalTo("id", toBeDeleted).findFirst();
+                c.deleteFromRealm();
+                mRealm.commitTransaction();
             }
 
         }
-    }
+    };
 
 
-
-    public void openActivity(String nomeCorso, Integer date){
-        //Log.d(TAG, "openActivity: "+ date.toString());
-        //listaCorsiAdapter.notifyItemChanged(position);
-        //String name= listaCorsi.get(position-1).toString();
+    public void openActivity(String corso, Long year){ ;
         Intent intent = new Intent(this, AppelloOrStatistica.class);
-        intent.putExtra(EXTRA_TEXT, nomeCorso);
-        intent.putExtra(EXTRA_DATE, date);
+        intent.putExtra(EXTRA_TEXT, corso);
+        intent.putExtra(EXTRA_DATE, year);
         startActivity(intent);
     }
 
@@ -282,8 +293,8 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         }
     }
 
-    public void openRenameItem(int position){
-        RenameAlert renameAlert = new RenameAlert(this, position);
+    public void openRenameItem(View v){
+        RenameAlert renameAlert = new RenameAlert(this, v);
         renameAlert.show(getSupportFragmentManager(), "RenameAlert");
     }
 
@@ -402,4 +413,12 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
         Log.d(TAG, "getTextAndYear: " + year);
         Log.d("nomeC", "getText: " + nomeCorso);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        listaCorsiRecycler.setAdapter(null);
+        mRealm.close();
+    }
 }
+

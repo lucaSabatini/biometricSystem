@@ -90,14 +90,6 @@ public class ProvaAlert extends DialogFragment {
                 });
                 //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
         AlertDialog alertDialog = builder.create();
-        /*alertDialog.setT
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(),R.color.design_default_color_primary_dark));
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.design_default_color_primary_dark));
-            }
-        });*/
 
         return alertDialog;
     }

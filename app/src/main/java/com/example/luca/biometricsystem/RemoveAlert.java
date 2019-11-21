@@ -12,26 +12,28 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.luca.biometricsystem.entities.Corso;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 
 public class RemoveAlert extends DialogFragment {
 
     private static final String TAG = "RemoveAlert";
     private String title;
-    private int position;
+    private Corso c;
     private String namePositiveButton;
     private String nameNegativeButton;
     private String message;
     private ListaCorsi listaCorsi;
     private RemoveAlertListener listener;
 
-    public RemoveAlert(ListaCorsi listaCorsi, int position){
+    public RemoveAlert(ListaCorsi listaCorsi, Corso c){
         title = "Rimuovi corso";
         message = "Sei sicuro di rimuovere il corso?";
         nameNegativeButton = "No";
         namePositiveButton = "Si";
         this.listaCorsi = listaCorsi;
-        this.position = position;
+        Log.d(TAG, "RemoveAlert: "+ c);
+        this.c = c;
     }
 
 
@@ -49,7 +51,7 @@ public class RemoveAlert extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("alert", "onClick: Rimouvi");
-                        listaCorsi.removeItemFromMap(position);
+                        listaCorsi.removeItemFromMap(c);
                         //listaCorsi.removeItem(position);
                     }
                 })
