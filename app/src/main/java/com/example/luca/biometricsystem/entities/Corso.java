@@ -2,26 +2,25 @@ package com.example.luca.biometricsystem.entities;
 
 import androidx.annotation.NonNull;
 
-public class Corso {
+import io.realm.RealmObject;
 
-    private static final String TAG = "Corso";
-    private String nomeCorso;
-    public  Corso(String nomeCorso){
-        this.nomeCorso = nomeCorso;
-    }
+public class Corso extends RealmObject {
 
-    public String getNomeCorso() {
-        return nomeCorso;
-    }
+    //private static final String TAG = "Corso";
+    public String name;
+    public String uid;
+    public Long year;
 
-    public void setNomeCorso(String nomeCorso) {
-        this.nomeCorso = nomeCorso;
+    public Corso(){}
+
+    public Corso( String name){
+        this.name = name;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return nomeCorso;
+        return String.format("name:%s year: %s uid: %s", name, year, uid);
     }
 
 }

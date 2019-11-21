@@ -20,11 +20,11 @@ public class CorsoItem extends ListItem{
     }
 
     public String getNomeCorso(){
-        return corso.getNomeCorso();
+        return corso.name;
     }
 
     public void setNomeCorso(String nomeCorso){
-        corso.setNomeCorso(nomeCorso);
+        corso.name = nomeCorso;
     }
 
     @NonNull

@@ -79,7 +79,7 @@ public class ProvaAlert extends DialogFragment {
                         Spinner spinner = view.findViewById(R.id.spinner);
                         listener.getTextAndYear(nomeCorso.getText().toString(),
                                 (Integer) spinner.getSelectedItem());
-                        //setNomeCorso(nomeCorso.getText().toString());
+                        //setNomeCorso(name.getText().toString());
                     }
                 })
                 .setNegativeButton(nameNegativeButton, new DialogInterface.OnClickListener() {

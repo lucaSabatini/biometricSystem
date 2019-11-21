@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/noCoursesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non ci sono corsi. Sarebbe il caso di mettere un layout più carino per questa schermata"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lista_corsi" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_corsi"
         android:layout_width="match_parent"
