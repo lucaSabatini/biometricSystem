@@ -2,24 +2,23 @@ package com.example.luca.biometricsystem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
+
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
-import android.os.Environment;
+
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
+
+import com.example.luca.biometricsystem.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.otaliastudios.cameraview.BitmapCallback;
 import com.otaliastudios.cameraview.CameraListener;
@@ -28,9 +27,9 @@ import com.otaliastudios.cameraview.PictureResult;
 import com.otaliastudios.cameraview.controls.Facing;
 import com.otaliastudios.cameraview.controls.Mode;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Calendar;
+
+
+import static com.example.luca.biometricsystem.login.LoginIntroFragment.EXTRA_ACTION;
 
 public class CameraActivity extends AppCompatActivity {
     private final String TAG = "CameraActivity";
@@ -40,12 +39,15 @@ public class CameraActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButtonCamera;
     private Button riprova;
     private Button conferma;
+    private byte[] data;
+    private String action;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        action = getIntent().getStringExtra(EXTRA_ACTION);
         camera = findViewById(R.id.camera);
         fotoCamera = findViewById(R.id.foto_camera);
         floatingActionButtonCamera = findViewById(R.id.floatingActionButtonCamera);
@@ -78,7 +80,7 @@ public class CameraActivity extends AppCompatActivity {
                 //result.toFile(file, callback);
 
                 // Access the raw data if needed.
-                //byte[] data = result.getData();
+                data = result.getData();
                 //Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 //imageView.setImageBitmap(bitmap);
 
@@ -108,7 +110,15 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     public void conferma(View view){
-        //do nothing
+        //inviare immagine al server "data"
+        //sendServer(data)
+        if(action.equals("login")){
+            startActivity(new Intent(this, ConfermaPresenza.class));
+        }else{
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        finish();
+
     }
 
     @Override

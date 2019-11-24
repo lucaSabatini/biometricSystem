@@ -28,7 +28,7 @@ public class RegistrazioneFoto extends AppCompatActivity {
     private ImageView imageView;
     private Button buttonCamera;
     private TextView titolo;
-    String action;
+    private String action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,11 @@ public class RegistrazioneFoto extends AppCompatActivity {
 
     public void openCamera(View view){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(action.equals("login")){
+            takePictureIntent.putExtra(EXTRA_ACTION, "login");
+        } else{
+            takePictureIntent.putExtra(EXTRA_ACTION, "signup");
+        }
         startActivityForResult(new Intent(this, CameraActivity.class), 100);
     }
 

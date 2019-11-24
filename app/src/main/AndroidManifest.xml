@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".RicercaAppelli"></activity>
+        <activity android:name=".ConfermaPresenza"></activity>
+        <activity android:name=".RicercaAppelli" />
         <activity android:name=".CameraActivity" />
         <!--
                 PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
