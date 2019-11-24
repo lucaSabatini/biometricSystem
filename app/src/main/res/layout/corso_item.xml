@@ -20,9 +20,26 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="4dp"
-            android:padding="2dp"
+            android:background="@drawable/circle"
+            android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/anno_corso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/roboto"
+            android:text="2018-2019"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tre_punti"
+            app:layout_constraintStart_toEndOf="@id/nome_corso"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -30,13 +47,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:ems="12"
+            android:ems="10"
             android:fontFamily="@font/roboto"
             android:text="Mobile applications and cloud computing"
             android:textAlignment="textStart"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_corso"
             app:layout_constraintTop_toTopOf="parent" />

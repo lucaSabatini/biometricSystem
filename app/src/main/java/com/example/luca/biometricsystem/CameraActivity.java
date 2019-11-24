@@ -52,7 +52,7 @@ public class CameraActivity extends AppCompatActivity {
         riprova = findViewById(R.id.riprova);
         conferma = findViewById(R.id.conferma);
         FocusView focusView = new FocusView(this);
-        fotoCamera.setScaleType(ImageView.ScaleType.CENTER);
+        fotoCamera.setScaleType(ImageView.ScaleType.CENTER_CROP);
         camera.addView(focusView);
         camera.setLifecycleOwner(this);
         camera.setFacing(Facing.FRONT);
@@ -96,21 +96,6 @@ public class CameraActivity extends AppCompatActivity {
     private Paint p = new Paint();
     private Paint transparentPaint;
 
-    private void init(){
-        Bitmap bitmap = Bitmap.createBitmap(camera.getWidth(), camera.getHeight(), Bitmap.Config.ARGB_8888);
-        temp = new Canvas(bitmap);
-        paint = new Paint();
-        paint.setColor(0xcc000000);
-        transparentPaint = new Paint();
-        transparentPaint.setColor(getResources().getColor(android.R.color.transparent, null));
-        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-    }
-
-    protected void onDraw(Canvas canvas) {
-        temp.drawRect(0, 0, temp.getWidth(), temp.getHeight(), paint);
-        temp.drawRect(camera.getWidth()/2 , camera.getHeight() / 2, camera.getWidth()/2 , camera.getHeight() / 2, transparentPaint);
-       // canvas.drawBitmap(biyt, 0, 0, p);
-    }
 
 
     public void takePicture(View view){

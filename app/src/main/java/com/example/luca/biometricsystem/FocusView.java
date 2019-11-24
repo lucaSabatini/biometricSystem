@@ -7,9 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class FocusView extends View {
+
+    private static final String TAG = "FocusView";
     private Paint mTransparentPaint;
     private Paint mSemiBlackPaint;
     private Path mPath = new Path();
@@ -39,6 +42,28 @@ public class FocusView extends View {
         mSemiBlackPaint.setStrokeWidth(10);
     }
 
+    public Integer getLeftRectangle(){
+        Log.d(TAG, "getLeftRectangle: "+ (getLeft()+(getRight()-getLeft())/5));
+        return getLeft()+(getRight()-getLeft())/5;
+
+    }
+
+    public Integer getRightRectangle(){
+        Log.d(TAG, "getRightRectangle: "+ (getRight()-(getRight()-getLeft())/5));
+        return getRight()-(getRight()-getLeft())/5;
+    }
+
+    public Integer getTopRectangle(){
+        Log.d(TAG, "getTopRectangle: "+(getTop()+(getBottom()-getTop())/5));
+        return getTop()+(getBottom()-getTop())/5;
+    }
+
+    public Integer getBottomRectangle(){
+        Log.d(TAG, "getBottomRectangle: "+ (getBottom()-(getBottom()-getTop())/5));
+        return getBottom()-(getBottom()-getTop())/5;
+    }
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -47,18 +72,12 @@ public class FocusView extends View {
 
         Rect rect = new Rect();
 
-        mPath.addRect(getLeft()+(getRight()-getLeft())/5,
-                getTop()+(getBottom()-getTop())/5,
-                getRight()-(getRight()-getLeft())/5,
-                getBottom()-(getBottom()-getTop())/5, Path.Direction.CW);
+        mPath.addRect(getLeftRectangle(), getTopRectangle(), getRightRectangle(), getBottomRectangle(), Path.Direction.CW);
 
         //mPath.addCircle(canvas.getWidth() / 2, canvas.getHeight() / 2, 550, Path.Direction.CW);
         mPath.setFillType(Path.FillType.INVERSE_EVEN_ODD);
 
-        canvas.drawRect(getLeft()+(getRight()-getLeft())/5,
-                getTop()+(getBottom()-getTop())/5,
-                getRight()-(getRight()-getLeft())/5,
-                getBottom()-(getBottom()-getTop())/5, mTransparentPaint);
+        canvas.drawRect(getLeftRectangle(), getTopRectangle(), getRightRectangle(), getBottomRectangle(), mTransparentPaint);
 
         //canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2, 550, mTransparentPaint);
 

@@ -14,12 +14,8 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.luca.biometricsystem.R;
-import com.example.luca.biometricsystem.entities.Corso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -132,6 +128,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public static class CorsoViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageCorso;
+        public TextView annoCorso;
         public TextView nomeCorso;
         public ImageButton trePunti;
 
@@ -141,6 +138,7 @@ public class CorsoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             imageCorso = itemView.findViewById(R.id.image_corso);
             nomeCorso = itemView.findViewById(R.id.nome_corso);
             trePunti = itemView.findViewById(R.id.tre_punti);
+            annoCorso = itemView.findViewById(R.id.anno_corso);
             //deleteImage = itemView.findViewById(R.id.image_delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {

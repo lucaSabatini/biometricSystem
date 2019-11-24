@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -39,6 +42,7 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     private Activity activity = this;
     private RecyclerView listaCorsiRecycler;
     private CorsoAdapter listaCorsiAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<CorsoItem> listaCorsi;
@@ -64,6 +68,26 @@ public class ListaCorsi extends AppCompatActivity implements ProvaAlert.ProvaAle
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_corsi);
+        swipeRefreshLayout = findViewById(R.id.lista_corsi_refresh);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getColor(R.color.design_default_color_primary_dark));
+        swipeRefreshLayout.setColorSchemeColors(Color.WHITE);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //inserire richiesta al server che ritorna la lista dei corsi
+                //quando ha terminato la richiesta chiamare
+                //swipeRefreshLayout.setRefreshing(false);
+                Log.d(TAG, "onRefresh: refresh");
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 2000);
+
+            }
+        });
         Persona persona = (Persona) getIntent().getSerializableExtra("Persona");
 
         setButtons();

@@ -9,7 +9,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CameraActivity"></activity>
+        <activity android:name=".RicercaAppelli"></activity>
+        <activity android:name=".CameraActivity" />
         <!--
                 PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
                 E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT
