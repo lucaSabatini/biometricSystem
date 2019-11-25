@@ -91,20 +91,9 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
 
             }
         });
-        Persona persona = (Persona) getIntent().getSerializableExtra("Persona");
 
         noCoursesLabel = findViewById(R.id.noCoursesLabel);
         listaCorsiRecycler = findViewById(R.id.lista_corsi);
-
-        if(isOnline()) {
-            StringRequest postRequest = new StringRequest(
-                    Request.Method.GET,
-                    RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
-                    callbackGet,
-                    callbackError);
-
-            queue.add(postRequest);
-        }
 
         buildRecyclerView();
     }
@@ -119,12 +108,10 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         courses.addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<Corso>>() {
             @Override
             public void onChange(@NonNull RealmResults<Corso> courses, @NonNull OrderedCollectionChangeSet changeSet) {
-                if(courses.isEmpty()) enableNoCoursessUI();
+                if(courses.isEmpty()) enableNoCoursesUI();
                 else disableNoCoursesUI();
             }
         });
-
-        listaCorsiRecycler.setAdapter(listaCorsiAdapter);
 
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
@@ -142,6 +129,18 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
                 openRenameAlert(c);
             }
         });
+
+        listaCorsiRecycler.setAdapter(listaCorsiAdapter);
+
+        if(isOnline()) {
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.GET,
+                    RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
+                    callbackGet,
+                    callbackError);
+
+            queue.add(postRequest);
+        }
     }
 
 
@@ -165,7 +164,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
                 JSONArray items = new JSONArray(response);
 
                 if(items.length() == 0) {
-                    enableNoCoursessUI();
+                    enableNoCoursesUI();
                     return;
                 }
                 for( int i = 0; i < items.length(); i++){
@@ -184,7 +183,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
     };
 
     //TODO: Qui si imposta il layout della lista vuota
-    private void enableNoCoursessUI(){
+    private void enableNoCoursesUI(){
         noCoursesLabel.setVisibility(View.VISIBLE);
         listaCorsiRecycler.setVisibility(View.GONE);
     }

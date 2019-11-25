@@ -40,10 +40,8 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
         mListener = listener;
     }
 
-
     @Override
     public CorsoAdapter.CorsoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.corso_item, parent, false);
         return new CorsoViewHolder(view, mListener);
     }
@@ -74,7 +72,6 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
             trePunti = itemView.findViewById(R.id.tre_punti);
             yearLabel = itemView.findViewById(R.id.yearLabel);
             annoCorso = itemView.findViewById(R.id.anno_corso);
-            //deleteImage = itemView.findViewById(R.id.image_delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,7 +80,6 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemCLick((Corso) nomeCorso.getTag());
-                            //Log.d(TAG, "onClick: "+ name.getParent().toString());
                         }
                     }
                 }
