@@ -1,7 +1,6 @@
 package com.example.luca.biometricsystem.list;
 
 import android.content.Context;
-import android.os.CpuUsageInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -30,7 +29,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
     public interface OnItemClickListener{
         void onItemCLick(Corso c);
         void onDeleteClick(Corso c);
-        void onRenameClick(View v);
+        void onRenameClick(Corso c);
     }
 
     public CorsoAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Corso> data) {
@@ -101,7 +100,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
                                 if (position != RecyclerView.NO_POSITION) {
                                     switch (item.getItemId()) {
                                         case R.id.renameCorso:
-                                            listener.onRenameClick(view);
+                                            listener.onRenameClick((Corso) nomeCorso.getTag());
                                             return true;
                                         case R.id.deleteCorso:
 

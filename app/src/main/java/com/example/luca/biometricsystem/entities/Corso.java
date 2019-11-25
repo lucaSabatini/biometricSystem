@@ -16,10 +16,6 @@ public class Corso extends RealmObject {
 
     public Corso(){}
 
-    public Corso( String name){
-        this.name = name;
-    }
-
     @NonNull
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.list;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.entities.Corso;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 

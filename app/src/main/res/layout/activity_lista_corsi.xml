@@ -33,7 +33,7 @@
         android:layout_marginBottom="50dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:clickable="true"
-        android:onClick="aggiungiCorso"
+        android:onClick="openAddCourseAlert"
         app:borderWidth="0.5dp"
         app:layout_constraintBottom_toBottomOf="@+id/lista_corsi"
         app:layout_constraintEnd_toEndOf="parent"
