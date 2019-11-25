@@ -39,6 +39,7 @@ public class LoginSignInFragment extends Fragment {
     private Context context;
     private static String emailPattern = "([a-z]+[.][0-9]+@studenti[.]uniroma1[.]it)|([a-z]+@di[.]uniroma1[.]it)";
 
+
     private String action;
     private TextInputLayout username;
     private TextInputLayout password;
@@ -125,9 +126,6 @@ public class LoginSignInFragment extends Fragment {
                                     // se Studente andare su activity per inserire foto
                                     // altrimenti su LoginActivity
                                     Persona persona = new Persona(username.getEditText().getText().toString().trim());
-                                    //firebaseAuth.getCurrentUser().sendEmailVerification();
-
-                                    context.startActivity(new Intent( context , LoginActivity.class));
                                     if(persona.isStudent()){
                                         //firebaseAuth.getCurrentUser().sendEmailVerification();
                                         Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
@@ -138,47 +136,6 @@ public class LoginSignInFragment extends Fragment {
                                         //firebaseAuth.getCurrentUser().sendEmailVerification();
                                         Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
                                         context.startActivity(new Intent( context , LoginActivity.class));
-                                    }
-                                }
-                            }
-                        });
-            } else{
-                firebaseAuth.signInWithEmailAndPassword(username.getEditText().getText().toString().trim(), password.getEditText().getText().toString().trim())
-                        .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                signUpProgressBar.setVisibility(View.INVISIBLE);
-                                if (!task.isSuccessful()) {
-                                    // there was an error
-                                    if (password.getEditText().getText().length() < 6) {
-                                        password.setError("Password too short, enter minimum 6 characters!");
-                                    }else {
-                                        Toast.makeText(context, "Authentication failed, sign up", Toast.LENGTH_LONG).show();
-                                        Log.d(TAG, "onComplete: auth failed");
-                                    }
-                                }/*else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
-                                    Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
-                                    clear();
-                                }*/ else {
-                                    // se studente andare su activity per confermare presenza
-                                    // altrimenti andare su ListaCorsi
-                                    sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
-                                    Log.d(TAG, "onComplete: provola !");
-                                    Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
-                                    Persona persona = new Persona(username.getEditText().getText().toString().trim());
-                                    if(persona.isStudent()){
-                                        Log.d(TAG, "onComplete: provolissima !");
-                                        //firebaseAuth.getCurrentUser().sendEmailVerification();
-                                        Toast.makeText(context, "LoginStudente", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent( context , RegistrazioneFoto.class);
-                                        intent.putExtra(EXTRA_ACTION, "login");
-                                        context.startActivity(intent);
-                                    }else{
-                                        Toast.makeText( context, "LoginProfessore", Toast.LENGTH_SHORT).show();
-                                        context.startActivity(new Intent(context, ListaCorsi.class));
                                     }
                                 }
                             }

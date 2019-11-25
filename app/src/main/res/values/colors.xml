@@ -11,6 +11,8 @@
     <color name="gray">#6F6F6F</color>
     <color name="rosso">#F44336</color>
 
+    <color name="transparent_black">#6B000000</color>
+
 
     <color name="white">#ddffffff</color>
     <color name="black">#DD000000</color>

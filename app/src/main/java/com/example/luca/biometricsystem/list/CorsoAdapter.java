@@ -16,8 +16,10 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.luca.biometricsystem.R;
-import com.example.luca.biometricsystem.entities.Corso;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -55,6 +57,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
 
     public static class CorsoViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageCorso;
+        public TextView annoCorso;
         public TextView nomeCorso;
         public ImageButton trePunti;
         public TextView yearLabel;
@@ -72,6 +75,8 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
             nomeCorso = itemView.findViewById(R.id.nome_corso);
             trePunti = itemView.findViewById(R.id.tre_punti);
             yearLabel = itemView.findViewById(R.id.yearLabel);
+            annoCorso = itemView.findViewById(R.id.anno_corso);
+            //deleteImage = itemView.findViewById(R.id.image_delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

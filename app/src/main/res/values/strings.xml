@@ -7,9 +7,8 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
     <string name="or">or</string>
-    
-    <string name="preferences_name" translatable="false">com.example.luca.preference-file-key</string>
 
+    <string name="preferences_name" translatable="false">com.example.luca.preference-file-key</string>
 
 
     <string name="login_welcome_title">Benvenuto!</string>
@@ -48,4 +47,7 @@
     <string name="to_reset_password_enter_your_email_press_the_button_and_check_mail_to_follow_instruction">To reset password, enter your email, press the button and check mail to follow instruction.</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset_password">Reset password</string>
+    <string name="riprova">riprova</string>
+    <string name="conferma">conferma</string>
+    <string name="ricerca_appello">Ricerca appello</string>
 </resources>

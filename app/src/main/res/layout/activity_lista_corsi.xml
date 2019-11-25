@@ -24,6 +24,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/lista_corsi_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lista_corsi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_insert"
@@ -34,8 +51,11 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:clickable="true"
         android:onClick="openAddCourseAlert"
+        android:focusable="true"
+        android:onClick="aggiungiCorso"
+        android:visibility="visible"
         app:borderWidth="0.5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/lista_corsi"
+        app:layout_constraintBottom_toBottomOf="@+id/lista_corsi_refresh"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
 

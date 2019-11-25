@@ -1,6 +1,7 @@
 package com.example.luca.biometricsystem;
 
 import android.content.Intent;
+import android.graphics.Camera;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;

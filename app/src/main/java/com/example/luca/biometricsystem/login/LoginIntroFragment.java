@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.luca.biometricsystem.Appello;
+import com.example.luca.biometricsystem.CameraActivity;
 import com.example.luca.biometricsystem.RegistrazioneFoto;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
@@ -173,7 +174,7 @@ public class LoginIntroFragment extends Fragment {
                                 Log.d(TAG, "onComplete: provola !");
                                 Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
                                 if(persona.isStudent()){
-                                    Intent intent = new Intent(context, RegistrazioneFoto.class);
+                                    Intent intent = new Intent(context, CameraActivity.class);
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
                                     intent.putExtra(EXTRA_ACTION,"login");
                                     context.startActivity(intent);

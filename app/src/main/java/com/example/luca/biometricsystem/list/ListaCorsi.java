@@ -5,12 +5,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -48,6 +51,8 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
 
     private RecyclerView listaCorsiRecycler;
     private CorsoAdapter listaCorsiAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private RecyclerView.LayoutManager layoutManager;
     private TextView noCoursesLabel;
 
@@ -66,6 +71,27 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         layoutManager = new LinearLayoutManager(this);
         mRealm = Realm.getDefaultInstance();
+        swipeRefreshLayout = findViewById(R.id.lista_corsi_refresh);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getColor(R.color.design_default_color_primary_dark));
+        swipeRefreshLayout.setColorSchemeColors(Color.WHITE);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //inserire richiesta al server che ritorna la lista dei corsi
+                //quando ha terminato la richiesta chiamare
+                //swipeRefreshLayout.setRefreshing(false);
+                Log.d(TAG, "onRefresh: refresh");
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 2000);
+
+            }
+        });
+        Persona persona = (Persona) getIntent().getSerializableExtra("Persona");
 
         noCoursesLabel = findViewById(R.id.noCoursesLabel);
         listaCorsiRecycler = findViewById(R.id.lista_corsi);
