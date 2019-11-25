@@ -294,9 +294,6 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
 
     @Override
     public void getTextAndYear(String nomeCorso, int year) {
-        //this.name = name;
-        int position = 0;
-
         Log.d(TAG, "getTextAndYear: "+ isOnline());
         if (isOnline()) {
             StringRequest postRequest = new StringRequest(
