@@ -26,7 +26,7 @@ public class RenameAlert extends DialogFragment {
     private ProvaAlert.ProvaAlertListener listener;
     private ListaCorsi listaCorsi;
 
-    public RenameAlert(ListaCorsi listaCorsi, int position){
+    public RenameAlert(ListaCorsi listaCorsi, View v){
         title = "Rinomina corso";
         nameNegativeButton = "Annulla";
         namePositiveButton = "Rinomina";
