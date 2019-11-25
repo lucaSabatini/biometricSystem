@@ -16,10 +16,8 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.entities.Corso;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
