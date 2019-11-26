@@ -18,7 +18,7 @@
     <color name="black">#DD000000</color>
     <color name="fb_blue">#0076f5</color>
     <color name="signin">#d6eaff</color>
-    <color name="light_cyan">#ddd6eaff</color>
+    <color name="light_cyan">#DDD6EAFF</color>
     <color name="shadows_grey">#d5d5d5</color>
     <color name="shadows_blue">#d3def6</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#4285F4</color>
