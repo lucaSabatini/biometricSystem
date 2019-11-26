@@ -56,12 +56,10 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
         public TextView annoCorso;
         public TextView nomeCorso;
         public ImageButton trePunti;
-        public TextView yearLabel;
 
         public void bind(Corso corso) {
-
+            imageCorso.setImageResource(R.drawable.image_corso);
             nomeCorso.setText("" + corso.name);
-            yearLabel.setText("" + corso.year);
             nomeCorso.setTag(corso);
         }
 
@@ -70,7 +68,6 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
             imageCorso = itemView.findViewById(R.id.image_corso);
             nomeCorso = itemView.findViewById(R.id.nome_corso);
             trePunti = itemView.findViewById(R.id.tre_punti);
-            yearLabel = itemView.findViewById(R.id.yearLabel);
             annoCorso = itemView.findViewById(R.id.anno_corso);
 
             itemView.setOnClickListener(new View.OnClickListener() {

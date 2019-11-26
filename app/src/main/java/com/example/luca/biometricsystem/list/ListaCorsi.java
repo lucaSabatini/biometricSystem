@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -62,6 +63,8 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
 
     private final SharedPrefManager sp = new SharedPrefManager(this);
 
+    private Context context = this;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,17 +80,28 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //inserire richiesta al server che ritorna la lista dei corsi
-                //quando ha terminato la richiesta chiamare
-                //swipeRefreshLayout.setRefreshing(false);
                 Log.d(TAG, "onRefresh: refresh");
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 2000);
+
+                StringRequest postRequest = new StringRequest(
+                        Request.Method.GET,
+                        RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                callbackGet.onResponse(response);
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                callbackError.onErrorResponse(error);
+                                swipeRefreshLayout.setRefreshing(false);
+                                Toast.makeText(context,"Sei offline", Toast.LENGTH_LONG);
+                            }
+                        });
+
+                queue.add(postRequest);
 
             }
         });
@@ -233,7 +247,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         }
     };
 
-    public void openActivity(String corso, Long year){ ;
+    public void openActivity(String corso, Long year){
         Intent intent = new Intent(this, AppelloOrStatistica.class);
         intent.putExtra(EXTRA_TEXT, corso);
         intent.putExtra(EXTRA_DATE, year);
