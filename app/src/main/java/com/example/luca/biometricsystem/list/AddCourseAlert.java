@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem.login;
+package com.example.luca.biometricsystem.list;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -25,15 +25,15 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 
-public class ProvaAlert extends DialogFragment {
+public class AddCourseAlert extends DialogFragment {
 
-    private static final String TAG = "ProvaAlert";
+    private static final String TAG = "AddCourseAlert";
     private String title;
     private String namePositiveButton;
     private String nameNegativeButton;
     private ProvaAlertListener listener;
 
-    public ProvaAlert(){
+    public AddCourseAlert(){
         this.title = "Nuovo corso";
         this.nameNegativeButton = "Annulla";
         this.namePositiveButton = "Aggiungi";

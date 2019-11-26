@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.list;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -13,8 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.entities.Corso;
 import com.example.luca.biometricsystem.list.ListaCorsi;
-import com.example.luca.biometricsystem.login.ProvaAlert;
 
 public class RenameAlert extends DialogFragment {
     private static final String TAG ="ChangeNameAlert";
@@ -23,15 +24,16 @@ public class RenameAlert extends DialogFragment {
     private int position;
     private String namePositiveButton;
     private String nameNegativeButton;
-    private ProvaAlert.ProvaAlertListener listener;
     private ListaCorsi listaCorsi;
+    private Corso c;
 
-    public RenameAlert(ListaCorsi listaCorsi, View v){
+    public RenameAlert(ListaCorsi listaCorsi, Corso c){
         title = "Rinomina corso";
         nameNegativeButton = "Annulla";
         namePositiveButton = "Rinomina";
         this.listaCorsi = listaCorsi;
         this.position = position;
+        this.c = c;
     }
 
     @NonNull
@@ -50,7 +52,7 @@ public class RenameAlert extends DialogFragment {
                         Log.d("alert", "onClick: ciao");
                         EditText nomeCorso = view.findViewById(R.id.edit_text_nome_corso);
                         if(nomeCorso.getText().toString().equals("")) return;
-                        listaCorsi.changeNameItem(position, nomeCorso.getText().toString().trim());
+                        listaCorsi.changeNameItem(nomeCorso.getText().toString(), c.year, c.id);
                     }
                 })
                 .setNegativeButton(nameNegativeButton, new DialogInterface.OnClickListener() {

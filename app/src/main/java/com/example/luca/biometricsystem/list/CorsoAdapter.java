@@ -1,7 +1,6 @@
 package com.example.luca.biometricsystem.list;
 
 import android.content.Context;
-import android.os.CpuUsageInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,9 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.entities.Corso;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -33,7 +29,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
     public interface OnItemClickListener{
         void onItemCLick(Corso c);
         void onDeleteClick(Corso c);
-        void onRenameClick(View v);
+        void onRenameClick(Corso c);
     }
 
     public CorsoAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Corso> data) {
@@ -44,10 +40,8 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
         mListener = listener;
     }
 
-
     @Override
     public CorsoAdapter.CorsoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.corso_item, parent, false);
         return new CorsoViewHolder(view, mListener);
     }
@@ -59,14 +53,13 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
 
     public static class CorsoViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageCorso;
+        public TextView annoCorso;
         public TextView nomeCorso;
         public ImageButton trePunti;
-        public TextView yearLabel;
 
         public void bind(Corso corso) {
-
+            imageCorso.setImageResource(R.drawable.image_corso);
             nomeCorso.setText("" + corso.name);
-            yearLabel.setText(corso.year+"-"+(corso.year+1));
             nomeCorso.setTag(corso);
         }
 
@@ -75,8 +68,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
             imageCorso = itemView.findViewById(R.id.image_corso);
             nomeCorso = itemView.findViewById(R.id.nome_corso);
             trePunti = itemView.findViewById(R.id.tre_punti);
-            yearLabel = itemView.findViewById(R.id.anno_corso);
-            //deleteImage = itemView.findViewById(R.id.image_delete);
+            annoCorso = itemView.findViewById(R.id.anno_corso);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,7 +77,6 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemCLick((Corso) nomeCorso.getTag());
-                            //Log.d(TAG, "onClick: "+ name.getParent().toString());
                         }
                     }
                 }
@@ -105,7 +96,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
                                 if (position != RecyclerView.NO_POSITION) {
                                     switch (item.getItemId()) {
                                         case R.id.renameCorso:
-                                            listener.onRenameClick(view);
+                                            listener.onRenameClick((Corso) nomeCorso.getTag());
                                             return true;
                                         case R.id.deleteCorso:
 
