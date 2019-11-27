@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ConfermaPresenza"></activity>
+        <activity android:name=".ListaPresenti"></activity>
+        <activity android:name=".ConfermaPresenza" />
         <activity android:name=".RicercaAppelli" />
         <activity android:name=".CameraActivity" />
         <!--
