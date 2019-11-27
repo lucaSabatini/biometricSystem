@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "784131350761",
-    "firebase_url": "https://biometricsystem-62f9f.firebaseio.com",
-    "project_id": "biometricsystem-62f9f",
-    "storage_bucket": "biometricsystem-62f9f.appspot.com"
+    "project_number": "638568729794",
+    "firebase_url": "https://appello-project.firebaseio.com",
+    "project_id": "appello-project",
+    "storage_bucket": "appello-project.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:784131350761:android:e332ffb2fd3df3ab191078",
+        "mobilesdk_app_id": "1:638568729794:android:4aacd09afccbc33e8fbf5b",
         "android_client_info": {
-          "package_name": "com.example.luca.biometricsystem"
+          "package_name": "com.luca.sabatini.appello"
         }
       },
       "oauth_client": [
         {
-          "client_id": "784131350761-j9qvk5jh327jicc2smc1o9tq27o04asj.apps.googleusercontent.com",
+          "client_id": "638568729794-3r68phi95kt25afeg0fllars4gmshm4q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAUf18yDi8YPK3zWymPmS10yfFe6gx8j5M"
+          "current_key": "AIzaSyBWQx97rjVJZtaROvwb1McLCIr9N7LjHBQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "784131350761-j9qvk5jh327jicc2smc1o9tq27o04asj.apps.googleusercontent.com",
+              "client_id": "638568729794-3r68phi95kt25afeg0fllars4gmshm4q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

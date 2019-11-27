@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AppelloOrStatistica">
+    tools:context="com.luca.sabatini.appello.AppelloOrStatistica">
 
     <TextView
         android:id="@+id/nome_corso"
@@ -49,7 +49,8 @@
         app:backgroundTint="@color/light_cyan"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/button2"
@@ -69,7 +70,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="openAttendanceSession"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

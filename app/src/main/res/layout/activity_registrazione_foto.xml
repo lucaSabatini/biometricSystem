@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".RegistrazioneFoto">
+    tools:context="com.luca.sabatini.appello.RegistrazioneFoto">
 
     <TextView
         android:id="@+id/titolo"
