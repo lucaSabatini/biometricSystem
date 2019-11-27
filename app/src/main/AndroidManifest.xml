@@ -9,7 +9,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:name=".BiometricSystem"
@@ -21,9 +21,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ListaPresenti"></activity>
-        <activity android:name=".ConfermaPresenza" />
-        <activity android:name=".RicercaAppelli" />
-        <activity android:name=".CameraActivity" />
+        <activity android:name=".student.ConfermaPresenza" />
+        <activity android:name=".student.RicercaAppelli" />
+        <activity android:name=".student.CameraActivity" />
         <!--
                 PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
                 E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT

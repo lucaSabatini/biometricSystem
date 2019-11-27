@@ -1,8 +1,10 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.student;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.luca.biometricsystem.R;
 
 public class RicercaAppelli extends AppCompatActivity {
 

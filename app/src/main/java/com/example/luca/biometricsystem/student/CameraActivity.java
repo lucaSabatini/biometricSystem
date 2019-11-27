@@ -1,14 +1,19 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.student;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -18,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
+import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.otaliastudios.cameraview.BitmapCallback;
@@ -33,13 +39,14 @@ import static com.example.luca.biometricsystem.login.LoginIntroFragment.EXTRA_AC
 
 public class CameraActivity extends AppCompatActivity {
     private final String TAG = "CameraActivity";
-    public static final String EXTRA_BITMAP = "com.example.luca.biometricsystem.CameraActivity";
+    public static final String EXTRA_BITMAP = "com.example.luca.biometricsystem.student.CameraActivity";
     private CameraView camera;
     private ImageView fotoCamera;
     private FloatingActionButton floatingActionButtonCamera;
     private Button riprova;
     private Button conferma;
     private byte[] data;
+
     private String action;
 
 
@@ -47,6 +54,11 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        if(Build.VERSION.SDK_INT >= 23){
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA }, 2);
+        }
+
         action = getIntent().getStringExtra(EXTRA_ACTION);
         camera = findViewById(R.id.camera);
         fotoCamera = findViewById(R.id.foto_camera);
@@ -119,6 +131,13 @@ public class CameraActivity extends AppCompatActivity {
         }
         finish();
 
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 2 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED){
+            //invio al server problema immagine parlare con Francesco
+        }
     }
 
     @Override

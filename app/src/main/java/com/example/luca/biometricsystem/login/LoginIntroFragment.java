@@ -17,9 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.luca.biometricsystem.Appello;
-import com.example.luca.biometricsystem.CameraActivity;
-import com.example.luca.biometricsystem.RegistrazioneFoto;
+import com.example.luca.biometricsystem.student.CameraActivity;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
@@ -102,6 +100,7 @@ public class LoginIntroFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public void loginNewAccount(){

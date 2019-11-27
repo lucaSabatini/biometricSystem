@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.student;
 
 import android.content.Context;
 import android.graphics.Canvas;

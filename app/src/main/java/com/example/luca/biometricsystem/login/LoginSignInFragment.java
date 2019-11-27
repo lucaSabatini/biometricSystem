@@ -17,9 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.luca.biometricsystem.RegistrazioneFoto;
+import com.example.luca.biometricsystem.student.CameraActivity;
 import com.example.luca.biometricsystem.entities.Persona;
-import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -129,7 +128,7 @@ public class LoginSignInFragment extends Fragment {
                                     if(persona.isStudent()){
                                         //firebaseAuth.getCurrentUser().sendEmailVerification();
                                         Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent( context , RegistrazioneFoto.class);
+                                        Intent intent = new Intent( context , CameraActivity.class);
                                         intent.putExtra(EXTRA_ACTION, "signup");
                                         context.startActivity(intent);
                                     }else{

@@ -1,4 +1,4 @@
-package com.example.luca.biometricsystem;
+package com.example.luca.biometricsystem.student;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.luca.biometricsystem.R;
 
 import static com.example.luca.biometricsystem.login.LoginIntroFragment.EXTRA_ACTION;
 
