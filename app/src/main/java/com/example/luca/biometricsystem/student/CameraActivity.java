@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import com.example.luca.biometricsystem.R;
 import com.example.luca.biometricsystem.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.otaliastudios.cameraview.BitmapCallback;
 import com.otaliastudios.cameraview.CameraListener;
 import com.otaliastudios.cameraview.CameraView;
@@ -38,6 +39,7 @@ import com.otaliastudios.cameraview.controls.Mode;
 import static com.example.luca.biometricsystem.login.LoginIntroFragment.EXTRA_ACTION;
 
 public class CameraActivity extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 42;
     private final String TAG = "CameraActivity";
     public static final String EXTRA_BITMAP = "com.example.luca.biometricsystem.student.CameraActivity";
     private CameraView camera;
@@ -56,7 +58,10 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         if(Build.VERSION.SDK_INT >= 23){
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA }, 2);
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "onCreate: camera rifiutata");
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+            }
         }
 
         action = getIntent().getStringExtra(EXTRA_ACTION);
@@ -90,7 +95,6 @@ public class CameraActivity extends AppCompatActivity {
                 // If planning to save a file on a background thread,
                 // just use toFile. Ensure you have permissions.
                 //result.toFile(file, callback);
-
                 // Access the raw data if needed.
                 data = result.getData();
                 //Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -126,17 +130,29 @@ public class CameraActivity extends AppCompatActivity {
         //sendServer(data)
         if(action.equals("login")){
             startActivity(new Intent(this, ConfermaPresenza.class));
+        }
+        else if(action.equals("changePhoto")){
+            startActivity(new Intent(this, ProfiloUtente.class));
         }else{
             startActivity(new Intent(this, LoginActivity.class));
         }
         finish();
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 2 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED){
-            //invio al server problema immagine parlare con Francesco
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //Log.d(TAG, "onRequestPermissionsResult: sto controllando i permessi");
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    //Log.d(TAG, "onRequestPermissionsResult: camera non accettata");
+                    FirebaseAuth.getInstance().getCurrentUser().delete();
+                    finish();
+                }
+            }
         }
     }
 

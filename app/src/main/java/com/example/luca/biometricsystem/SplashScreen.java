@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.login.LoginActivity;
+import com.example.luca.biometricsystem.student.ProfiloUtente;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, ProfiloUtente.class);
         startActivity(intent);
         finish();
     }
