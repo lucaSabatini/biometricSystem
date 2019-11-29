@@ -26,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
-                Log.d(TAG, "onSuccess: " + instanceIdResult.getToken());
+                Log.d(TAG, " notificationfirebase onSuccess: " + instanceIdResult.getToken());
             }
         });
     }

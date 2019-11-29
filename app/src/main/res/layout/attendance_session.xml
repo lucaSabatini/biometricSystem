@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.luca.sabatini.appello.AttendanceSession">
+    tools:context="com.luca.sabatini.appello.attendancesession.AttendanceSession">
 
     <Button
         android:id="@+id/closeAttendanceSessionButton"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:onClick="closeAttendanceSession"
         android:text="Chiudi Appello"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+        app:layout_constraintBottom_toBottomOf="@+id/attendanceRecycle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/attendanceRecycle"
         android:layout_width="409dp"
         android:layout_height="648dp"
         android:layout_marginStart="8dp"

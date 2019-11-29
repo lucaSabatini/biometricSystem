@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.luca.sabatini.appello.AttendanceSession"></activity>
+        <activity android:name="com.luca.sabatini.appello.attendancesession.AttendanceSession"></activity>
         <activity android:name="com.luca.sabatini.appello.ConfermaPresenza" />
         <activity android:name="com.luca.sabatini.appello.RicercaAppelli" />
         <activity android:name="com.luca.sabatini.appello.CameraActivity" />
@@ -53,9 +53,8 @@
         <activity android:name="com.luca.sabatini.appello.RegistrazioneFoto" />
         <activity android:name="com.luca.sabatini.appello.MainActivity" />
 
-        <service android:name="com.luca.sabatini.appello.AttendanceService" />
         <service
-            android:name="com.luca.sabatini.appello.FirebaseService"
+            android:name="com.luca.sabatini.appello.attendancesession.FirebaseService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

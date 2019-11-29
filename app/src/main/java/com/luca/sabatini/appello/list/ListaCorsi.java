@@ -186,6 +186,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
                         mRealm.beginTransaction();
                         mRealm.insertOrUpdate(course);
                         mRealm.commitTransaction();
+
                 }
 
             } catch (JSONException e) {
