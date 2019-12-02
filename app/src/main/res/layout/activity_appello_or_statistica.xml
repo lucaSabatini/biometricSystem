@@ -44,6 +44,7 @@
         android:background="@color/light_cyan"
         android:drawableStart="@drawable/statistiche"
         android:text="@string/statistiche"
+        android:onClick="openStatisticsActivity"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         app:backgroundTint="@color/light_cyan"

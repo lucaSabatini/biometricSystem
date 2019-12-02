@@ -36,4 +36,8 @@ public class AppelloOrStatistica extends AppCompatActivity {
         startActivity(new Intent(this, AttendanceSession.class));
     }
 
+    public void openStatisticsActivity(View view){
+        startActivity(new Intent(this, StatisticsActivity.class));
+    }
+
 }
