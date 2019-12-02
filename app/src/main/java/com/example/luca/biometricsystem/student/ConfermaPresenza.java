@@ -45,14 +45,14 @@ public class ConfermaPresenza extends AppCompatActivity {
         }
     }
 
-    public void apriCameraActivity(View view){
+    public void apriCameraActivityRiprovaOnClick(View view){
         Intent intent = new Intent(this, CameraActivity.class);
         intent.putExtra("login", EXTRA_ACTION);
         startActivity(intent);
     }
 
-    public void apriProfiloUtente(View view){
+    public void apriProfiloUtenteOkOnClick(View view){
         //aggiungere activity tra login e ricercaAppello
-        return;
+        startActivity(new Intent(this, ProfiloUtente.class));
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.luca.biometricsystem.student.ProfiloUtente">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/modifica_foto_profilo_item"
         android:orderInCategory="100"
         android:title="modifica foto profilo"
         app:showAsAction="never" />

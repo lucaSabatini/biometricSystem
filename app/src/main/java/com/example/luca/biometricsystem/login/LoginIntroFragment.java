@@ -21,6 +21,7 @@ import com.example.luca.biometricsystem.student.CameraActivity;
 import com.example.luca.biometricsystem.entities.Persona;
 import com.example.luca.biometricsystem.list.ListaCorsi;
 import com.example.luca.biometricsystem.R;
+import com.example.luca.biometricsystem.student.ProfiloUtente;
 import com.example.luca.biometricsystem.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -173,9 +174,8 @@ public class LoginIntroFragment extends Fragment {
                                 Log.d(TAG, "onComplete: provola !");
                                 Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
                                 if(persona.isStudent()){
-                                    Intent intent = new Intent(context, CameraActivity.class);
+                                    Intent intent = new Intent(context, ProfiloUtente.class);
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
-                                    intent.putExtra(EXTRA_ACTION,"login");
                                     context.startActivity(intent);
                                 }else{
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
