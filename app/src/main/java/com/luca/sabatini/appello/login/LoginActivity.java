@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
             // se l'utente è un professore o uno studente e avviare l'activity corretta
             //SplashActivity.intent(context).start();
             //finish();
+
         }
     }
 
