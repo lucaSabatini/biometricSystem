@@ -1,8 +1,11 @@
-package com.luca.sabatini.appello;
+package com.luca.sabatini.appello.student;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.luca.sabatini.appello.R;
+
 
 public class RicercaAppelli extends AppCompatActivity {
 

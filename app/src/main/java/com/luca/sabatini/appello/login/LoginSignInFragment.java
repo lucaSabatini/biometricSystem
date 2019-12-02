@@ -18,8 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.RegistrazioneFoto;
 import com.luca.sabatini.appello.entities.Persona;
+import com.luca.sabatini.appello.student.CameraActivity;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -128,7 +128,7 @@ public class LoginSignInFragment extends Fragment {
                                     if(persona.isStudent()){
                                         //firebaseAuth.getCurrentUser().sendEmailVerification();
                                         Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent( context , RegistrazioneFoto.class);
+                                        Intent intent = new Intent( context , CameraActivity.class);
                                         intent.putExtra(EXTRA_ACTION, "signup");
                                         context.startActivity(intent);
                                     }else{

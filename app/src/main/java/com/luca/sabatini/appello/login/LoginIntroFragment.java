@@ -17,10 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.luca.sabatini.appello.CameraActivity;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Persona;
 import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.student.ProfiloUtente;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -100,6 +100,7 @@ public class LoginIntroFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public void loginNewAccount(){
@@ -151,7 +152,7 @@ public class LoginIntroFragment extends Fragment {
                     .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            task.getResult().getUser().getIdToken(true);
+                            //task.getResult().getUser().getIdToken(true);
                             signInProgressBar.setVisibility(View.INVISIBLE);
                             if (!task.isSuccessful()) {
                                 // there was an error
@@ -173,9 +174,8 @@ public class LoginIntroFragment extends Fragment {
                                 Log.d(TAG, "onComplete: provola !");
                                 Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
                                 if(persona.isStudent()){
-                                    Intent intent = new Intent(context, CameraActivity.class);
+                                    Intent intent = new Intent(context, ProfiloUtente.class);
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
-                                    intent.putExtra(EXTRA_ACTION,"login");
                                     context.startActivity(intent);
                                 }else{
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();

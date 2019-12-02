@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello;
+package com.luca.sabatini.appello.student;
 
 import android.content.Context;
 import android.graphics.Canvas;

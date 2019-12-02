@@ -9,7 +9,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".Appello"
@@ -21,9 +20,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.luca.sabatini.appello.attendancesession.AttendanceSession"></activity>
-        <activity android:name="com.luca.sabatini.appello.ConfermaPresenza" />
-        <activity android:name="com.luca.sabatini.appello.RicercaAppelli" />
-        <activity android:name="com.luca.sabatini.appello.CameraActivity" />
+        <activity android:name="com.luca.sabatini.appello.student.ConfermaPresenza" />
+        <activity android:name="com.luca.sabatini.appello.student.RicercaAppelli" />
+        <activity android:name=".student.ProfiloUtente"/>
+        <activity android:name="com.luca.sabatini.appello.student.CameraActivity" />
         <!--
                 PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
                 E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT
@@ -50,7 +50,6 @@
         </activity>
         <activity android:name="com.luca.sabatini.appello.list.ListaCorsi" />
         <activity android:name="com.luca.sabatini.appello.VerifyStudent" />
-        <activity android:name="com.luca.sabatini.appello.RegistrazioneFoto" />
         <activity android:name="com.luca.sabatini.appello.MainActivity" />
 
         <service
