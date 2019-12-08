@@ -104,7 +104,6 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
             finish();
             return;
         }
-
         route("sign_in");
     }
 

@@ -23,10 +23,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
 
+import com.luca.sabatini.appello.entities.Student;
+import com.luca.sabatini.appello.entities.StudentBuilder;
 import com.luca.sabatini.appello.login.LoginActivity;
 import com.otaliastudios.cameraview.BitmapCallback;
 import com.otaliastudios.cameraview.CameraListener;
@@ -48,6 +56,9 @@ public class CameraActivity extends AppCompatActivity {
     private Button riprova;
     private Button conferma;
     private byte[] data;
+
+    RequestQueue queue = Volley.newRequestQueue(this);
+
 
     private String action;
 
@@ -114,8 +125,6 @@ public class CameraActivity extends AppCompatActivity {
     private Paint p = new Paint();
     private Paint transparentPaint;
 
-
-
     public void takePicture(View view){
         camera.takePicture();
     }
@@ -128,6 +137,25 @@ public class CameraActivity extends AppCompatActivity {
     public void conferma(View view){
         //inviare immagine al server "data"
         //sendServer(data)
+        // Request a string response from the provided URL.
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,"",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        //textView.setText("Response is: "+ response.substring(0,500));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //textView.setText("That didn't work!");
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
         if(action.equals("login")){
             startActivity(new Intent(this, ConfermaPresenza.class));
         }

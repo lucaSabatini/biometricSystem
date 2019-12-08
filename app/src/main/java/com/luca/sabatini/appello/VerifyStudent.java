@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 public class VerifyStudent extends AppCompatActivity {
 
     private static final String TAG = "VerifyStudent";
@@ -19,6 +22,7 @@ public class VerifyStudent extends AppCompatActivity {
     private TextView lastName;
     private TextView studentId;
     private ImageView foto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,40 +2,37 @@ package com.luca.sabatini.appello.student;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.entities.Persona;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
 
-
 public class ProfiloUtente extends AppCompatActivity {
 
-    private TextView studentData;
+    private TextView matricolaTextView;
+    private TextView surnameTextView;
+    private SharedPrefManager sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_utente);
-        studentData = findViewById(R.id.student_data_textView);
-        Persona persona = new Persona(FirebaseAuth.getInstance().getCurrentUser().getEmail().trim());
-        String temp = persona.getLastName()+"\n\n"+persona.getStudentId();
-        studentData.setText(temp);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        sp = new SharedPrefManager(this);
 
+        matricolaTextView = findViewById(R.id.matricola_textView);
+        surnameTextView = findViewById(R.id.surname_textView);
+
+        matricolaTextView.setText("" + sp.readMatricola());
+        surnameTextView.setText(sp.readSurname());
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     public void ricercaAppelliFabOnClick(View view){
