@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
@@ -58,6 +60,13 @@ public class ProfiloUtente extends AppCompatActivity {
             Intent intent = new Intent(this, CameraActivity.class);
             intent.putExtra(EXTRA_ACTION, "changePhoto");
             startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            sp.writeSurname("");
+            sp.writeMatricola(-1L);
+            sp.writeFirebaseId("");
             return true;
         }
         return super.onOptionsItemSelected(item);

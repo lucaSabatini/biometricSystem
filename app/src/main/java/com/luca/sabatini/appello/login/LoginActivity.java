@@ -18,6 +18,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.luca.sabatini.appello.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
+import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.student.ProfiloUtente;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 
 public class LoginActivity extends AppCompatActivity implements LoginRoutingInterface{
@@ -25,19 +28,21 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
     private final Context context = this;
     private final static String TAG = "LoginActivity";
     private String shown;
-
+    private SharedPrefManager sp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            //TODO: qui è possibile fare in modo che se l'utente ha già effettuato il login
-            // non debba rifarlo ogni volta che apre l'applicazione. Quindi bisogna controllare
-            // se l'utente è un professore o uno studente e avviare l'activity corretta
-            //SplashActivity.intent(context).start();
-            //finish();
-
+        sp = new SharedPrefManager(context);
+        //Login automatico
+        if(isLogged()){
+            if(isStudent()){
+                context.startActivity(new Intent(context, ProfiloUtente.class));
+            }
+            else{
+                context.startActivity(new Intent(context, ListaCorsi.class));
+            }
         }
     }
 
@@ -47,7 +52,14 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
         route("sign_in");
     }
 
+    public boolean isLogged() {
+        return !sp.readFirebaseId().equals(SharedPrefManager.NULL_KEY) &&
+                !sp.readSurname().equals(SharedPrefManager.NULL_KEY);
+    }
 
+    public boolean isStudent() {
+        return sp.readMatricola() != -1;
+    }
 
     private Fragment buildFragment(String fragment){
 

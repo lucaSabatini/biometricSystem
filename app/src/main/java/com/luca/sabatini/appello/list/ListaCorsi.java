@@ -76,6 +76,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         swipeRefreshLayout = findViewById(R.id.lista_corsi_refresh);
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getColor(R.color.design_default_color_primary_dark));
         swipeRefreshLayout.setColorSchemeColors(Color.WHITE);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
