@@ -84,7 +84,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
 
                 StringRequest postRequest = new StringRequest(
                         Request.Method.GET,
-                        RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
+                        RestConstants.getAllCoursesByIdUrl("nessuno", "" + sp.readFirebaseId()),
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -113,7 +113,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
     }
     public void buildRecyclerView(){
 
-        final RealmResults<Corso> courses = mRealm.where(Corso.class).equalTo("uid", sp.readString("uid")).findAll();
+        final RealmResults<Corso> courses = mRealm.where(Corso.class).equalTo("uid", sp.readFirebaseId()).findAll();
 
         listaCorsiAdapter = new CorsoAdapter(this, courses);
 
@@ -149,7 +149,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         if(isOnline()) {
             StringRequest postRequest = new StringRequest(
                     Request.Method.GET,
-                    RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
+                    RestConstants.getAllCoursesByIdUrl("nessuno", sp.readFirebaseId()),
                     callbackGet,
                     callbackError);
 
@@ -231,7 +231,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         Log.d(TAG, "removeItemFromMap: " + c);
         StringRequest postRequest = new StringRequest(
                 Request.Method.DELETE,
-                RestConstants.deleteCourseUrl("noncista", sp.readString("uid"), c.id),
+                RestConstants.deleteCourseUrl("noncista", sp.readFirebaseId(), c.id),
                 callbackDelete,
                 callbackError);
         queue.add(postRequest);
@@ -259,7 +259,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
 
         StringRequest postRequest = new StringRequest(
                 Request.Method.PUT,
-                RestConstants.updateCourseUrl("noncista", sp.readString("uid")),
+                RestConstants.updateCourseUrl("noncista", sp.readFirebaseId()),
                 callbackUpdate,
                 callbackError){
             @Override
@@ -274,7 +274,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
                     c.name = nomeCorso;
                     c.year = year;
                     c.id = id;
-                    c.uid = sp.readString("uid");
+                    c.uid = sp.readFirebaseId();
                     Log.d(TAG, "getBody: "+ c);
                     return new Gson().toJson(c).getBytes();
                 } catch (Exception e) {
@@ -338,7 +338,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         if (isOnline()) {
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST,
-                    RestConstants.postCourseUrl("nono", sp.readString("uid")),
+                    RestConstants.postCourseUrl("nono", sp.readFirebaseId()),
                     callbackPost,
                     callbackError) {
                 @Override
@@ -353,7 +353,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
                         Corso c = new Corso();
                         c.name = nomeCorso;
                         c.year = Long.valueOf(year);
-                        c.uid = sp.readString("uid");
+                        c.uid = sp.readFirebaseId();
                         return new Gson().toJson(c).getBytes();
                     } catch (Exception e) {
                         Log.d(TAG, "getBody: " + e.toString());
@@ -369,7 +369,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
             Corso c = new Corso();
             c.name = nomeCorso;
             c.year = Long.valueOf(year);
-            c.uid = sp.readString("uid");
+            c.uid = sp.readFirebaseId();
             mRealm.insertOrUpdate(c);
             mRealm.commitTransaction();
 

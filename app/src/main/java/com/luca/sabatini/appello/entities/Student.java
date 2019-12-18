@@ -5,15 +5,15 @@ import io.realm.annotations.PrimaryKey;
 
 public class Student extends RealmObject {
     @PrimaryKey
-    public String studentId;
+    public String firebaseId;
     public Long matricola;
     public String surname;
     public String photo;
 
     public Student(){}
 
-    public Student(String studentId, Long matricola, String surname, String photo) {
-        this.studentId = studentId;
+    public Student(String firebaseId, Long matricola, String surname, String photo) {
+        this.firebaseId = firebaseId;
         this.matricola = matricola;
         this.surname = surname;
         this.photo = photo;

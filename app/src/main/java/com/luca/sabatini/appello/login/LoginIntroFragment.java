@@ -17,15 +17,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.luca.sabatini.appello.R;
+import com.luca.sabatini.appello.entities.Corso;
 import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.student.CameraActivity;
 import com.luca.sabatini.appello.student.ProfiloUtente;
+import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class LoginIntroFragment extends Fragment {
 
@@ -42,6 +54,7 @@ public class LoginIntroFragment extends Fragment {
     private Context context;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private SharedPrefManager sp;
+    private RequestQueue queue;
 
     @Nullable
     @Override
@@ -53,6 +66,8 @@ public class LoginIntroFragment extends Fragment {
         signInOrCreate = inflate.findViewById(R.id.login_button);
         passwordTextInput = inflate.findViewById(R.id.password);
         usernameTextInput = inflate.findViewById(R.id.username);
+
+        queue = Volley.newRequestQueue(getContext());
 
         newAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +166,7 @@ public class LoginIntroFragment extends Fragment {
         signInProgressBar.setVisibility(View.VISIBLE);
         String username = usernameTextInput.getEditText().getText().toString().trim();
         String password = passwordTextInput.getEditText().getText().toString().trim();
+        Fragment f = this;
         firebaseAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -175,13 +191,52 @@ public class LoginIntroFragment extends Fragment {
                             sp.writeFirebaseId(firebaseAuth.getCurrentUser().getUid());
 
                             if(isStudent()){
-                                context.startActivity(new Intent(context, ProfiloUtente.class));
+                                checkRegistered();
                             }else{
                                 context.startActivity(new Intent(context, ListaCorsi.class));
                             }
+                            getActivity().finish();
                         }
                     }
                 });
+
     }
+
+    private void checkRegistered(){
+        StringRequest postRequest = new StringRequest(
+                Request.Method.GET,
+                RestConstants.isRegisteredUrl(sp.readFirebaseId()),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Boolean result = new Gson().fromJson(response, Boolean.class);
+                        Log.d(TAG, "onResponse: " + result);
+                        if(result){
+                            sp.writeIsRegistered(true);
+                            context.startActivity(new Intent(context, ProfiloUtente.class));
+                        }
+                        else {
+                            Intent intent = new Intent( context , CameraActivity.class);
+                            intent.putExtra(EXTRA_ACTION, "signup");
+                            context.startActivity(intent);
+                        }
+                    }
+                },
+                callbackError);
+
+        queue.add(postRequest);
+    }
+
+    private Response.ErrorListener callbackError = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            if(error.networkResponse != null) {
+                Log.e(TAG, "onErrorResponse: callbackError: " + new String(error.networkResponse.data));
+                Log.e(TAG, "onErrorResponse: callbackError: " + error.networkResponse.statusCode);
+            } else{
+                Log.e(TAG, "onErrorResponse: callbackError: " + error.getMessage());
+            }
+        }
+    };
 
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
+import com.luca.sabatini.appello.login.LoginActivity;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
@@ -62,11 +63,11 @@ public class ProfiloUtente extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        else if (id == R.id.logout) {
+        else if (id == R.id.logoutProfessorButton) {
             FirebaseAuth.getInstance().signOut();
-            sp.writeSurname("");
-            sp.writeMatricola(-1L);
-            sp.writeFirebaseId("");
+            sp.resetSharedPref();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

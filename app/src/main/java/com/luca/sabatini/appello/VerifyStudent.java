@@ -29,9 +29,9 @@ public class VerifyStudent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Persona persona = (Persona) getIntent().getSerializableExtra("Persona");
         //lastName = findViewById(R.id.last_name_appello);
-        //studentId = findViewById(R.id.student_id_appello);
+        //firebaseId = findViewById(R.id.student_id_appello);
        //lastName.setText(persona.getLastName().toUpperCase());
-       //studentId.setText(persona.getStudentId());
+       //firebaseId.setText(persona.getStudentId());
     }
 
     public void openCamera(View view){

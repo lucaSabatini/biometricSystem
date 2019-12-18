@@ -3,6 +3,7 @@ package com.luca.sabatini.appello.utils;
 public class RestConstants {
     private static final String BASEURL = "https://appello-project.appspot.com";
     private static final String COURSE = BASEURL + "/courses";
+    private static final String STUDENT = BASEURL + "/user";
 
     public static String getCourseUrl(String accessToken, String uid){
         return String.format("%s/readCourse?accessToken=%s&uid=%s", COURSE, accessToken, uid);
@@ -22,6 +23,13 @@ public class RestConstants {
 
     public static String getAllCoursesByIdUrl(String accessToken, String uid){
         return String.format("%s/getCoursesByUserId?accessToken=%s&uid=%s", COURSE, accessToken, uid);
+    }
+
+    public static String postStudentUrl(){
+        return String.format("%s/postStudent", STUDENT);
+    }
+    public static String isRegisteredUrl(String uid){
+        return String.format("%s/isRegistered?firebaseId=%s", STUDENT, uid);
     }
 
 }

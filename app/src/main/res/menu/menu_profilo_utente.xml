@@ -8,7 +8,7 @@
         android:title="Modifica foto profilo"
         app:showAsAction="never" />
     <item
-        android:id="@+id/logout"
+        android:id="@+id/logoutProfessorButton"
         android:orderInCategory="100"
         android:title="Logout"
         app:showAsAction="never" />

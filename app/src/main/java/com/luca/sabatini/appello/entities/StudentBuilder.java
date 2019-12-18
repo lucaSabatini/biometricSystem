@@ -1,13 +1,13 @@
 package com.luca.sabatini.appello.entities;
 
 public class StudentBuilder {
-    private String studentId;
+    private String firebaseId;
     private Long matricola;
     private String surname;
     private String photo;
 
-    public StudentBuilder setStudentId(String studentId) {
-        this.studentId = studentId;
+    public StudentBuilder setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
         return this;
     }
 
@@ -27,6 +27,6 @@ public class StudentBuilder {
     }
 
     public Student createStudent() {
-        return new Student(studentId, matricola, surname, photo);
+        return new Student(firebaseId, matricola, surname, photo);
     }
 }

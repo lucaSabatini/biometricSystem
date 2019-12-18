@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.attendancesession.AttendanceSession;
 import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.login.LoginActivity;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 public class AppelloOrStatistica extends AppCompatActivity {
 
@@ -34,6 +37,16 @@ public class AppelloOrStatistica extends AppCompatActivity {
 
     public void openAttendanceSession(View v){
         startActivity(new Intent(this, AttendanceSession.class));
+    }
+
+    public void logout(View v){
+        SharedPrefManager sp = new SharedPrefManager(this);
+        FirebaseAuth.getInstance().signOut();
+        sp.resetSharedPref();
+        startActivity(new Intent(this, LoginActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        finish();
     }
 
 }
