@@ -19,7 +19,6 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_person_cyan_24dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimaryDark"
             app:expandedTitleTextAppearance="@style/MyTitleTheme"
