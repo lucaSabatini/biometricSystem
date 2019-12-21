@@ -17,6 +17,7 @@ public class SharedPrefManager {
     private static final String FIREBASEID = "firebaseid";
     private static final String MATRICOLA = "matricola";
     private static final String IS_REGISTERED = "is_registered";
+    private static final String SESSIONID = "sessionid";
 
     public SharedPrefManager (Context context){
         this.context = context;
@@ -82,14 +83,18 @@ public class SharedPrefManager {
 
     public Long readMatricola(){return readLong(MATRICOLA);}
 
-    public void writeIsRegistered(Boolean b){writeBool(IS_REGISTERED, b);}
+    public void writeIsRegistered(Boolean isRegistered){writeBool(IS_REGISTERED, isRegistered);}
 
     public Boolean readIsRegistered(){return readBool(IS_REGISTERED);}
 
+    public void writeSessionId(Long sessionId){writeLong(SESSIONID, sessionId);}
+
+    public Long readSessionId(){return readLong(SESSIONID);}
 
     public void resetSharedPref(){
         writeSurname(SharedPrefManager.DEFAULT_VALUE);
         writeMatricola(-1l);
         writeFirebaseId(SharedPrefManager.DEFAULT_VALUE);
+        writeSessionId(-1L);
     }
 }

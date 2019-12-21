@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.luca.sabatini.appello.attendancesession.AttendanceSession"></activity>
+        <activity android:name="com.luca.sabatini.appello.professor.Session"></activity>
         <activity android:name="com.luca.sabatini.appello.student.ConfermaPresenza" />
         <activity android:name="com.luca.sabatini.appello.student.RicercaAppelli" />
         <activity android:name=".student.ProfiloUtente"/>
@@ -29,7 +29,7 @@
                 E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT
         -->
         <activity
-            android:name="com.luca.sabatini.appello.AppelloOrStatistica"
+            android:name="com.luca.sabatini.appello.professor.ProfessorMain"
             android:parentActivityName="com.luca.sabatini.appello.list.ListaCorsi" />
         <activity android:name="com.luca.sabatini.appello.login.ForgotPassword" />
         <activity
@@ -49,10 +49,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.luca.sabatini.appello.list.ListaCorsi" />
-        <activity android:name="com.luca.sabatini.appello.VerifyStudent" />
 
         <service
-            android:name="com.luca.sabatini.appello.attendancesession.FirebaseService"
+            android:name="com.luca.sabatini.appello.professor.FirebaseService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

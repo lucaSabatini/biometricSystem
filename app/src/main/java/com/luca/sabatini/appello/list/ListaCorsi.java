@@ -24,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.luca.sabatini.appello.AppelloOrStatistica;
+import com.luca.sabatini.appello.professor.ProfessorMain;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
 import com.luca.sabatini.appello.utils.RestConstants;
@@ -249,7 +249,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
     };
 
     public void openActivity(String corso, Long year){
-        Intent intent = new Intent(this, AppelloOrStatistica.class);
+        Intent intent = new Intent(this, ProfessorMain.class);
         intent.putExtra(EXTRA_TEXT, corso);
         intent.putExtra(EXTRA_DATE, year);
         startActivity(intent);

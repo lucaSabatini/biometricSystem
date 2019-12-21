@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.attendancesession;
+package com.luca.sabatini.appello.professor;
 
 import android.util.Log;
 
