@@ -7,7 +7,7 @@ public class RestConstants {
     private static final String ATTENDANCE = BASEURL + "/attendance";
 
     public static String getCourseUrl(String accessToken, String uid){
-        return String.format("%s/readCourse?accessToken=%s&uid=%s", COURSE, accessToken, uid);
+        return String.format("%s/getCourse?accessToken=%s&uid=%s", COURSE, accessToken, uid);
     }
 
     public static String postCourseUrl(String accessToken, String uid){
@@ -34,11 +34,15 @@ public class RestConstants {
         return String.format("%s/isRegistered?firebaseId=%s", STUDENT, uid);
     }
 
-    public static String createSessionUrl(String professorId, String beaconId){
-        return String.format("%s/createSession?professorId=%s&beaconId=%s", ATTENDANCE, professorId, beaconId);
+    public static String createSessionUrl(String professorId, String beaconId, Long corsoId){
+        return String.format("%s/createSession?professorId=%s&beaconId=%s&corsoId=%d", ATTENDANCE, professorId, beaconId, corsoId);
     }
 
-    public static String closeSessionUrl(Long attendanceId){
-        return String.format("%s/closeSession?attendanceId=%d", ATTENDANCE, attendanceId);
+    public static String closeSessionUrl(Long sessionId){
+        return String.format("%s/closeSession?sessionId=%d", ATTENDANCE, sessionId);
+    }
+
+    public static String checkSessionUrl(String beaconId){
+        return String.format("%s/checkSession?beaconId=%d", ATTENDANCE, beaconId);
     }
 }

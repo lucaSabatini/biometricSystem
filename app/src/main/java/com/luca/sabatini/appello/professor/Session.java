@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,6 +67,7 @@ public class Session extends AppCompatActivity {
 
 
     private void closeAttendanceSessionBackend(){
+        Log.d(TAG, "closeAttendanceSessionBackend: " + sp.readSessionId());
         StringRequest postRequest = new StringRequest(
                 Request.Method.GET,
                 RestConstants.closeSessionUrl(sp.readSessionId()),
@@ -90,8 +92,10 @@ public class Session extends AppCompatActivity {
     private Response.Listener<String> callbackGet = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
-            Long id = new Gson().fromJson(response, Long.class);
-            sp.writeSessionId(id);
+            //Long id = new Gson().fromJson(response, Long.class);
+            sp.writeSessionId(0L);
+            //startActivity(new Intent(context, ProfessorMain.class));
+            finish();
         }
     };
 }

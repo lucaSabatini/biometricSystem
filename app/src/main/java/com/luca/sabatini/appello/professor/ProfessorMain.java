@@ -43,15 +43,15 @@ public class ProfessorMain extends AppCompatActivity {
         Intent intent = getIntent();
         context = this;
 
-        String nomeCorso = intent.getStringExtra(ListaCorsi.EXTRA_TEXT);
-        Long annoCorso = intent.getLongExtra(ListaCorsi.EXTRA_DATE, -1);
+        //String nomeCorso = intent.getStringExtra(ListaCorsi.EXTRA_TEXT);
+        //Long annoCorso = intent.getLongExtra(ListaCorsi.EXTRA_DATE, -1);
 
         sp = new SharedPrefManager(this);
         nomeCorsoTextView = findViewById(R.id.nome_corso);
         annoCorsoTextView = findViewById(R.id.anno_corso);
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
-        nomeCorsoTextView.setText(nomeCorso);
-        annoCorsoTextView.setText(""+annoCorso);
+        nomeCorsoTextView.setText(sp.readNomeCorso());
+        annoCorsoTextView.setText(""+sp.readAnnoCorso());
 
     }
 
@@ -72,7 +72,7 @@ public class ProfessorMain extends AppCompatActivity {
     private void openAttendanceSessionBackend(){
         StringRequest postRequest = new StringRequest(
                 Request.Method.GET,
-                RestConstants.createSessionUrl(sp.readFirebaseId(), "beacon"),
+                RestConstants.createSessionUrl(sp.readFirebaseId(), "beacon", sp.readCorsoId()),
                 callbackGet,
                 callbackError);
 
@@ -88,6 +88,7 @@ public class ProfessorMain extends AppCompatActivity {
             } else{
                 Log.e(TAG, "onErrorResponse: callbackError: " + error.getMessage());
             }
+            Toast.makeText(context, "Connessione a internet assente. Riprova più tardi", Toast.LENGTH_LONG).show();
         }
 
     };

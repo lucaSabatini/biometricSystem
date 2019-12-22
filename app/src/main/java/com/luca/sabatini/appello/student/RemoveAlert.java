@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.list;
+package com.luca.sabatini.appello.student;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
+import com.luca.sabatini.appello.list.ListaCorsi;
 
 public class RemoveAlert extends DialogFragment {
 

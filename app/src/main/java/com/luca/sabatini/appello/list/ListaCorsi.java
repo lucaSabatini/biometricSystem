@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.luca.sabatini.appello.professor.ProfessorMain;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
+import com.luca.sabatini.appello.student.RemoveAlert;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.gson.Gson;
@@ -63,7 +64,6 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
     private final SharedPrefManager sp = new SharedPrefManager(this);
 
     private Context context = this;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,7 +130,11 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
             public void onItemCLick(Corso c) {
-                openActivity(c.name,  c.year);
+                sp.writeCorsoId(c.id);
+                sp.writeNomeCorso(c.name);
+                sp.writeAnnoCorso(c.year);
+
+                startActivity(new Intent(context, ProfessorMain.class));
             }
 
             @Override
@@ -249,9 +253,12 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
     };
 
     public void openActivity(String corso, Long year){
+
+
+
         Intent intent = new Intent(this, ProfessorMain.class);
-        intent.putExtra(EXTRA_TEXT, corso);
-        intent.putExtra(EXTRA_DATE, year);
+        //intent.putExtra(EXTRA_TEXT, corso);
+        //intent.putExtra(EXTRA_DATE, year);
         startActivity(intent);
     }
 

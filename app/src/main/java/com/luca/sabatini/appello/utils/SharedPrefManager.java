@@ -18,6 +18,9 @@ public class SharedPrefManager {
     private static final String MATRICOLA = "matricola";
     private static final String IS_REGISTERED = "is_registered";
     private static final String SESSIONID = "sessionid";
+    private static final String ANNOCORSO = "annocorso";
+    private static final String NOMECORSO = "nomecorso";
+    private static final String CORSOID = "corsoid";
 
     public SharedPrefManager (Context context){
         this.context = context;
@@ -90,6 +93,18 @@ public class SharedPrefManager {
     public void writeSessionId(Long sessionId){writeLong(SESSIONID, sessionId);}
 
     public Long readSessionId(){return readLong(SESSIONID);}
+
+    public void writeNomeCorso(String firebaseId){writeString(NOMECORSO, firebaseId);}
+
+    public String readNomeCorso(){return readString(NOMECORSO);}
+
+    public void writeAnnoCorso(Long sessionId){writeLong(ANNOCORSO, sessionId);}
+
+    public Long readAnnoCorso(){return readLong(ANNOCORSO);}
+
+    public void writeCorsoId(Long corsoId){writeLong(CORSOID, corsoId);}
+
+    public Long readCorsoId(){return readLong(CORSOID);}
 
     public void resetSharedPref(){
         writeSurname(SharedPrefManager.DEFAULT_VALUE);
