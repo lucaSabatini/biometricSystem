@@ -2,8 +2,8 @@ package com.luca.sabatini.appello.entities;
 
 public class CheckSessionResponse {
     private String professorId;
-    private String nomeCorso;
     private String corsoId;
+    private String corsoName;
 
     public String getProfessorId() {
         return professorId;
@@ -14,11 +14,11 @@ public class CheckSessionResponse {
     }
 
     public String getNomeCorso() {
-        return nomeCorso;
+        return corsoName;
     }
 
-    public void setNomeCorso(String nomeCorso) {
-        this.nomeCorso = nomeCorso;
+    public void setNomeCorso(String corsoName) {
+        this.corsoName = corsoName;
     }
 
     public String getCorsoId() {

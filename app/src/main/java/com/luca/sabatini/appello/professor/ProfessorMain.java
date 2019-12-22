@@ -72,7 +72,7 @@ public class ProfessorMain extends AppCompatActivity {
     private void openAttendanceSessionBackend(){
         StringRequest postRequest = new StringRequest(
                 Request.Method.GET,
-                RestConstants.createSessionUrl(sp.readFirebaseId(), "beacon", sp.readCorsoId()),
+                RestConstants.createSessionUrl(sp.readFirebaseId(), "beaconnuovo", sp.readCorsoId()),
                 callbackGet,
                 callbackError);
 

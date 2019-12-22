@@ -3,8 +3,10 @@ package com.luca.sabatini.appello.student;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,16 +27,18 @@ public class RicercaAppelli extends AppCompatActivity {
 
     private final String TAG = "RicercaAppelli";
     private RequestQueue queue;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         setContentView(R.layout.activity_ricerca_appelli);
-
+        context = this;
         String beaconId = ricercaBeacon();
 
-        if(!ricercaBeacon().equals("")){
+        if(!(ricercaBeacon().equals(""))){
+            Log.d(TAG, "onCreate: " + ricercaBeacon());
             checkAttendanceSessionBackend(beaconId);
 
         }
@@ -43,7 +47,7 @@ public class RicercaAppelli extends AppCompatActivity {
 
     private String ricercaBeacon(){
         //TODO: implementare parte beacons
-        return "beaconId";
+        return "beaconnuovo";
     }
 
     private void checkAttendanceSessionBackend(String beaconId){
@@ -72,10 +76,14 @@ public class RicercaAppelli extends AppCompatActivity {
     private Response.Listener<String> callbackGet = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
-            CheckSessionResponse corso = new Gson().fromJson(response, CheckSessionResponse.class);
-            if(corso != null){
-
+            Log.d(TAG, "onCreate: " + response);
+            if(response.equals("")){
+                Toast.makeText(context, "nessun appello trovato", Toast.LENGTH_LONG).show();
+                finish();
+                return;
             }
+            CheckSessionResponse corso = new Gson().fromJson(response, CheckSessionResponse.class);
+            Log.d(TAG, "onResponse: " + corso);
             //sp.writeSessionId(0L);
             //startActivity(new Intent(context, ProfessorMain.class));
             //finish();

@@ -43,6 +43,6 @@ public class RestConstants {
     }
 
     public static String checkSessionUrl(String beaconId){
-        return String.format("%s/checkSession?beaconId=%d", ATTENDANCE, beaconId);
+        return String.format("%s/checkSession?beaconId=%s", ATTENDANCE, beaconId);
     }
 }

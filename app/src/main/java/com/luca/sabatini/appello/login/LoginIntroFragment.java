@@ -66,7 +66,7 @@ public class LoginIntroFragment extends Fragment {
         signInOrCreate = inflate.findViewById(R.id.login_button);
         passwordTextInput = inflate.findViewById(R.id.password);
         usernameTextInput = inflate.findViewById(R.id.username);
-
+        sp = new SharedPrefManager(context);
         queue = Volley.newRequestQueue(getContext());
 
         newAccount.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,7 @@ public class LoginIntroFragment extends Fragment {
             this.callback = null;
         }
         this.context = context;
-        sp = new SharedPrefManager(context);
+
     }
 
     @Override
