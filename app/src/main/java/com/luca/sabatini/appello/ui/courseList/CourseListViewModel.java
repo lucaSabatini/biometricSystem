@@ -1,14 +1,14 @@
-package com.luca.sabatini.appello.ui.listaCorsi;
+package com.luca.sabatini.appello.ui.courseList;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ListaCorsiViewModel extends ViewModel {
+public class CourseListViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ListaCorsiViewModel() {
+    public CourseListViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");
     }

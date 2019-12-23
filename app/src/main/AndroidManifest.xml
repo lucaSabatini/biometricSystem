@@ -19,10 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".login.ChangePassword"></activity>
         <activity
             android:name=".ProfessorProfile"
             android:label="@string/title_activity_professor_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".student.UserProfile"
             android:label="@string/title_activity_user_profile"
@@ -40,7 +41,7 @@
         -->
         <activity
             android:name=".AppelloOrStatistica"
-            android:parentActivityName=".list.ListaCorsi" />
+            android:parentActivityName=".ui.courseList.ListaCorsi" />
         <activity android:name=".login.ForgotPassword" />
         <activity
             android:name=".SplashScreen"
@@ -58,7 +59,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".list.ListaCorsi" />
+        <activity android:name=".ui.courseList.ListaCorsi" />
         <activity android:name=".VerifyStudent" />
         <activity android:name=".MainActivity" />
 

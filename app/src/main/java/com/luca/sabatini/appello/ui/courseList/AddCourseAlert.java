@@ -1,7 +1,6 @@
-package com.luca.sabatini.appello.list;
+package com.luca.sabatini.appello.ui.courseList;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,12 +30,14 @@ public class AddCourseAlert extends DialogFragment {
     private String title;
     private String namePositiveButton;
     private String nameNegativeButton;
+    private CourseListFragment listaCorsiFragment;
     private ProvaAlertListener listener;
 
-    public AddCourseAlert(){
-        this.title = "Nuovo corso";
-        this.nameNegativeButton = "Annulla";
-        this.namePositiveButton = "Aggiungi";
+    public AddCourseAlert(CourseListFragment listaCorsiFragment){
+        this.listaCorsiFragment = listaCorsiFragment;
+        this.title = "Add course";
+        this.nameNegativeButton = "Cancel";
+        this.namePositiveButton = "Add";
     }
 
     int choosenYear = 2017;
@@ -77,7 +78,7 @@ public class AddCourseAlert extends DialogFragment {
                         EditText nomeCorso = view.findViewById(R.id.edit_text_nome_corso);
                         if(nomeCorso.getText().toString().equals("")) return;
                         Spinner spinner = view.findViewById(R.id.spinner);
-                        listener.getTextAndYear(nomeCorso.getText().toString(),
+                        listaCorsiFragment.getTextAndYear(nomeCorso.getText().toString(),
                                 (Integer) spinner.getSelectedItem());
                         //setNomeCorso(name.getText().toString());
                     }
@@ -103,16 +104,17 @@ public class AddCourseAlert extends DialogFragment {
         return textView;
     }
 
-    @Override
+    /*@Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
         try{
+
             listener = (ProvaAlertListener) context;
         } catch (ClassCastException e){
-            throw new ClassCastException(context.toString() + "implement ProvaAlertListener");
+            throw new ClassCastException(context.toString());
         }
-    }
+    } */
 
     public interface ProvaAlertListener{
         void getTextAndYear(String nomeCorso, int year);

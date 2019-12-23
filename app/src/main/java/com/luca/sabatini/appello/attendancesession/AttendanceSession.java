@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.entities.Corso;
 import com.luca.sabatini.appello.entities.Student;
-import com.luca.sabatini.appello.list.CorsoAdapter;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 import java.util.Objects;
@@ -51,8 +50,9 @@ public class AttendanceSession extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void closeAttendanceSession(){
+    public void closeAttendanceSession(View view){
 
+        finish();
         mRealm.where(Student.class).findAll().deleteAllFromRealm();
 
     }

@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.list;
+package com.luca.sabatini.appello.ui.courseList;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,27 +16,24 @@ import androidx.fragment.app.DialogFragment;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
 
-public class RemoveAlert extends DialogFragment {
+public class RenameAlert extends DialogFragment {
+    private static final String TAG ="ChangeNameAlert";
 
-    private static final String TAG = "RemoveAlert";
     private String title;
-    private Corso c;
+    private int position;
     private String namePositiveButton;
     private String nameNegativeButton;
-    private String message;
-    private ListaCorsi listaCorsi;
-    private RemoveAlertListener listener;
+    private CourseListFragment listaCorsi;
+    private Corso c;
 
-    public RemoveAlert(ListaCorsi listaCorsi, Corso c){
-        title = "Rimuovi corso";
-        message = "Sei sicuro di rimuovere il corso?";
-        nameNegativeButton = "No";
-        namePositiveButton = "Si";
+    public RenameAlert(CourseListFragment listaCorsi, Corso c){
+        title = "Rename course";
+        nameNegativeButton = "Cancel";
+        namePositiveButton = "Rename";
         this.listaCorsi = listaCorsi;
-        Log.d(TAG, "RemoveAlert: "+ c);
+        this.position = position;
         this.c = c;
     }
-
 
     @NonNull
     @Override
@@ -43,42 +41,28 @@ public class RemoveAlert extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MaterialComponents_Light_Dialog_Alert);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.popup_remove_corso, null);
+        View view = layoutInflater.inflate(R.layout.popup_rename_corso, null);
+
         builder.setView(view)
                 .setTitle(title)
-                .setMessage(message)
                 .setPositiveButton(namePositiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("alert", "onClick: Rimouvi");
-                        listaCorsi.removeItemFromMap(c);
-                        //listaCorsi.removeItem(position);
+                        Log.d("alert", "onClick: ciao");
+                        EditText nomeCorso = view.findViewById(R.id.edit_text_nome_corso);
+                        if(nomeCorso.getText().toString().equals("")) return;
+                        listaCorsi.changeNameItem(nomeCorso.getText().toString(), c.year, c.id);
                     }
                 })
                 .setNegativeButton(nameNegativeButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("alert", "onClick: annulla");
-                        //listener.removeCorso(true);
-                        //swipeToDelete.undoDelete();
-                        dialogInterface.cancel();
                     }
                 });
-        //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
-        return builder.create();
-    }
+        AlertDialog alertDialog = builder.create();
 
-    /*@Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try{
-            listener = (RemoveAlertListener) context;
-        } catch (ClassCastException e){
-            throw new ClassCastException(context.toString() + "implement RemoveAlert");
-        }
-    }*/
 
-    public interface RemoveAlertListener{
-        void removeCorso(boolean undo);
+        return alertDialog;
     }
 }

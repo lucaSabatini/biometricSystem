@@ -2,11 +2,6 @@ package com.luca.sabatini.appello;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
-
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
@@ -19,8 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
 
 public class ProfessorProfile extends AppCompatActivity {
 
@@ -37,12 +30,12 @@ public class ProfessorProfile extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_listaCorsi,R.id.nav_profile, R.id.nav_settings)
+                R.id.nav_courseList,R.id.nav_profile, R.id.nav_settings)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavGraph navGraph = navController.getGraph();
-        navGraph.setStartDestination(R.id.nav_listaCorsi);
+        navGraph.setStartDestination(R.id.nav_courseList);
         navController.setGraph(navGraph);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

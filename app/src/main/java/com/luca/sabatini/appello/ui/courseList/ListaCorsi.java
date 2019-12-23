@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.list;
+package com.luca.sabatini.appello.ui.courseList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,7 +42,7 @@ import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.ProvaAlertListener {
+public class ListaCorsi extends AppCompatActivity {
 
     private static final String TAG = "ListaCorsi";
     public static final String EXTRA_TEXT = "com.example.luca.biometricsystem.list.EXTRA_TEXT";
@@ -306,10 +306,10 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
     }*/
 
 
-    public void openAddCourseAlert(View view){
+   /* public void openAddCourseAlert(View view){
         AddCourseAlert addCourseAlert = new AddCourseAlert();
         addCourseAlert.show(getSupportFragmentManager(), "alert");
-    }
+    }*/
 
 
     private Response.Listener<String> callbackPost = new Response.Listener<String>() {
@@ -331,7 +331,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
         }
     };
 
-    @Override
+
     public void getTextAndYear(String nomeCorso, int year) {
         Log.d(TAG, "getTextAndYear: "+ isOnline());
         if (isOnline()) {

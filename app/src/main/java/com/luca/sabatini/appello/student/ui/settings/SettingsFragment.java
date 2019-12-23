@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Persona;
+import com.luca.sabatini.appello.login.ChangePassword;
 
 
 public class SettingsFragment extends Fragment {
@@ -26,6 +27,7 @@ public class SettingsFragment extends Fragment {
     private SettingsViewModel logoutViewModel;
     private Button aboutButton;
     private Button logoutButton;
+    private Button changePasswordButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -40,6 +42,7 @@ public class SettingsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         aboutButton = root.findViewById(R.id.about_button);
         logoutButton = root.findViewById(R.id.logout_button);
+        changePasswordButton = root.findViewById(R.id.change_password_button);
         final TextView textView = root.findViewById(R.id.text_logout);
         logoutViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -53,6 +56,14 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 about(view);
                 startActivity(new Intent(getActivity(), AboutActivity.class));
+            }
+        });
+
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePassword(view);
+                startActivity(new Intent(getActivity(), ChangePassword.class));
             }
         });
 
@@ -70,6 +81,10 @@ public class SettingsFragment extends Fragment {
 
     public void logout(View view){
         Toast.makeText(getActivity(), "click logout", Toast.LENGTH_SHORT).show();
+    }
+
+    public void changePassword(View view){
+        Toast.makeText(getActivity(), "click change password", Toast.LENGTH_SHORT).show();
     }
 
     public void about(View view){

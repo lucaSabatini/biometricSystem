@@ -17,10 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.luca.sabatini.appello.ProfessorProfile;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Persona;
-import com.luca.sabatini.appello.list.ListaCorsi;
-import com.luca.sabatini.appello.student.ProfiloUtente;
 import com.luca.sabatini.appello.student.UserProfile;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -180,7 +179,7 @@ public class LoginIntroFragment extends Fragment {
                                     context.startActivity(intent);
                                 }else{
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
-                                    context.startActivity(new Intent(context, ListaCorsi.class));
+                                    context.startActivity(new Intent(context, ProfessorProfile.class));
                                 }
 
                             }

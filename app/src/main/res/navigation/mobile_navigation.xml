@@ -17,8 +17,8 @@
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/nav_listaCorsi"
-        android:name="com.luca.sabatini.appello.ui.listaCorsi.ListaCorsiFragment"
-        android:label="@string/listaCorsi"/>
+        android:id="@+id/nav_courseList"
+        android:name="com.luca.sabatini.appello.ui.courseList.CourseListFragment"
+        android:label="@string/courseList"/>
 
 </navigation>

@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.list;
+package com.luca.sabatini.appello.ui.courseList;
 
 import android.content.Context;
 import android.util.Log;

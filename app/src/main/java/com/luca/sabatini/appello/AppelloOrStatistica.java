@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.luca.sabatini.appello.attendancesession.AttendanceSession;
-import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.ui.courseList.ListaCorsi;
 
 public class AppelloOrStatistica extends AppCompatActivity {
 

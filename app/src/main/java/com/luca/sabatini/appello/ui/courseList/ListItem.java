@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.list;
+package com.luca.sabatini.appello.ui.courseList;
 
 public abstract class ListItem {
     public static final int TYPE_HEADER = 0;

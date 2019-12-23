@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.ui.listaCorsi;
+package com.luca.sabatini.appello.ui.courseList;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -27,14 +25,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.luca.sabatini.appello.AppelloOrStatistica;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
-import com.luca.sabatini.appello.list.AddCourseAlert;
-import com.luca.sabatini.appello.list.CorsoAdapter;
-import com.luca.sabatini.appello.list.RemoveAlert;
-import com.luca.sabatini.appello.list.RenameAlert;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
@@ -49,7 +44,7 @@ import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class ListaCorsiFragment extends Fragment implements AddCourseAlert.ProvaAlertListener{
+public class CourseListFragment extends Fragment {
 
 
     private static final String TAG = "ListaCorsi";
@@ -78,6 +73,7 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
         queue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         layoutManager = new LinearLayoutManager(getContext());
         mRealm = Realm.getDefaultInstance();
+
         swipeRefreshLayout = root.findViewById(R.id.lista_corsi_refresh);
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getActivity().getColor(R.color.design_default_color_primary_dark));
         swipeRefreshLayout.setColorSchemeColors(Color.WHITE);
@@ -112,6 +108,13 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
 
         noCoursesLabel = root.findViewById(R.id.noCoursesLabel);
         listaCorsiRecycler = root.findViewById(R.id.lista_corsi);
+        FloatingActionButton buttonInsertFab = root.findViewById(R.id.button_insert);
+        buttonInsertFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddCourseAlert();
+            }
+        });
         sp = new SharedPrefManager(getContext());
         buildRecyclerView();
 
@@ -142,12 +145,12 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
 
             @Override
             public void onDeleteClick(Corso c) {
-                //removeItem(c);
+                removeItem(c);
             }
 
             @Override
             public void onRenameClick(Corso c) {
-                // openRenameAlert(c);
+                openRenameAlert(c);
             }
         });
 
@@ -229,10 +232,10 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
     }
 
 
-    /*public void removeItem(Corso c){
+    public void removeItem(Corso c){
         RemoveAlert removeAlert = new RemoveAlert(this, c);
-        removeAlert.show(getSupportFragmentManager(), "RemoveAlert");
-    }*/
+        removeAlert.show(getFragmentManager(), "RemoveAlert");
+    }
 
     public void removeItemFromMap(Corso c){
         Log.d(TAG, "removeItemFromMap: " + c);
@@ -308,14 +311,14 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
             }
         }
     };
-    /*public void openRenameAlert(Corso c){
+    public void openRenameAlert(Corso c){
         RenameAlert renameAlert = new RenameAlert(this, c);
-        renameAlert.show(getSupportFragmentManager(), "RenameAlert");
-    }*/
+        renameAlert.show(getFragmentManager(), "RenameAlert");
+    }
 
 
-    public void openAddCourseAlert(View view){
-        AddCourseAlert addCourseAlert = new AddCourseAlert();
+    public void openAddCourseAlert(){
+        AddCourseAlert addCourseAlert = new AddCourseAlert(this);
         addCourseAlert.show(getFragmentManager(), "alert");
     }
 
@@ -339,7 +342,6 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
         }
     };
 
-    @Override
     public void getTextAndYear(String nomeCorso, int year) {
         Log.d(TAG, "getTextAndYear: "+ isOnline());
         if (isOnline()) {

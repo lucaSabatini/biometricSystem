@@ -47,6 +47,25 @@
             android:background="@color/colorPrimaryDark" />
 
         <Button
+            android:id="@+id/change_password_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:drawableStart="@drawable/ic_vpn_key_black_24dp"
+            android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:drawablePadding="24dp"
+            android:paddingStart="8dp"
+            android:text="Change password"
+            android:textAlignment="textStart"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/space3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimaryDark" />
+
+        <Button
             android:id="@+id/logout_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
