@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -69,7 +68,7 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
 
     private Realm mRealm;
 
-    private final SharedPrefManager sp = new SharedPrefManager(getContext());
+    private SharedPrefManager sp;
 
     private Context context = getContext();
 
@@ -113,11 +112,12 @@ public class ListaCorsiFragment extends Fragment implements AddCourseAlert.Prova
 
         noCoursesLabel = root.findViewById(R.id.noCoursesLabel);
         listaCorsiRecycler = root.findViewById(R.id.lista_corsi);
-
+        sp = new SharedPrefManager(getContext());
         buildRecyclerView();
 
         return root;
     }
+
     public void buildRecyclerView(){
 
         final RealmResults<Corso> courses = mRealm.where(Corso.class).equalTo("uid", sp.readString("uid")).findAll();

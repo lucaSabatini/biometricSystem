@@ -68,7 +68,7 @@ public class ListaCorsi extends AppCompatActivity implements AddCourseAlert.Prov
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_corsi);
+        setContentView(R.layout.fragment_lista_corsi);
 
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         layoutManager = new LinearLayoutManager(this);
