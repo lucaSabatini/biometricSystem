@@ -19,11 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".StatisticsActivity"></activity>
+        <activity
+            android:name=".ProfessorProfile"
+            android:label="@string/title_activity_professor_profile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".student.UserProfile"
+            android:label="@string/title_activity_user_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".StatisticsActivity" />
         <activity android:name=".attendancesession.AttendanceSession" />
         <activity android:name=".student.ConfermaPresenza" />
         <activity android:name=".student.RicercaAppelli" />
         <activity android:name=".student.ProfiloUtente" />
+        <activity android:name=".student.ui.settings.AboutActivity" />
         <activity android:name=".student.CameraActivity" />
         <!--
                 PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn

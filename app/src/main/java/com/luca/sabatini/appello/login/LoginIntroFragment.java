@@ -21,6 +21,7 @@ import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Persona;
 import com.luca.sabatini.appello.list.ListaCorsi;
 import com.luca.sabatini.appello.student.ProfiloUtente;
+import com.luca.sabatini.appello.student.UserProfile;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -174,7 +175,7 @@ public class LoginIntroFragment extends Fragment {
                                 Log.d(TAG, "onComplete: provola !");
                                 Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
                                 if(persona.isStudent()){
-                                    Intent intent = new Intent(context, ProfiloUtente.class);
+                                    Intent intent = new Intent(context, UserProfile.class);
                                     Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
                                     context.startActivity(intent);
                                 }else{

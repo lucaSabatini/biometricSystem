@@ -40,8 +40,8 @@
     <string name="controllo_credenziali">Controllo credenziali in corso</string>
     <string name="not_valid_credentials">Credenziali non valide</string>
     <string name="anno_corso">anno corso</string>
-    <string name="statistiche">STATISTICHE</string>
-    <string name="appello">APPELLO</string>
+    <string name="statistiche">Statistics</string>
+    <string name="appello">Appello</string>
     <string name="rinomina">Rinomina</string>
     <string name="eliminao">Elimina</string>
     <string name="to_reset_password_enter_your_email_press_the_button_and_check_mail_to_follow_instruction">To reset password, enter your email, press the button and check mail to follow instruction.</string>
@@ -51,6 +51,8 @@
     <string name="conferma">conferma</string>
     <string name="ricerca_appello">Ricerca appello</string>
     <string name="title_activity_profilo_utente">Profilo</string>
+    <string name="open_navigation_drawer">open Navigation Drawer</string>
+    <string name="close_navigation_drawer">close Navigation Drawer</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -140,4 +142,23 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="change_profile_image">Change profile image</string>
+    <string name="title_activity_professor_profile">ProfessorProfile</string>
+    <string name="listaCorsi">Lista corsi</string>
+    <string name="about">About</string>
 </resources>

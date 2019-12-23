@@ -34,7 +34,7 @@ public class ProfiloUtente extends AppCompatActivity {
         studentData.setText(temp);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
 
     }
 
@@ -57,7 +57,7 @@ public class ProfiloUtente extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.modifica_foto_profilo_item) {
+        if (id == R.id.change_profile_image_item) {
             Intent intent = new Intent(this, CameraActivity.class);
             intent.putExtra(EXTRA_ACTION, "changePhoto");
             startActivity(intent);

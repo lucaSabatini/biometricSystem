@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.luca.sabatini.appello.login.LoginActivity;
+import com.luca.sabatini.appello.student.UserProfile;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, ProfessorProfile.class);
         startActivity(intent);
         finish();
 
