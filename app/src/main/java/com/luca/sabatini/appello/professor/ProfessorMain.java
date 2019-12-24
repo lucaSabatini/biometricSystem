@@ -19,7 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.StatisticsActivity;
 import com.luca.sabatini.appello.login.LoginActivity;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
@@ -67,6 +67,10 @@ public class ProfessorMain extends AppCompatActivity {
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         finish();
+    }
+
+    public void openStatisticsActivtiy(View view){
+        startActivity(new Intent(this, StatisticsActivity.class));
     }
 
     private void openAttendanceSessionBackend(){

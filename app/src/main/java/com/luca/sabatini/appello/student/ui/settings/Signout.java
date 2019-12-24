@@ -18,8 +18,11 @@ import androidx.fragment.app.DialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.login.LoginActivity;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 public class Signout extends DialogFragment{
+
+    private SharedPrefManager sp;
 
     @NonNull
     @Override
@@ -27,6 +30,7 @@ public class Signout extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MaterialComponents_Light_Dialog_Alert);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.popup_remove_corso, null);
+        sp = new SharedPrefManager(getContext());
 
         builder.setView(view)
                 .setTitle("Logout")
@@ -34,6 +38,7 @@ public class Signout extends DialogFragment{
                 .setPositiveButton("LOGOUT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        sp.resetSharedPref();
                         FirebaseAuth.getInstance().signOut();
                         getActivity().finishAffinity();
                         startActivity(new Intent(getActivity(), LoginActivity.class));

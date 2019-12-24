@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.login.LoginActivity;
@@ -65,13 +66,7 @@ public class ProfiloUtente extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        else if (id == R.id.logoutProfessorButton) {
-            FirebaseAuth.getInstance().signOut();
-            sp.resetSharedPref();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 }

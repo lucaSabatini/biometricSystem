@@ -20,19 +20,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Persona;
 import com.luca.sabatini.appello.login.ChangePassword;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 
 public class SettingsFragment extends Fragment {
 
     private SettingsViewModel logoutViewModel;
+    private SharedPrefManager sp;
     private Button aboutButton;
     private Button logoutButton;
     private Button changePasswordButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Persona persona = new Persona(FirebaseAuth.getInstance().getCurrentUser().getEmail().trim());
-        if(persona.isStudent()){
+        sp= new SharedPrefManager(getContext());
+
+        // == -1 prof
+        if(sp.readMatricola() != -1){
             FloatingActionButton fab = getActivity().findViewById(R.id.fab1);
             fab.hide();
         }

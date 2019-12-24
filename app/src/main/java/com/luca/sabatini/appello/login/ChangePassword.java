@@ -16,12 +16,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.luca.sabatini.appello.R;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 public class ChangePassword extends AppCompatActivity {
 
     private TextInputLayout currentPasswordInputLayout;
     private TextInputLayout newPasswordInputLayout;
     private TextInputLayout newPasswordAgainInputLayout;
+    private SharedPrefManager sp;
     private Button changePasswordButton;
     private static final String TAG = "ChangePassword";
 
@@ -32,6 +34,7 @@ public class ChangePassword extends AppCompatActivity {
         newPasswordInputLayout = findViewById(R.id.new_password_input_layout);
         newPasswordAgainInputLayout = findViewById(R.id.new_password_again_input_layout);
         changePasswordButton = findViewById(R.id.change_password_button);
+        sp = new SharedPrefManager(getApplicationContext());
     }
 
     public void changePasswordButton(View view){
@@ -53,11 +56,12 @@ public class ChangePassword extends AppCompatActivity {
                             }else if( newPasswordAgain.length() < 6){
                                 newPasswordAgainInputLayout.setError("Password too short, enter minimum 6 characters!");
                             }else {
-                                Toast.makeText( getApplicationContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText( getApplicationContext(), "password incorrect", Toast.LENGTH_SHORT).show();
                                 Log.w(TAG, "onClick:failure", task.getException());
                             }
                         }else{
                             Toast.makeText( getApplicationContext(), "Password changed", Toast.LENGTH_SHORT).show();
+                            sp.resetSharedPref();
                             finishAffinity();
                             startActivity(new Intent( getApplicationContext(), LoginActivity.class));
                         }

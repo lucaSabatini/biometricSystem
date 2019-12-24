@@ -163,10 +163,10 @@ public class CameraActivity extends AppCompatActivity {
                             startActivity(new Intent(context, ConfermaPresenza.class));
                         }
                         else if(action.equals("signup")) {
-                            startActivity(new Intent(context, ProfiloUtente.class));
+                            startActivity(new Intent(context, UserProfile.class));
                         }
                         else if(action.equals("changePhoto")){
-                            startActivity(new Intent(context, ProfiloUtente.class));
+                            startActivity(new Intent(context, UserProfile.class));
                         }else{
                             startActivity(new Intent(context, LoginActivity.class));
                         }

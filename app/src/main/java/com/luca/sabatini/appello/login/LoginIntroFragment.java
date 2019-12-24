@@ -24,11 +24,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.luca.sabatini.appello.ProfessorProfile;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
-import com.luca.sabatini.appello.list.ListaCorsi;
 import com.luca.sabatini.appello.student.CameraActivity;
 import com.luca.sabatini.appello.student.ProfiloUtente;
+import com.luca.sabatini.appello.student.UserProfile;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -216,7 +217,7 @@ public class LoginIntroFragment extends Fragment {
                             context.startActivity(new Intent(context, UserProfile.class));
                         }
                         else {
-                            Intent intent = new Intent( context , CameraActivity.class);
+                            Intent intent = new Intent( context , LoginActivity.class);
                             intent.putExtra(EXTRA_ACTION, "signup");
                             context.startActivity(intent);
                         }

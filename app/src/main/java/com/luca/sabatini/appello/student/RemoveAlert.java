@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
-import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.ui.courseList.ListaCorsi;
 
 public class RemoveAlert extends DialogFragment {
 

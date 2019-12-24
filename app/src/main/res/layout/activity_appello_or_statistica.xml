@@ -43,15 +43,14 @@
         android:layout_marginBottom="16dp"
         android:background="@color/light_cyan"
         android:drawableStart="@drawable/statistiche"
+        android:onClick="openStatisticsActivtiy"
         android:text="@string/statistiche"
-        android:onClick="openStatisticsActivity"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         app:backgroundTint="@color/light_cyan"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button2"
@@ -73,17 +72,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="openAttendanceSession"/>
-
-    <Button
-        android:id="@+id/logoutProfessorButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="logout"
-        android:text="Logout(temporaneo)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

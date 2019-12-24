@@ -15,10 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.luca.sabatini.appello.ProfessorProfile;
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.list.ListaCorsi;
 import com.luca.sabatini.appello.student.CameraActivity;
 import com.luca.sabatini.appello.student.ProfiloUtente;
+import com.luca.sabatini.appello.student.UserProfile;
+import com.luca.sabatini.appello.ui.courseList.ListaCorsi;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
         if(isLogged()){
             if(isStudent()){
                 if(sp.readIsRegistered()) {
-                    context.startActivity(new Intent(context, ProfiloUtente.class));
+                    context.startActivity(new Intent(context, UserProfile.class));
                 }
                 else {
                     Intent intent = new Intent( context , CameraActivity.class);
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
                 }
             }
             else{
-                context.startActivity(new Intent(context, ListaCorsi.class));
+                context.startActivity(new Intent(context, ProfessorProfile.class));
             }
         }
     }
