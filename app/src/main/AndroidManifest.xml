@@ -35,11 +35,19 @@
         <activity android:name=".student.ProfiloUtente" />
         <activity android:name=".student.ui.settings.AboutActivity" />
         <activity android:name=".student.CameraActivity" />
+        <activity android:name="com.luca.sabatini.appello.professor.Session"></activity>
+        <activity android:name="com.luca.sabatini.appello.student.ConfermaPresenza" />
+        <activity android:name="com.luca.sabatini.appello.student.RicercaAppelli" />
+        <activity android:name=".student.ProfiloUtente"/>
+        <activity android:name="com.luca.sabatini.appello.student.CameraActivity" />
         <!--
                 PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
                 E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT
         -->
         <activity
+            android:name="com.luca.sabatini.appello.professor.ProfessorMain"
+            android:parentActivityName="com.luca.sabatini.appello.list.ListaCorsi" />
+        <activity android:name="com.luca.sabatini.appello.login.ForgotPassword" />
             android:name=".AppelloOrStatistica"
             android:parentActivityName=".ui.courseList.ListaCorsi" />
         <activity android:name=".login.ForgotPassword" />
@@ -62,9 +70,11 @@
         <activity android:name=".ui.courseList.ListaCorsi" />
         <activity android:name=".VerifyStudent" />
         <activity android:name=".MainActivity" />
+        <activity android:name="com.luca.sabatini.appello.list.ListaCorsi" />
 
         <service
             android:name=".attendancesession.FirebaseService"
+            android:name="com.luca.sabatini.appello.professor.FirebaseService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

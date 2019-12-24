@@ -17,10 +17,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.luca.sabatini.appello.ProfessorProfile;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.entities.Persona;
-import com.luca.sabatini.appello.student.UserProfile;
+import com.luca.sabatini.appello.entities.Corso;
+import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.student.CameraActivity;
+import com.luca.sabatini.appello.student.ProfiloUtente;
+import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,24 +37,24 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class LoginIntroFragment extends Fragment {
 
     private static final String TAG = "LoginIntroFragment";
     public final static String EXTRA_ACTION = "com.example.luca.biometricsystem.logingeneroso";
     private static String emailPattern = "([a-z]+[.][0-9]+@studenti[.]uniroma1[.]it)|([a-z]+@di[.]uniroma1[.]it)";
     private TextView newAccount;
-    private Button login;
-    private TextInputLayout username;
-    private TextInputLayout password;
+    private TextInputLayout usernameTextInput;
+    private TextInputLayout passwordTextInput;
     private Button signInOrCreate;
     private ProgressBar signInProgressBar;
 
     private LoginRoutingInterface callback;
     private Context context;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-
     private SharedPrefManager sp;
+    private RequestQueue queue;
 
     @Nullable
     @Override
@@ -54,10 +63,11 @@ public class LoginIntroFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.login_intro_fragment, container, false);
         signInProgressBar = inflate.findViewById(R.id.sign_in_progress_bar);
         newAccount = inflate.findViewById(R.id.login_new_account);
-        //login = inflate.findViewById(R.id.login_button);
         signInOrCreate = inflate.findViewById(R.id.login_button);
-        password = inflate.findViewById(R.id.password);
-        username = inflate.findViewById(R.id.username);
+        passwordTextInput = inflate.findViewById(R.id.password);
+        usernameTextInput = inflate.findViewById(R.id.username);
+        sp = new SharedPrefManager(context);
+        queue = Volley.newRequestQueue(getContext());
 
         newAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,97 +119,124 @@ public class LoginIntroFragment extends Fragment {
     }
 
     private boolean validateEmail(){
-        String emailValue = username.getEditText().getText().toString().trim();
+        String emailValue = usernameTextInput.getEditText().getText().toString().trim();
         if (emailValue.isEmpty()) {
-            username.setError("Field can't be empty");
+            usernameTextInput.setError("Field can't be empty");
             return false;
         } else if(!emailValue.matches(emailPattern)){
             clear();
-            username.setError("invalid e-mail");
+            usernameTextInput.setError("invalid e-mail");
             return false;
         } else{
-            username.setError(null);
+            usernameTextInput.setError(null);
             return true;
         }
     }
 
 
     private boolean validatePassword(){
-        String passwordValue = password.getEditText().getText().toString().trim();
+        String passwordValue = passwordTextInput.getEditText().getText().toString().trim();
         if (passwordValue.isEmpty()){
-            password.setError("Field can't be empty");
+            passwordTextInput.setError("Field can't be empty");
             return false;
         }else{
-            password.setError(null);
+            passwordTextInput.setError(null);
             return true;
         }
     }
 
     private void clear(){
-        username.getEditText().getText().clear();
-        password.getEditText().getText().clear();
+        usernameTextInput.getEditText().getText().clear();
+        passwordTextInput.getEditText().getText().clear();
     }
 
-    public Boolean confermaInput(){
+    public Boolean isInputBad(){
         return (!validateEmail() | !validatePassword());
     }
 
-
-    public void loginSignInButton(){
-        if(!confermaInput()) {
-            signInProgressBar.setVisibility(View.VISIBLE);
-            firebaseAuth.signInWithEmailAndPassword(username.getEditText().getText().toString().trim(), password.getEditText().getText().toString().trim())
-                    .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            //task.getResult().getUser().getIdToken(true);
-                            signInProgressBar.setVisibility(View.INVISIBLE);
-                            if (!task.isSuccessful()) {
-                                // there was an error
-                                if (password.getEditText().getText().length() < 6) {
-                                    password.setError("Password too short, enter minimum 6 characters!");
-                                }else {
-                                    Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                }
-                            }/*else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
-                                Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                clear();
-                            }*/ else {
-                                // se studente andare su activity per confermare presenza
-                                // altrimenti andare su ListaCorsi
-                                Persona persona = new Persona(username.getEditText().getText().toString().trim());
-                                sp.writeString("uid", firebaseAuth.getCurrentUser().getUid());
-                                Log.d(TAG, "onComplete: provola !");
-                                Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getUid());
-                                if(persona.isStudent()){
-                                    Intent intent = new Intent(context, UserProfile.class);
-                                    Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
-                                    context.startActivity(intent);
-                                }else{
-                                    Toast.makeText( context, "Login", Toast.LENGTH_SHORT).show();
-                                    context.startActivity(new Intent(context, ProfessorProfile.class));
-                                }
-
-                            }
-                        }
-                    });
-        }
-        else{
-            Toast.makeText(context, getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
-        }
+    public boolean isStudent() {
+        return sp.readMatricola() != -1;
     }
 
-    /*@Override
-    public void onComplete(@NonNull Task<AuthResult> task) {
-        signInProgressBar.setVisibility(View.INVISIBLE);
-        if (task.isSuccessful()) {
-            startActivity(new Intent(context, ListaCorsi.class));
-        } else {
-            Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
-            Log.w(TAG, "signInWithEmail:failure", task.getException());
+    public void loginSignInButton(){
+        if(isInputBad()) {
+            Toast.makeText(context, getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
+            return;
         }
-    }*/
+        signInProgressBar.setVisibility(View.VISIBLE);
+        String username = usernameTextInput.getEditText().getText().toString().trim();
+        String password = passwordTextInput.getEditText().getText().toString().trim();
+        Fragment f = this;
+        firebaseAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        signInProgressBar.setVisibility(View.INVISIBLE);
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        }/*
+                        else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                            Toast.makeText(context, "e-mail is not verified", Toast.LENGTH_LONG).show();
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            clear();
+                        }*/
+                        else {
+                            String emailBeforeAt = username.split("@")[0];
+                            if (emailBeforeAt.contains(".")) {
+                                Log.d(TAG, "setLastNameAndStudentId: login studente");
+                                sp.writeMatricola(Long.parseLong(emailBeforeAt.split("\\.")[1]));
+                            }
+                            sp.writeSurname(emailBeforeAt.split("\\.")[0]);
+                            sp.writeFirebaseId(firebaseAuth.getCurrentUser().getUid());
+
+                            if(isStudent()){
+                                checkRegistered();
+                            }else{
+                                context.startActivity(new Intent(context, ProfessorProfile.class));
+                            }
+                            getActivity().finish();
+                        }
+                    }
+                });
+
+    }
+
+    private void checkRegistered(){
+        StringRequest postRequest = new StringRequest(
+                Request.Method.GET,
+                RestConstants.isRegisteredUrl(sp.readFirebaseId()),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Boolean result = new Gson().fromJson(response, Boolean.class);
+                        Log.d(TAG, "onResponse: " + result);
+                        if(result){
+                            sp.writeIsRegistered(true);
+                            context.startActivity(new Intent(context, UserProfile.class));
+                        }
+                        else {
+                            Intent intent = new Intent( context , CameraActivity.class);
+                            intent.putExtra(EXTRA_ACTION, "signup");
+                            context.startActivity(intent);
+                        }
+                    }
+                },
+                callbackError);
+
+        queue.add(postRequest);
+    }
+
+    private Response.ErrorListener callbackError = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            if(error.networkResponse != null) {
+                Log.e(TAG, "onErrorResponse: callbackError: " + new String(error.networkResponse.data));
+                Log.e(TAG, "onErrorResponse: callbackError: " + error.networkResponse.statusCode);
+            } else{
+                Log.e(TAG, "onErrorResponse: callbackError: " + error.getMessage());
+            }
+        }
+    };
 
 }

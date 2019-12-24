@@ -1,4 +1,4 @@
-package com.luca.sabatini.appello.attendancesession;
+package com.luca.sabatini.appello.professor;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,9 +16,9 @@ import com.luca.sabatini.appello.entities.Student;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class AttendanceAdapter extends RealmRecyclerViewAdapter<Student, AttendanceAdapter.AttendanceHolder> {
+public class SessionAdapter extends RealmRecyclerViewAdapter<Student, SessionAdapter.AttendanceHolder> {
 
-    public AttendanceAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Student> data) {
+    public SessionAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Student> data) {
         super(context, data, true);
     }
 

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     tools:context="com.luca.sabatini.appello.attendancesession.AttendanceSession">
+    tools:context="com.luca.sabatini.appello.professor.Session">
 
     <Button
         android:id="@+id/closeAttendanceSessionButton"

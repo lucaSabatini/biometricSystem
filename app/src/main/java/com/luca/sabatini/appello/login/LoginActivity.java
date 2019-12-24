@@ -15,9 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.luca.sabatini.appello.MainActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.luca.sabatini.appello.R;
+import com.luca.sabatini.appello.list.ListaCorsi;
+import com.luca.sabatini.appello.student.CameraActivity;
+import com.luca.sabatini.appello.student.ProfiloUtente;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
+
+import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
 
 
 public class LoginActivity extends AppCompatActivity implements LoginRoutingInterface{
@@ -25,21 +29,32 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
     private final Context context = this;
     private final static String TAG = "LoginActivity";
     private String shown;
-
+    private SharedPrefManager sp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            //TODO: qui è possibile fare in modo che se l'utente ha già effettuato il login
-            // non debba rifarlo ogni volta che apre l'applicazione. Quindi bisogna controllare
-            // se l'utente è un professore o uno studente e avviare l'activity corretta
-            //SplashActivity.intent(context).start();
-            //finish();
-
+        sp = new SharedPrefManager(context);
+        //Login automatico
+        Log.d(TAG, "onCreate: isLogged: " + isLogged() + "isStudent: " + isStudent() + "isRegistered: " + sp.readIsRegistered());
+        if(isLogged()){
+            if(isStudent()){
+                if(sp.readIsRegistered()) {
+                    context.startActivity(new Intent(context, ProfiloUtente.class));
+                }
+                else {
+                    Intent intent = new Intent( context , CameraActivity.class);
+                    intent.putExtra(EXTRA_ACTION, "signup");
+                    context.startActivity(intent);
+                }
+            }
+            else{
+                context.startActivity(new Intent(context, ListaCorsi.class));
+            }
         }
     }
+
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +62,15 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
         route("sign_in");
     }
 
+    public boolean isLogged() {
+        Log.d(TAG, "isLogged: id" + sp.readFirebaseId() + "surname " + sp.readSurname());
+        return !(sp.readFirebaseId().equals(SharedPrefManager.DEFAULT_VALUE)) &&
+                !(sp.readSurname().equals(SharedPrefManager.DEFAULT_VALUE));
+    }
 
+    public boolean isStudent() {
+        return sp.readMatricola() != -1;
+    }
 
     private Fragment buildFragment(String fragment){
 
@@ -75,27 +98,20 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
     @Override
     public void route(String dest) {
 
-        if(dest.equals("main_activity")){
-            startActivity(new Intent(context, MainActivity.class));
-            finish();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction tr = fragmentManager.beginTransaction();
 
-        } else {
+        /// qui inseriamo le transizioni, se necessario
+        if (dest.equals("new_account"))
+            tr.setCustomAnimations(R.anim.slideup_in, R.anim.slideup_out);
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction tr = fragmentManager.beginTransaction();
+        if (dest.equals("sign_in") && shown != null)
+            tr.setCustomAnimations(R.anim.slidedown_out, R.anim.slidedown_in);
 
-            /// qui inseriamo le transizioni, se necessario
-            if (dest.equals("new_account"))
-                tr.setCustomAnimations(R.anim.slideup_in, R.anim.slideup_out);
+        tr.replace(R.id.fragment_container, buildFragment(dest)).commit();
+        shown = dest;
+        Log.d(TAG, "route: shown: " + shown);
 
-            if (dest.equals("sign_in") && shown != null)
-                tr.setCustomAnimations(R.anim.slidedown_out, R.anim.slidedown_in);
-
-            tr.replace(R.id.fragment_container, buildFragment(dest)).commit();
-            shown = dest;
-            Log.d(TAG, "route: shown: " + shown);
-        }
     }
 
     @Override
@@ -104,7 +120,6 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
             finish();
             return;
         }
-
         route("sign_in");
     }
 

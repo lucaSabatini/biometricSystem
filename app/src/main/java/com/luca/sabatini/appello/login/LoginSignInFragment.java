@@ -124,18 +124,7 @@ public class LoginSignInFragment extends Fragment {
                                 } else {
                                     // se Studente andare su activity per inserire foto
                                     // altrimenti su LoginActivity
-                                    Persona persona = new Persona(username.getEditText().getText().toString().trim());
-                                    if(persona.isStudent()){
-                                        //firebaseAuth.getCurrentUser().sendEmailVerification();
-                                        Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent( context , CameraActivity.class);
-                                        intent.putExtra(EXTRA_ACTION, "signup");
-                                        context.startActivity(intent);
-                                    }else{
-                                        //firebaseAuth.getCurrentUser().sendEmailVerification();
-                                        Toast.makeText(context, "Sign up", Toast.LENGTH_SHORT).show();
-                                        context.startActivity(new Intent( context , LoginActivity.class));
-                                    }
+                                    //firebaseAuth.getCurrentUser().sendEmailVerification();
                                 }
                             }
                         });

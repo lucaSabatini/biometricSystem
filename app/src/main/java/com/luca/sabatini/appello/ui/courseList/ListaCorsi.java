@@ -24,9 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.luca.sabatini.appello.AppelloOrStatistica;
+import com.luca.sabatini.appello.professor.ProfessorMain;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
+import com.luca.sabatini.appello.student.RemoveAlert;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.gson.Gson;
@@ -64,7 +65,6 @@ public class ListaCorsi extends AppCompatActivity {
 
     private Context context = this;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +76,7 @@ public class ListaCorsi extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.lista_corsi_refresh);
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getColor(R.color.design_default_color_primary_dark));
         swipeRefreshLayout.setColorSchemeColors(Color.WHITE);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -83,7 +84,7 @@ public class ListaCorsi extends AppCompatActivity {
 
                 StringRequest postRequest = new StringRequest(
                         Request.Method.GET,
-                        RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
+                        RestConstants.getAllCoursesByIdUrl("nessuno", "" + sp.readFirebaseId()),
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -112,7 +113,7 @@ public class ListaCorsi extends AppCompatActivity {
     }
     public void buildRecyclerView(){
 
-        final RealmResults<Corso> courses = mRealm.where(Corso.class).equalTo("uid", sp.readString("uid")).findAll();
+        final RealmResults<Corso> courses = mRealm.where(Corso.class).equalTo("uid", sp.readFirebaseId()).findAll();
 
         listaCorsiAdapter = new CorsoAdapter(this, courses);
 
@@ -129,7 +130,11 @@ public class ListaCorsi extends AppCompatActivity {
         listaCorsiAdapter.setOnItemClickListener(new CorsoAdapter.OnItemClickListener() {
             @Override
             public void onItemCLick(Corso c) {
-                openActivity(c.name,  c.year);
+                sp.writeCorsoId(c.id);
+                sp.writeNomeCorso(c.name);
+                sp.writeAnnoCorso(c.year);
+
+                startActivity(new Intent(context, ProfessorMain.class));
             }
 
             @Override
@@ -148,7 +153,7 @@ public class ListaCorsi extends AppCompatActivity {
         if(isOnline()) {
             StringRequest postRequest = new StringRequest(
                     Request.Method.GET,
-                    RestConstants.getAllCoursesByIdUrl("nessuno", sp.readString("uid")),
+                    RestConstants.getAllCoursesByIdUrl("nessuno", sp.readFirebaseId()),
                     callbackGet,
                     callbackError);
 
@@ -230,7 +235,7 @@ public class ListaCorsi extends AppCompatActivity {
         Log.d(TAG, "removeItemFromMap: " + c);
         StringRequest postRequest = new StringRequest(
                 Request.Method.DELETE,
-                RestConstants.deleteCourseUrl("noncista", sp.readString("uid"), c.id),
+                RestConstants.deleteCourseUrl("noncista", sp.readFirebaseId(), c.id),
                 callbackDelete,
                 callbackError);
         queue.add(postRequest);
@@ -248,9 +253,12 @@ public class ListaCorsi extends AppCompatActivity {
     };
 
     public void openActivity(String corso, Long year){
-        Intent intent = new Intent(this, AppelloOrStatistica.class);
-        intent.putExtra(EXTRA_TEXT, corso);
-        intent.putExtra(EXTRA_DATE, year);
+
+
+
+        Intent intent = new Intent(this, ProfessorMain.class);
+        //intent.putExtra(EXTRA_TEXT, corso);
+        //intent.putExtra(EXTRA_DATE, year);
         startActivity(intent);
     }
 
@@ -258,7 +266,7 @@ public class ListaCorsi extends AppCompatActivity {
 
         StringRequest postRequest = new StringRequest(
                 Request.Method.PUT,
-                RestConstants.updateCourseUrl("noncista", sp.readString("uid")),
+                RestConstants.updateCourseUrl("noncista", sp.readFirebaseId()),
                 callbackUpdate,
                 callbackError){
             @Override
@@ -273,7 +281,7 @@ public class ListaCorsi extends AppCompatActivity {
                     c.name = nomeCorso;
                     c.year = year;
                     c.id = id;
-                    c.uid = sp.readString("uid");
+                    c.uid = sp.readFirebaseId();
                     Log.d(TAG, "getBody: "+ c);
                     return new Gson().toJson(c).getBytes();
                 } catch (Exception e) {
@@ -337,7 +345,7 @@ public class ListaCorsi extends AppCompatActivity {
         if (isOnline()) {
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST,
-                    RestConstants.postCourseUrl("nono", sp.readString("uid")),
+                    RestConstants.postCourseUrl("nono", sp.readFirebaseId()),
                     callbackPost,
                     callbackError) {
                 @Override
@@ -352,7 +360,7 @@ public class ListaCorsi extends AppCompatActivity {
                         Corso c = new Corso();
                         c.name = nomeCorso;
                         c.year = Long.valueOf(year);
-                        c.uid = sp.readString("uid");
+                        c.uid = sp.readFirebaseId();
                         return new Gson().toJson(c).getBytes();
                     } catch (Exception e) {
                         Log.d(TAG, "getBody: " + e.toString());
@@ -368,7 +376,7 @@ public class ListaCorsi extends AppCompatActivity {
             Corso c = new Corso();
             c.name = nomeCorso;
             c.year = Long.valueOf(year);
-            c.uid = sp.readString("uid");
+            c.uid = sp.readFirebaseId();
             mRealm.insertOrUpdate(c);
             mRealm.commitTransaction();
 

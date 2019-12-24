@@ -1,12 +1,14 @@
-package com.luca.sabatini.appello.student;
+package com.luca.sabatini.appello.professor;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,45 +18,59 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.entities.CheckSessionResponse;
-import com.luca.sabatini.appello.entities.Corso;
+import com.luca.sabatini.appello.entities.Student;
 import com.luca.sabatini.appello.utils.RestConstants;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 import java.util.Objects;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 
-public class RicercaAppelli extends AppCompatActivity {
 
-    private final String TAG = "RicercaAppelli";
+public class Session extends AppCompatActivity {
+
+    private final String TAG = "Session";
+    private RecyclerView attendanceRecycler;
+    private SessionAdapter sessionAdapter;
+
     private RequestQueue queue;
-    private Context context;
+    private Realm mRealm;
+    private final SharedPrefManager sp = new SharedPrefManager(this);
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.attendance_session);
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
-        setContentView(R.layout.activity_ricerca_appelli);
-        context = this;
-        String beaconId = ricercaBeacon();
+        mRealm = Realm.getDefaultInstance();
+        attendanceRecycler = findViewById(R.id.attendanceRecycle);
+        final RealmResults<Student> students = mRealm.where(Student.class).findAll();
 
-        if(!(ricercaBeacon().equals(""))){
-            Log.d(TAG, "onCreate: " + ricercaBeacon());
-            checkAttendanceSessionBackend(beaconId);
+        sessionAdapter = new SessionAdapter(this, students);
 
-        }
+        attendanceRecycler.setLayoutManager(new LinearLayoutManager(this));
+        attendanceRecycler.setAdapter(sessionAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    public void closeAttendanceSession(View v){
+        mRealm.where(Student.class).findAll().deleteAllFromRealm();
+        closeAttendanceSessionBackend();
 
     }
 
-    private String ricercaBeacon(){
-        //TODO: implementare parte beacons
-        return "beaconnuovo";
-    }
 
-    private void checkAttendanceSessionBackend(String beaconId){
-        //Log.d(TAG, "closeAttendanceSessionBackend: " + sp.readSessionId());
+    private void closeAttendanceSessionBackend(){
+        Log.d(TAG, "closeAttendanceSessionBackend: " + sp.readSessionId());
         StringRequest postRequest = new StringRequest(
                 Request.Method.GET,
-                RestConstants.checkSessionUrl(beaconId),
+                RestConstants.closeSessionUrl(sp.readSessionId()),
                 callbackGet,
                 callbackError);
 
@@ -76,18 +92,10 @@ public class RicercaAppelli extends AppCompatActivity {
     private Response.Listener<String> callbackGet = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
-            Log.d(TAG, "onCreate: " + response);
-            if(response.equals("")){
-                Toast.makeText(context, "nessun appello trovato", Toast.LENGTH_LONG).show();
-                finish();
-                return;
-            }
-            CheckSessionResponse corso = new Gson().fromJson(response, CheckSessionResponse.class);
-            Log.d(TAG, "onResponse: " + corso);
-            //sp.writeSessionId(0L);
+            //Long id = new Gson().fromJson(response, Long.class);
+            sp.writeSessionId(0L);
             //startActivity(new Intent(context, ProfessorMain.class));
-            //finish();
-
+            finish();
         }
     };
 }
