@@ -22,8 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
-
-import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
+import static com.luca.sabatini.appello.student.CameraActivity.EXTRA_ACTION;
 
 public class UserProfile extends AppCompatActivity {
 

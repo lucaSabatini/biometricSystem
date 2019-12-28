@@ -27,7 +27,6 @@ import com.android.volley.toolbox.Volley;
 import com.luca.sabatini.appello.professor.ProfessorMain;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
-import com.luca.sabatini.appello.student.RemoveAlert;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.gson.Gson;

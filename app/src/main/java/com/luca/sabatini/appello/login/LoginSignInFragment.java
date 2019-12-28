@@ -27,7 +27,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
 
 
 public class LoginSignInFragment extends Fragment {

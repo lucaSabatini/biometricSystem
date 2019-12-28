@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.CheckSessionResponse;
 import com.luca.sabatini.appello.entities.Corso;
+import com.luca.sabatini.appello.ui.courseList.RemoveAlert;
 import com.luca.sabatini.appello.utils.RestConstants;
 
 import java.util.Objects;
@@ -84,10 +85,13 @@ public class RicercaAppelli extends AppCompatActivity {
             }
             CheckSessionResponse corso = new Gson().fromJson(response, CheckSessionResponse.class);
             Log.d(TAG, "onResponse: " + corso);
+            ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(corso.getNomeCorso());
+            confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
             //sp.writeSessionId(0L);
             //startActivity(new Intent(context, ProfessorMain.class));
             //finish();
 
         }
     };
+
 }

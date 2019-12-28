@@ -1,7 +1,10 @@
 package com.luca.sabatini.appello.student;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,27 +19,22 @@ import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
 import com.luca.sabatini.appello.ui.courseList.ListaCorsi;
 
-public class RemoveAlert extends DialogFragment {
+import static com.luca.sabatini.appello.student.CameraActivity.EXTRA_ACTION;
 
-    private static final String TAG = "RemoveAlert";
+public class ConfirmCourseAlert extends DialogFragment {
+
+    private static final String TAG = "ConfirmCourseAlert";
     private String title;
-    private Corso c;
     private String namePositiveButton;
     private String nameNegativeButton;
     private String message;
-    private ListaCorsi listaCorsi;
-    private RemoveAlertListener listener;
 
-    public RemoveAlert(ListaCorsi listaCorsi, Corso c){
-        title = "Rimuovi corso";
-        message = "Sei sicuro di rimuovere il corso?";
+    public ConfirmCourseAlert(String corso){
+        title = "Trovata sessione di appello per il corso: " + corso;
+        message = "Avviare riconoscimento biometrico?";
         nameNegativeButton = "No";
         namePositiveButton = "Si";
-        this.listaCorsi = listaCorsi;
-        Log.d(TAG, "RemoveAlert: "+ c);
-        this.c = c;
     }
-
 
     @NonNull
     @Override
@@ -51,35 +49,21 @@ public class RemoveAlert extends DialogFragment {
                 .setPositiveButton(namePositiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("alert", "onClick: Rimouvi");
-                        listaCorsi.removeItemFromMap(c);
-                        //listaCorsi.removeItem(position);
+                        Intent intent = new Intent(getContext(), CameraActivity.class);
+                        intent.putExtra(EXTRA_ACTION, "verification");
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton(nameNegativeButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("alert", "onClick: annulla");
-                        //listener.removeCorso(true);
-                        //swipeToDelete.undoDelete();
                         dialogInterface.cancel();
+                        ((Activity) getContext()).finish();
                     }
                 });
-        //.setView(layoutInflater.inflate(R.layout.popup_add_corso, null));
+
         return builder.create();
     }
 
-    /*@Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try{
-            listener = (RemoveAlertListener) context;
-        } catch (ClassCastException e){
-            throw new ClassCastException(context.toString() + "implement RemoveAlert");
-        }
-    }*/
-
-    public interface RemoveAlertListener{
-        void removeCorso(boolean undo);
-    }
 }

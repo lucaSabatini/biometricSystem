@@ -45,4 +45,8 @@ public class RestConstants {
     public static String checkSessionUrl(String beaconId){
         return String.format("%s/checkSession?beaconId=%s", ATTENDANCE, beaconId);
     }
+
+    public static String getRegistrationPhotoUrl(Long matricola){
+        return String.format("%s/getRegistrationPhoto?matricola=%s", STUDENT, matricola);
+    }
 }

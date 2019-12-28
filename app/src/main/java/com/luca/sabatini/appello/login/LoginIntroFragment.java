@@ -26,9 +26,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.luca.sabatini.appello.ProfessorProfile;
 import com.luca.sabatini.appello.R;
-import com.luca.sabatini.appello.entities.Corso;
-import com.luca.sabatini.appello.student.CameraActivity;
-import com.luca.sabatini.appello.student.ProfiloUtente;
 import com.luca.sabatini.appello.student.UserProfile;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
@@ -38,12 +35,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
+import static com.luca.sabatini.appello.student.CameraActivity.EXTRA_ACTION;
 
 public class LoginIntroFragment extends Fragment {
 
     private static final String TAG = "LoginIntroFragment";
-    public final static String EXTRA_ACTION = "com.example.luca.biometricsystem.logingeneroso";
+
     private static String emailPattern = "([a-z]+[.][0-9]+@studenti[.]uniroma1[.]it)|([a-z]+@di[.]uniroma1[.]it)";
     private TextView newAccount;
     private TextInputLayout usernameTextInput;

@@ -18,13 +18,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.luca.sabatini.appello.ProfessorProfile;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.student.CameraActivity;
-import com.luca.sabatini.appello.student.ProfiloUtente;
 import com.luca.sabatini.appello.student.UserProfile;
-import com.luca.sabatini.appello.ui.courseList.ListaCorsi;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
-import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
-
+import static com.luca.sabatini.appello.student.CameraActivity.EXTRA_ACTION;
 
 public class LoginActivity extends AppCompatActivity implements LoginRoutingInterface{
 

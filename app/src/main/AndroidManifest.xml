@@ -31,7 +31,6 @@
         <activity android:name=".StatisticsActivity" />
         <activity android:name=".student.ConfermaPresenza" />
         <activity android:name=".student.RicercaAppelli" />
-        <activity android:name=".student.ProfiloUtente" />
         <activity android:name=".student.ui.settings.AboutActivity" />
         <activity android:name=".student.CameraActivity" />
         <activity android:name="com.luca.sabatini.appello.professor.Session"></activity>
@@ -42,8 +41,7 @@
         <activity
             android:name="com.luca.sabatini.appello.professor.ProfessorMain"
             android:parentActivityName="com.luca.sabatini.appello.ui.courseList.ListaCorsi" />
-        <activity android:name="com.luca.sabatini.appello.login.ForgotPassword" />
-            android:name=".AppelloOrStatistica"
+        <activity android:name="com.luca.sabatini.appello.login.ForgotPassword"
             android:parentActivityName=".ui.courseList.ListaCorsi" />
         <activity
             android:name=".SplashScreen"

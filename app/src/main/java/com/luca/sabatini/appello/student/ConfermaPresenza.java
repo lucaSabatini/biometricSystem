@@ -10,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luca.sabatini.appello.R;
-
-import static com.luca.sabatini.appello.login.LoginIntroFragment.EXTRA_ACTION;
+import static com.luca.sabatini.appello.student.CameraActivity.EXTRA_ACTION;
 
 
 public class ConfermaPresenza extends AppCompatActivity {
@@ -54,6 +53,7 @@ public class ConfermaPresenza extends AppCompatActivity {
 
     public void apriProfiloUtenteOkOnClick(View view){
         //aggiungere activity tra login e ricercaAppello
-        startActivity(new Intent(this, ProfiloUtente.class));
+        startActivity(new Intent(this, UserProfile.class));
+        finish();
     }
 }
