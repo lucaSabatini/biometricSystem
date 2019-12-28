@@ -23,6 +23,7 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.android.volley.Request;
@@ -245,6 +246,7 @@ public class CameraActivity extends AppCompatActivity {
                         + "belong to the same person");*/
                 Log.i("CIAO", "onPostExecute: "+result.isIdentical);
                 Log.d(TAG, "onPostExecute: " + result.confidence);
+                Toast.makeText(context, "confidence " + result.confidence, Toast.LENGTH_LONG).show();
                 if(result.confidence > 0.6){
                     Intent i = new Intent(context, ConfermaPresenza.class);
                     i.putExtra("happy", true);
