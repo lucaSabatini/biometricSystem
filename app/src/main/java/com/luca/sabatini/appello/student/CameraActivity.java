@@ -36,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.luca.sabatini.appello.R;
 
+import com.luca.sabatini.appello.entities.CheckSessionResponse;
 import com.luca.sabatini.appello.entities.Student;
 import com.luca.sabatini.appello.entities.StudentBuilder;
 import com.luca.sabatini.appello.login.LoginActivity;
@@ -44,6 +45,7 @@ import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
 import com.microsoft.projectoxford.face.contract.Face;
+import com.microsoft.projectoxford.face.contract.VerifyResult;
 import com.otaliastudios.cameraview.BitmapCallback;
 import com.otaliastudios.cameraview.CameraListener;
 import com.otaliastudios.cameraview.CameraView;
@@ -55,6 +57,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.UUID;
 
 public class CameraActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 42;
@@ -71,11 +74,13 @@ public class CameraActivity extends AppCompatActivity {
     RequestQueue queue;
     private String action;
 
+    FaceServiceClient faceServiceClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        faceServiceClient = new FaceServiceRestClient("https://face-subscription.cognitiveservices.azure.com/face/v1.0/","816bb822c29241f5aae719e540404311");
 
         sp = new SharedPrefManager(this);
 
@@ -137,10 +142,6 @@ public class CameraActivity extends AppCompatActivity {
 
     }
 
-    private Canvas temp;
-    private Paint paint;
-    private Paint p = new Paint();
-    private Paint transparentPaint;
 
     public void takePicture(View view){
         camera.takePicture();
@@ -154,7 +155,7 @@ public class CameraActivity extends AppCompatActivity {
     public void conferma(View view){
         //inviare immagine al server "data"
 
-        if(action.equals("login")){
+        if(action.equals("signup")){
             Log.d(TAG, "verifyUser: non STIAMO");
             registerUser(Base64.getEncoder().encodeToString(data));
         }
@@ -180,46 +181,128 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
+                        byte[] registrationPhoto = new Gson().fromJson(response, byte[].class);
                         //sp.writeIsRegistered(true);
                         //startActivity(new Intent(context, UserProfile.class));
-                        detect(data);
+                        detect(data, registrationPhoto);
                         //finish();
                     }
                 }, callbackError);
-        queue.add(stringRequest);
+        //queue.add(stringRequest);
+
+        BinaryRequest binaryRequest = new BinaryRequest(0, RestConstants.getRegistrationPhotoUrl(sp.readMatricola()), new Response.Listener<byte[]>() {
+            @Override
+            public void onResponse(byte[] response) {
+                Log.d(TAG, "onResponse: " + response);
+                //byte[] registrationPhoto = new Gson().fromJson(response, byte[].class);
+                //sp.writeIsRegistered(true);
+                //startActivity(new Intent(context, UserProfile.class));
+                detect(response, data);
+                //finish();
+            }
+        }, callbackError
+        );
+
+        queue.add(binaryRequest);
 
     }
+
+    private class VerificationTask extends AsyncTask<Void, String, VerifyResult> {
+        // The IDs of two face to verify.
+        private UUID mFaceId0;
+        private UUID mFaceId1;
+
+        VerificationTask (UUID faceId0, UUID faceId1) {
+            Log.i("CIAO", "faceid0: "+faceId0.toString());
+            Log.i("CIAO", "faceid1: "+faceId1.toString());
+            mFaceId0 = faceId0;
+            mFaceId1 = faceId1;
+        }
+
+        @Override
+        protected VerifyResult doInBackground(Void... params) {
+            // Get an instance of face service client to detect faces in image.
+            try{
+                publishProgress("Verifying...");
+
+                // Start verification.
+                return faceServiceClient.verify(
+                        mFaceId0,      /* The first face ID to verify */
+                        mFaceId1);     /* The second face ID to verify */
+            }  catch (Exception e) {
+                publishProgress(e.getMessage());
+//                addLog(e.getMessage());
+                return null;
+            }
+        }
+
+
+        @Override
+        protected void onPostExecute(VerifyResult result) {
+            if (result != null) {
+                /*addLog("Response: Success. Face " + mFaceId0 + " and face "
+                        + mFaceId1 + (result.isIdentical ? " " : " don't ")
+                        + "belong to the same person");*/
+                Log.i("CIAO", "onPostExecute: "+result.isIdentical);
+                Log.d(TAG, "onPostExecute: " + result.confidence);
+                if(result.confidence > 0.6){
+                    Intent i = new Intent(context, ConfermaPresenza.class);
+                    i.putExtra("happy", true);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(context, ConfermaPresenza.class);
+                    i.putExtra("happy", false);
+                    startActivity(i);
+                }
+            }
+
+        }
+    }
+
 
     // Background task of face detection.
     private class DetectionTask extends AsyncTask<InputStream, String, Face[]> {
 
         @Override
         protected Face[] doInBackground(InputStream... params) {
-            // Get an instance of face service client to detect faces in image.
-            FaceServiceClient faceServiceClient = new FaceServiceRestClient("https://appello.cognitiveservices.azure.com/face/v1.0/","f89ae8d239014d658ae7382e3d7450e9");
-            try{
-                publishProgress("Detecting...");
-
-                // Start detection.
-                return faceServiceClient.detect(
-                        params[0],  /* Input stream of image to detect */
-                        true,       /* Whether to return face ID */
-                        false,       /* Whether to return face landmarks */
+            Face[]  res = new Face[2];
+            for (int i = 0; i < 2; i ++){
+                try{
+                    Face[] result1 = faceServiceClient.detect(
+                            params[i],  /* Input stream of image to detect */
+                            true,       /* Whether to return face ID */
+                            false,       /* Whether to return face landmarks */
                         /* Which face attributes to analyze, currently we support:
                            age,gender,headPose,smile,facialHair */
-                        null);
-            }  catch (Exception e) {
-                publishProgress(e.getMessage());
-                return null;
+                            null);
+                    if (result1.length == 0){
+                        Intent intent = new Intent(context, ConfermaPresenza.class);
+                        intent.putExtra("happy", false);
+                        startActivity(intent);
+                        return null;
+                    } else{
+                        res[i] = result1[0];
+                    }
+
+                }  catch (Exception e) {
+                    publishProgress(e.getMessage());
+
+                }
+
             }
+
+            return res;
         }
 
         @Override
         protected void onPostExecute(Face[] result) {
             // Show the result on screen when detection is done.
+            if (result == null) return;
+
             Log.i("CIAO", "ciao mamma sto per entrare: ");
             Log.d(TAG, "onPostExecute: " + result[0].faceId);
-
+            Log.d(TAG, "onPostExecute: " + result[1].faceId);
+            new VerificationTask(result[0].faceId, result[1].faceId).execute();
             //setUiAfterDetection(result, mIndex, mSucceed);
         }
     }
@@ -228,13 +311,8 @@ public class CameraActivity extends AppCompatActivity {
 
 
     // Start detecting in image specified by index.
-    private void detect(byte[] photo) {
-        // Put the image into an input stream for detection.
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(photo);
-
-        Log.i("CIAO", "detect: input "+inputStream.toString());
-        // Start a background task to detect faces in the image.
-        new DetectionTask().execute(inputStream);
+    private void detect(byte[] photo, byte[]registrationPhoto) {
+        new DetectionTask().execute(new ByteArrayInputStream(photo), new ByteArrayInputStream(registrationPhoto));
     }
 
 
@@ -247,7 +325,6 @@ public class CameraActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: " + response);
                         sp.writeIsRegistered(true);
                         startActivity(new Intent(context, UserProfile.class));
-
                         finish();
                     }
                 }, callbackError){

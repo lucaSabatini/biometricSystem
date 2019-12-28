@@ -94,7 +94,7 @@ public class LoginIntroFragment extends Fragment {
             this.callback = null;
         }
         this.context = context;
-        sp = new SharedPrefManager(context);
+
     }
 
     @Override
@@ -108,6 +108,7 @@ public class LoginIntroFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sp = new SharedPrefManager(context);
 
     }
 
@@ -164,7 +165,7 @@ public class LoginIntroFragment extends Fragment {
         signInProgressBar.setVisibility(View.VISIBLE);
         String username = usernameTextInput.getEditText().getText().toString().trim();
         String password = passwordTextInput.getEditText().getText().toString().trim();
-        Fragment f = this;
+
         firebaseAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override

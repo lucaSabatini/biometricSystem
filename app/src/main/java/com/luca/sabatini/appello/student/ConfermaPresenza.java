@@ -28,11 +28,13 @@ public class ConfermaPresenza extends AppCompatActivity {
         scritta = findViewById(R.id.scritta);
         conferma = findViewById(R.id.conferma);
         riprova = findViewById(R.id.riprova);
+        boolean action = getIntent().getBooleanExtra("happy", false);
+        animation(action);
     }
 
 
-    public void animation(String action){
-        if(action.equals("confermato")){
+    public void animation(boolean happy){
+        if(happy){
             faccina.setImageResource(R.drawable.ic_sentiment_satisfied_green_300dp);
             scritta.setText("Presenza confermata!");
             conferma.setVisibility(View.VISIBLE);
@@ -47,7 +49,7 @@ public class ConfermaPresenza extends AppCompatActivity {
 
     public void apriCameraActivityRiprovaOnClick(View view){
         Intent intent = new Intent(this, CameraActivity.class);
-        intent.putExtra("login", EXTRA_ACTION);
+        intent.putExtra("verification", EXTRA_ACTION);
         startActivity(intent);
     }
 
