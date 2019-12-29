@@ -49,4 +49,8 @@ public class RestConstants {
     public static String getRegistrationPhotoUrl(Long matricola){
         return String.format("%s/getRegistrationPhoto?matricola=%s", STUDENT, matricola);
     }
+
+    public static String changeRegistrationPhotoUrl(Long matricola){
+        return String.format("%s/changeRegistrationPhoto?matricola=%s", STUDENT, matricola);
+    }
 }

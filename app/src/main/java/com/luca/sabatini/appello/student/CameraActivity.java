@@ -55,7 +55,6 @@ import com.otaliastudios.cameraview.controls.Facing;
 import com.otaliastudios.cameraview.controls.Mode;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Base64;
 import java.util.UUID;
@@ -121,8 +120,6 @@ public class CameraActivity extends AppCompatActivity {
                         fotoCamera.setImageBitmap(bitmap);
                         visibleNotVisible("show_photo");
 
-                        //Salviamo nel backend la registrazione avvenuta
-
                     }
                 });
                 // If planning to save a file on a background thread,
@@ -154,23 +151,51 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     public void conferma(View view){
-        //inviare immagine al server "data"
 
         if(action.equals("signup")){
-            Log.d(TAG, "verifyUser: non STIAMO");
+            Log.d(TAG, "signup");
             registerUser(Base64.getEncoder().encodeToString(data));
         }
         else if(action.equals("verification")) {
-            Log.d(TAG, "verifyUser: STIAMO");
+            Log.d(TAG, "verification");
             verifyUser();
         }
         else if(action.equals("changePhoto")){
-            Log.d(TAG, "verifyUser: no STIAMO");
-            startActivity(new Intent(context, UserProfile.class));
+            Log.d(TAG, "changePhoto");
+            postNewRegistrationPhoto(data);
+            //startActivity(new Intent(context, UserProfile.class));
         }else{
-            Log.d(TAG, "verifyUser: nono STIAMO");
-            startActivity(new Intent(context, LoginActivity.class));
+            Log.e(TAG, "Invalid Login action " + action );
         }
+    }
+
+    private void postNewRegistrationPhoto(byte[] photo){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                RestConstants.changeRegistrationPhotoUrl(sp.readMatricola()),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "onResponse: " + response);
+                        //startActivity(new Intent(context, UserProfile.class));
+                        Toast.makeText(context, "Foto profilo aggionata", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                }, callbackError){
+            @Override
+            public String getBodyContentType() {
+                return "application/octet-stream; charset=utf-8";
+            }
+            @Override
+            public byte[] getBody() {
+                try {
+                    return photo;
+                } catch (Exception e) {
+                    Log.d(TAG, "getBody: " + e.toString());
+                    return null;
+                }
+            }
+        };
+        queue.add(stringRequest);
     }
 
     private void verifyUser(){
