@@ -177,7 +177,7 @@ public class CameraActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
                         //startActivity(new Intent(context, UserProfile.class));
-                        Toast.makeText(context, "Foto profilo aggionata", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Foto profilo aggiornata", Toast.LENGTH_LONG).show();
                         finish();
                     }
                 }, callbackError){
