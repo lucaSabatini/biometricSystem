@@ -78,7 +78,7 @@ public class AppelloProfessore extends AppCompatActivity implements BeaconConsum
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout(IBEACON));
 
-        beaconManager.bind(this);
+
 
 
 
@@ -128,7 +128,8 @@ public class AppelloProfessore extends AppCompatActivity implements BeaconConsum
     }
 
     private void startBeaconsScanning(){
-
+        Log.d(TAG, "startBeaconsScanning: bind");
+        beaconManager.bind(this);
     }
 
 
