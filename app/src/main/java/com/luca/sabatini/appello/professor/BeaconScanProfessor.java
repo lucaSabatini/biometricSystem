@@ -46,7 +46,7 @@ public class BeaconScanProfessor extends BeaconScan {
     public void onBeaconIdReceived(String beaconId) {
         StringRequest postRequest = new StringRequest(
                 Request.Method.GET,
-                RestConstants.createSessionUrl(sp.readFirebaseId(), beaconId, sp.readCorsoId()),
+                RestConstants.createSessionUrl(sp.readFirebaseId(), beaconId, sp.readCorsoId(), sp.readRegistrationId()),
                 callbackGet,
                 callbackError);
         queue.add(postRequest);

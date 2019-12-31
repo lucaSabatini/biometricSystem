@@ -30,9 +30,8 @@ public class FirebaseService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         Student s = new StudentBuilder().createStudent();
         Realm mRealm = Realm.getDefaultInstance();
-        s.matricola = 1234L;
-        s.surname = remoteMessage.getData().get("firebaseId");
-        s.firebaseId = remoteMessage.getData().get("firebaseId");
+        s.matricola = Long.parseLong(remoteMessage.getData().get("matricola"));
+        s.surname = remoteMessage.getData().get("surname");
 
         mRealm.beginTransaction();
         mRealm.insertOrUpdate(s);

@@ -21,6 +21,8 @@ import com.luca.sabatini.appello.BeaconScan;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.CheckSessionResponse;
 import com.luca.sabatini.appello.utils.RestConstants;
+import com.luca.sabatini.appello.utils.SharedPrefManager;
+
 import java.util.Objects;
 
 
@@ -28,12 +30,14 @@ public class BeaconScanStudent extends BeaconScan {
     private final String TAG = "BeaconScanStudent";
     public RequestQueue queue;
     private Context context;
+    SharedPrefManager sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
+        sp = new SharedPrefManager(this);
 
         //TODO:commentare qui
         onBeaconIdReceived("beacondefault");
@@ -46,7 +50,6 @@ public class BeaconScanStudent extends BeaconScan {
                 RestConstants.checkSessionUrl(beaconId),
                 callbackGet,
                 callbackError);
-
         queue.add(postRequest);
     }
 
@@ -72,9 +75,10 @@ public class BeaconScanStudent extends BeaconScan {
                 finish();
                 return;
             }
-            CheckSessionResponse corso = new Gson().fromJson(response, CheckSessionResponse.class);
-            Log.d(TAG, "onResponse: " + corso);
-            ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(corso.getNomeCorso());
+            CheckSessionResponse sessionResponse = new Gson().fromJson(response, CheckSessionResponse.class);
+            sp.writeRegistrationId(sessionResponse.getRegistrationId());
+            Log.d(TAG, "onResponse: " + sessionResponse);
+            ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(sessionResponse.getNomeCorso());
             confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
         }
     };

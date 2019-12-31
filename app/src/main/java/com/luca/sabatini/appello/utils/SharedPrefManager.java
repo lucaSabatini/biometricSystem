@@ -21,6 +21,7 @@ public class SharedPrefManager {
     private static final String ANNOCORSO = "annocorso";
     private static final String NOMECORSO = "nomecorso";
     private static final String CORSOID = "corsoid";
+    private static final String REGISTRATIONID = "registrationid";
 
     public SharedPrefManager (Context context){
         this.context = context;
@@ -105,6 +106,10 @@ public class SharedPrefManager {
     public void writeCorsoId(Long corsoId){writeLong(CORSOID, corsoId);}
 
     public Long readCorsoId(){return readLong(CORSOID);}
+
+    public void writeRegistrationId(String registrationId){writeString(REGISTRATIONID, registrationId);}
+
+    public String readRegistrationId(){return readString(REGISTRATIONID);}
 
     public void resetSharedPref(){
         writeSurname(SharedPrefManager.DEFAULT_VALUE);

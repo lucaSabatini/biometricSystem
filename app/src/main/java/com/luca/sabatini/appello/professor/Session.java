@@ -62,6 +62,7 @@ public class Session extends AppCompatActivity {
 
     public void closeAttendanceSession(View v){
         mRealm.where(Student.class).findAll().deleteAllFromRealm();
+        mRealm.close();
         closeAttendanceSessionBackend();
 
     }

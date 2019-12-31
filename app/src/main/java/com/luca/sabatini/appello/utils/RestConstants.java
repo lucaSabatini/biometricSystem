@@ -34,8 +34,8 @@ public class RestConstants {
         return String.format("%s/isRegistered?firebaseId=%s", STUDENT, uid);
     }
 
-    public static String createSessionUrl(String professorId, String beaconId, Long corsoId){
-        return String.format("%s/createSession?professorId=%s&beaconId=%s&corsoId=%d", ATTENDANCE, professorId, beaconId, corsoId);
+    public static String createSessionUrl(String professorId, String beaconId, Long corsoId, String registrationId){
+        return String.format("%s/createSession?professorId=%s&beaconId=%s&corsoId=%d&registrationId=%s", ATTENDANCE, professorId, beaconId, corsoId, registrationId);
     }
 
     public static String closeSessionUrl(Long sessionId){
@@ -46,8 +46,8 @@ public class RestConstants {
         return String.format("%s/checkSession?beaconId=%s", ATTENDANCE, beaconId);
     }
 
-    public static String createAttendanceUrl(String studentId, String registrationToken){
-        return String.format("%s/createAttendance?studentId=%s&registrationToken=%s", ATTENDANCE, studentId, registrationToken);
+    public static String createAttendanceUrl(Long matricola, String surname, String registrationToken){
+        return String.format("%s/createAttendance?matricola=%s&surname=%s&registrationToken=%s", ATTENDANCE, matricola, surname, registrationToken);
     }
 
     public static String getRegistrationPhotoUrl(Long matricola){

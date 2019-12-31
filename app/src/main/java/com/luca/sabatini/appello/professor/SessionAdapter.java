@@ -48,7 +48,6 @@ public class SessionAdapter extends RealmRecyclerViewAdapter<Student, SessionAda
         private void bind(Student student){
             matricola.setText("" + student.matricola);
             cognome.setText(student.surname);
-
         }
     }
 }
