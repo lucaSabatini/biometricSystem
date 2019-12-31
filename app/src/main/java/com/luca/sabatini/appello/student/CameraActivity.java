@@ -93,6 +93,7 @@ public class CameraActivity extends AppCompatActivity {
         }
 
         queue = Volley.newRequestQueue(this);
+
         action = getIntent().getStringExtra(EXTRA_ACTION);
         camera = findViewById(R.id.camera);
         fotoCamera = findViewById(R.id.foto_camera);
@@ -326,7 +327,7 @@ public class CameraActivity extends AppCompatActivity {
             // Show the result on screen when detection is done.
             if (result == null) return;
 
-            Log.i("CIAO", "ciao mamma sto per entrare: ");
+            Log.i(TAG, "identification: ");
             Log.d(TAG, "onPostExecute: " + result[0].faceId);
             Log.d(TAG, "onPostExecute: " + result[1].faceId);
             new VerificationTask(result[0].faceId, result[1].faceId).execute();

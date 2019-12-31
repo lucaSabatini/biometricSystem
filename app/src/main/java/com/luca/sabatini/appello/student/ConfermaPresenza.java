@@ -39,6 +39,7 @@ public class ConfermaPresenza extends AppCompatActivity {
             scritta.setText("Presenza confermata!");
             conferma.setVisibility(View.VISIBLE);
             riprova.setVisibility(View.GONE);
+            //TODO: manda attendance al server
         }else{
             faccina.setImageResource(R.drawable.ic_sentiment_dissatisfied_red_300dp);
             scritta.setText("Presenza non confermata!");

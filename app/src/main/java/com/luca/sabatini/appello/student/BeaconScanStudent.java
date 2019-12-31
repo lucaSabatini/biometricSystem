@@ -1,10 +1,12 @@
 package com.luca.sabatini.appello.student;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,44 +17,30 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.luca.sabatini.appello.BeaconScan;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.CheckSessionResponse;
-import com.luca.sabatini.appello.entities.Corso;
-import com.luca.sabatini.appello.ui.courseList.RemoveAlert;
 import com.luca.sabatini.appello.utils.RestConstants;
-
 import java.util.Objects;
 
 
-public class RicercaAppelli extends AppCompatActivity {
-
-    private final String TAG = "RicercaAppelli";
-    private RequestQueue queue;
+public class BeaconScanStudent extends BeaconScan {
+    private final String TAG = "BeaconScanStudent";
+    public RequestQueue queue;
     private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        queue = Volley.newRequestQueue(Objects.requireNonNull(this));
-        setContentView(R.layout.activity_ricerca_appelli);
         context = this;
-        String beaconId = ricercaBeacon();
+        queue = Volley.newRequestQueue(Objects.requireNonNull(this));
 
-        if(!(ricercaBeacon().equals(""))){
-            Log.d(TAG, "onCreate: " + ricercaBeacon());
-            checkAttendanceSessionBackend(beaconId);
-
-        }
-
+        //TODO:commentare qui
+        onBeaconIdReceived("beacondefault");
     }
 
-    private String ricercaBeacon(){
-        //TODO: implementare parte beacons
-        return "beaconnuovo";
-    }
-
-    private void checkAttendanceSessionBackend(String beaconId){
-        //Log.d(TAG, "closeAttendanceSessionBackend: " + sp.readSessionId());
+    @Override
+    public void onBeaconIdReceived(String beaconId) {
         StringRequest postRequest = new StringRequest(
                 Request.Method.GET,
                 RestConstants.checkSessionUrl(beaconId),
@@ -61,6 +49,7 @@ public class RicercaAppelli extends AppCompatActivity {
 
         queue.add(postRequest);
     }
+
 
     private Response.ErrorListener callbackError = new Response.ErrorListener() {
         @Override
@@ -87,10 +76,6 @@ public class RicercaAppelli extends AppCompatActivity {
             Log.d(TAG, "onResponse: " + corso);
             ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(corso.getNomeCorso());
             confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
-            //sp.writeSessionId(0L);
-            //startActivity(new Intent(context, ProfessorMain.class));
-            //finish();
-
         }
     };
 

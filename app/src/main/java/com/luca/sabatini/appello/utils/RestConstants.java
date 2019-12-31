@@ -46,6 +46,10 @@ public class RestConstants {
         return String.format("%s/checkSession?beaconId=%s", ATTENDANCE, beaconId);
     }
 
+    public static String createAttendanceUrl(String studentId, String registrationToken){
+        return String.format("%s/createAttendance?studentId=%s&registrationToken=%s", ATTENDANCE, studentId, registrationToken);
+    }
+
     public static String getRegistrationPhotoUrl(Long matricola){
         return String.format("%s/getRegistrationPhoto?matricola=%s", STUDENT, matricola);
     }

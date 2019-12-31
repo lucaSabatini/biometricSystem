@@ -73,7 +73,7 @@ public class UserProfile extends AppCompatActivity {
     }
 
     public void ricercaAppelliFabOnClick(View view){
-        startActivity(new Intent(this, RicercaAppelli.class));
+        startActivity(new Intent(this, BeaconScanStudent.class));
     }
 
     @Override

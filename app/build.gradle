@@ -77,13 +77,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.1'
-    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'io.realm:android-adapters:1.4.0'
 
+    //statistics
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+    //azure face recognition
     implementation 'com.microsoft.projectoxford:face:1.4.3'
+
+    //beacons
+    implementation 'org.altbeacon:android-beacon-library:2.16.3'
 
 }
 

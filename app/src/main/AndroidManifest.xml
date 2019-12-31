@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".login.ChangePassword"></activity>
+        <activity android:name=".login.ChangePassword"/>
+        <activity android:name=".professor.BeaconScanProfessor"/>
         <activity
             android:name=".ProfessorProfile"
             android:label="@string/title_activity_professor_profile"
@@ -30,14 +31,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StatisticsActivity" />
         <activity android:name=".student.ConfermaPresenza" />
-        <activity android:name=".student.RicercaAppelli" />
+        <activity android:name=".student.BeaconScanStudent" />
         <activity android:name=".student.ui.settings.AboutActivity" />
         <activity android:name=".student.CameraActivity" />
-        <activity android:name="com.luca.sabatini.appello.professor.Session"></activity>
-        <!--
-                PER MODIFICARE L'ACTIVITY DI INIZIO DEVI ANDARE NELLA CLASSE SplashScrenn
-                E MODIFICARE IL SECONDO PARAMETRO DELL'INTENT
-        -->
+        <activity android:name="com.luca.sabatini.appello.professor.Session"/>
         <activity
             android:name="com.luca.sabatini.appello.professor.ProfessorMain"
             android:parentActivityName="com.luca.sabatini.appello.ui.courseList.ListaCorsi" />

@@ -57,6 +57,7 @@ public class Session extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        closeAttendanceSession(null);
     }
 
     public void closeAttendanceSession(View v){

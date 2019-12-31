@@ -11,7 +11,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.luca.sabatini.appello.login.LoginActivity;
-import com.luca.sabatini.appello.student.UserProfile;
 
 public class SplashScreen extends AppCompatActivity {
 
