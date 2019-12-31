@@ -118,6 +118,7 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onBitmapReady(@Nullable Bitmap bitmap) {
                         Log.d(TAG, "onBitmapReady: " + bitmap.getByteCount());
+
                         fotoCamera.setImageBitmap(bitmap);
                         visibleNotVisible("show_photo");
 

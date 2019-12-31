@@ -17,9 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.luca.sabatini.appello.ProfessorProfile;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Persona;
 import com.luca.sabatini.appello.student.CameraActivity;
+import com.luca.sabatini.appello.student.UserProfile;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,8 +41,8 @@ public class LoginSignInFragment extends Fragment {
 
 
     private String action;
-    private TextInputLayout username;
-    private TextInputLayout password;
+    private TextInputLayout usernameTextInput;
+    private TextInputLayout passwordTextInput;
     private Button signInOrCreate;
     private TextView signInTextView;
     private ProgressBar signUpProgressBar;
@@ -55,8 +57,8 @@ public class LoginSignInFragment extends Fragment {
         signUpProgressBar = inflate.findViewById(R.id.sign_up_progress_bar);
         signInTextView = inflate.findViewById(R.id.textView);
         signInOrCreate = inflate.findViewById(R.id.login_button);
-        password = inflate.findViewById(R.id.password);
-        username = inflate.findViewById(R.id.username);
+        passwordTextInput = inflate.findViewById(R.id.password);
+        usernameTextInput = inflate.findViewById(R.id.username);
         signInOrCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +98,10 @@ public class LoginSignInFragment extends Fragment {
         this.context = null;
     }
 
+    public boolean isStudent() {
+        return sp.readMatricola() != -1;
+    }
+
     /*@Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -106,64 +112,80 @@ public class LoginSignInFragment extends Fragment {
     }*/
 
     private void loginSignInButton(){
-        if(!confermaInput()) {
-            signUpProgressBar.setVisibility(View.VISIBLE);
-            if(action != null && action.equals("register")){
-                firebaseAuth.createUserWithEmailAndPassword(username.getEditText().getText().toString().trim(), password.getEditText().getText().toString().trim())
-                        .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                signUpProgressBar.setVisibility(View.INVISIBLE);
-
-                                //Toast.makeText(context, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText( context , "SignUp failed." ,
-                                            Toast.LENGTH_SHORT).show();
-                                    Log.w(TAG, "signUpWithEmail:failure", task.getException());
-                                } else {
-                                    // se Studente andare su activity per inserire foto
-                                    // altrimenti su LoginActivity
-                                    //firebaseAuth.getCurrentUser().sendEmailVerification();
-                                }
-                            }
-                        });
-            }
-        }
-        else{
+        if(isInputBad()) {
             Toast.makeText(context, getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        signUpProgressBar.setVisibility(View.VISIBLE);
+        String username = usernameTextInput.getEditText().getText().toString().trim();
+        String password = passwordTextInput.getEditText().getText().toString().trim();
+
+        if(action != null && action.equals("register")){
+            firebaseAuth.createUserWithEmailAndPassword(username, password)
+                    .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            signUpProgressBar.setVisibility(View.INVISIBLE);
+
+                            //Toast.makeText(context, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                            if (!task.isSuccessful()) {
+                                Toast.makeText( context , "SignUp failed." ,
+                                        Toast.LENGTH_SHORT).show();
+                                Log.w(TAG, "signUpWithEmail:failure", task.getException());
+                            } else {
+                                // se Studente andare su activity per inserire foto
+                                // altrimenti su LoginActivity
+                                //firebaseAuth.getCurrentUser().sendEmailVerification();
+                                String emailBeforeAt = username.split("@")[0];
+                                if (emailBeforeAt.contains(".")) {
+                                    Log.d(TAG, "setLastNameAndStudentId: login studente");
+                                    sp.writeMatricola(Long.parseLong(emailBeforeAt.split("\\.")[1]));
+                                }
+                                sp.writeSurname(emailBeforeAt.split("\\.")[0]);
+                                sp.writeFirebaseId(firebaseAuth.getCurrentUser().getUid());
+
+                                if(isStudent()){
+                                    context.startActivity(new Intent(context, UserProfile.class));
+                                }else{
+                                    context.startActivity(new Intent(context, ProfessorProfile.class));
+                                }
+                                getActivity().finish();
+                            }
+                        }
+                    });
         }
     }
 
 
     private boolean validateEmail(){
-        String emailValue = username.getEditText().getText().toString().trim();
+        String emailValue = usernameTextInput.getEditText().getText().toString().trim();
         if (emailValue.isEmpty()) {
-            username.setError("Field can't be empty");
+            usernameTextInput.setError("Field can't be empty");
             return false;
         } else if(!emailValue.matches(emailPattern)){
             clear();
-            username.setError("invalid e-mail");
+            usernameTextInput.setError("invalid e-mail");
             return false;
         } else{
-            username.setError(null);
+            usernameTextInput.setError(null);
             return true;
         }
     }
     private boolean validatePassword(){
-        String passwordValue = password.getEditText().getText().toString().trim();
+        String passwordValue = passwordTextInput.getEditText().getText().toString().trim();
         if (passwordValue.isEmpty()){
-            password.setError("Field can't be empty");
+            passwordTextInput.setError("Field can't be empty");
             return false;
         }else{
-            password.setError(null);
+            passwordTextInput.setError(null);
             return true;
         }
     }
     private void clear(){
-        username.getEditText().getText().clear();
-        password.getEditText().getText().clear();
+        usernameTextInput.getEditText().getText().clear();
+        passwordTextInput.getEditText().getText().clear();
     }
-    public Boolean confermaInput(){
+    public Boolean isInputBad(){
         return (!validateEmail() | !validatePassword());
     }
 

@@ -24,15 +24,9 @@
     <string name="email">E-mail</string>
     <string name="tutorial_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dolore magna aliquam erat volutpat.</string>
     <string name="next">next</string>
-    <string name="demo_label">Ciao, Ciccio!! Usa lo switch</string>
     <string name="no_permissions">No permissions</string>
     <string name="error">error:</string>
-    <string name="add_boarding_pass">add boarding pass</string>
-    <string name="ar_label">AR</string>
-    <string name="boarding_pass_label">Add your flight information to see the boarding pass</string>
 
-    <string name="facebook_app_id">2270926746570408</string>
-    <string name="fb_login_protocol_scheme">fb2270926746570408</string>
     <string name="login_error">Username and/or password incorrect</string>
     <string name="login_create_account">Sign up</string>
     <string name="preference_file_key">airmapp.sp</string>
