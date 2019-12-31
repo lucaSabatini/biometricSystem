@@ -22,33 +22,41 @@ import com.luca.sabatini.appello.entities.Student;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.Objects;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
-
 
 public class Session extends AppCompatActivity {
 
     private final String TAG = "Session";
     private RecyclerView attendanceRecycler;
     private SessionAdapter sessionAdapter;
-
+    public static ArrayList<Student> students;
     private RequestQueue queue;
-    private Realm mRealm;
     private final SharedPrefManager sp = new SharedPrefManager(this);
-    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendance_session);
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
-        mRealm = Realm.getDefaultInstance();
-        attendanceRecycler = findViewById(R.id.attendanceRecycle);
-        final RealmResults<Student> students = mRealm.where(Student.class).findAll();
+        students = new ArrayList<>();
 
-        sessionAdapter = new SessionAdapter(this, students);
+        Student luca = new Student();
+        luca.surname = "sab";
+        luca.matricola = 123L;
+
+        Student francesco = new Student();
+        francesco.surname = "sas";
+        francesco.matricola = 321L;
+
+        students.add(luca);
+        students.add(francesco);
+
+        attendanceRecycler = findViewById(R.id.attendanceRecycle);
+
+        sessionAdapter = new SessionAdapter(students);
 
         attendanceRecycler.setLayoutManager(new LinearLayoutManager(this));
         attendanceRecycler.setAdapter(sessionAdapter);
@@ -61,11 +69,31 @@ public class Session extends AppCompatActivity {
     }
 
     public void closeAttendanceSession(View v){
-        mRealm.where(Student.class).findAll().deleteAllFromRealm();
-        mRealm.close();
+        students.clear();
         closeAttendanceSessionBackend();
+    }
+
+    @Subscribe
+    public void onDatasetUpdated(Student s) {
+        //Update RecyclerViews
+        Log.d(TAG, "onDatasetUpdated: " + s);
+        students.add(s);
+        sessionAdapter.notifyItemInserted(students.size() - 1);
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BusHolder.getInstance().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BusHolder.getInstance().unregister(this);
+    }
+
 
 
     private void closeAttendanceSessionBackend(){

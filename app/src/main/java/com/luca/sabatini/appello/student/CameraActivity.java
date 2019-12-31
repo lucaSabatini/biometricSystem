@@ -314,11 +314,8 @@ public class CameraActivity extends AppCompatActivity {
 
                 }  catch (Exception e) {
                     publishProgress(e.getMessage());
-
                 }
-
             }
-
             return res;
         }
 

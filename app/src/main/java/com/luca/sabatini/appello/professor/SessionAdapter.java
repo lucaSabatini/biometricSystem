@@ -13,13 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Student;
 
+import java.util.ArrayList;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class SessionAdapter extends RealmRecyclerViewAdapter<Student, SessionAdapter.AttendanceHolder> {
+public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.AttendanceHolder> {
 
-    public SessionAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Student> data) {
-        super(context, data, true);
+    private ArrayList<Student> students;
+
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public SessionAdapter(ArrayList<Student> students) {
+        this.students = students;
     }
 
     @NonNull
@@ -31,7 +36,13 @@ public class SessionAdapter extends RealmRecyclerViewAdapter<Student, SessionAda
 
     @Override
     public void onBindViewHolder(@NonNull AttendanceHolder holder, int position) {
-        holder.bind(getItem(position));
+        holder.bind(students.get(position));
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        return students.size();
     }
 
     public class AttendanceHolder extends RecyclerView.ViewHolder{
