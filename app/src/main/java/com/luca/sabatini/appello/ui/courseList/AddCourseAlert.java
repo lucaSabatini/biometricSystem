@@ -47,7 +47,7 @@ public class AddCourseAlert extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MaterialComponents_Light_Dialog_Alert);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.alert_dialog_custom);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.popup_add_corso, null);
 
@@ -59,7 +59,7 @@ public class AddCourseAlert extends DialogFragment {
 
         Spinner spinner = view.findViewById(R.id.spinner);
         ArrayAdapter<Integer> adapter = new ArrayAdapter<>
-                (this.getContext(), android.R.layout.simple_spinner_item,
+                (this.getContext(), R.layout.spinner_item,
                         spinnerArray);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.luca.sabatini.appello.ExitAlert;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Corso;
 import com.luca.sabatini.appello.professor.ProfessorMain;
@@ -116,6 +118,17 @@ public class CourseListFragment extends Fragment {
             }
         });
         sp = new SharedPrefManager(getContext());
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                ExitAlert exitAlert = new ExitAlert(root.getContext(),getActivity());
+                exitAlert.show(getFragmentManager(), "ExitAlert");
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+
         buildRecyclerView();
 
         return root;

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -25,6 +24,7 @@ import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 public class SettingsFragment extends Fragment {
 
+    private final static String TAG ="SettingsFragment";
     private SettingsViewModel logoutViewModel;
     private SharedPrefManager sp;
     private Button aboutButton;
@@ -84,15 +84,12 @@ public class SettingsFragment extends Fragment {
     }
 
     public void logout(View view){
-        Toast.makeText(getActivity(), "click logout", Toast.LENGTH_SHORT).show();
     }
 
     public void changePassword(View view){
-        Toast.makeText(getActivity(), "click change password", Toast.LENGTH_SHORT).show();
     }
 
     public void about(View view){
-        Toast.makeText(getActivity(), "click about", Toast.LENGTH_SHORT).show();
 
     }
 }

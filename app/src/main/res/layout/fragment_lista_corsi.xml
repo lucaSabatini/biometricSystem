@@ -9,7 +9,7 @@
         android:id="@+id/noCoursesLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Non ci sono corsi"
+        android:text="@string/no_course"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
         android:visibility="gone"

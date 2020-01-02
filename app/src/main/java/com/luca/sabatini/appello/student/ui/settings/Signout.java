@@ -21,13 +21,13 @@ import com.luca.sabatini.appello.login.LoginActivity;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
 public class Signout extends DialogFragment{
-
+    private final static String TAG = "Signout";
     private SharedPrefManager sp;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MaterialComponents_Light_Dialog_Alert);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.alert_dialog_custom);
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.popup_remove_corso, null);
         sp = new SharedPrefManager(getContext());

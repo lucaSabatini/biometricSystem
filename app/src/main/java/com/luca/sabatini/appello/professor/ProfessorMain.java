@@ -39,6 +39,7 @@ public class ProfessorMain extends AppCompatActivity {
         annoCorsoTextView.setText(""+sp.readAnnoCorso());
     }
 
+
     public void openStatisticsActivity(View view){
         startActivity(new Intent(this, StatisticsActivity.class));
     }

@@ -1,19 +1,23 @@
 package com.luca.sabatini.appello.student;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.luca.sabatini.appello.ExitAlert;
 import com.luca.sabatini.appello.R;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -26,6 +30,7 @@ import static com.luca.sabatini.appello.student.CameraActivity.EXTRA_ACTION;
 
 public class UserProfile extends AppCompatActivity {
 
+    private final static String TAG="UserProfile";
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -47,6 +52,12 @@ public class UserProfile extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
+
+    /*@Override
+    public void onBackPressed() {
+        ExitAlert exitAlert = new ExitAlert(this);
+        exitAlert.show(getSupportFragmentManager(),"ExitAlert");
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
