@@ -11,10 +11,11 @@
     <string name="preferences_name" translatable="false">com.example.luca.preference-file-key</string>
 
 
-    <string name="login_welcome_title">Benvenuto!</string>
+    <string name="login_welcome_title">Welcome!</string>
     <string name="login_welcome_text">Hai già un account? Esegui il login!</string>
     <string name="sign_in">sign in</string>
-    <string name="sign_up">sign up</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_up_underlined">Don\'t have an account? <u>Sign up</u></string>
     <string name="sign_in_facebook">sign in with facebook</string>
     <string name="login_new_account">Nuovo account?</string>
     <string name="login_signin_text">Effettua il login!</string>

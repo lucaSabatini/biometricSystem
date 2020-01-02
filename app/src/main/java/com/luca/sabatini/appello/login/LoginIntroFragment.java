@@ -47,6 +47,7 @@ public class LoginIntroFragment extends Fragment {
     private TextInputLayout passwordTextInput;
     private Button signInOrCreate;
     private ProgressBar signInProgressBar;
+    private TextView textView;
 
     private LoginRoutingInterface callback;
     private Context context;
@@ -60,6 +61,7 @@ public class LoginIntroFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View inflate = inflater.inflate(R.layout.login_intro_fragment, container, false);
         signInProgressBar = inflate.findViewById(R.id.sign_in_progress_bar);
+        textView = inflate.findViewById(R.id.textView_forgot_password);
         newAccount = inflate.findViewById(R.id.login_new_account);
         signInOrCreate = inflate.findViewById(R.id.login_button);
         passwordTextInput = inflate.findViewById(R.id.password);
@@ -78,6 +80,13 @@ public class LoginIntroFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 loginSignInButton();
+            }
+        });
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ForgotPassword.class));
             }
         });
 
