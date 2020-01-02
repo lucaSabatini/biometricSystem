@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,6 +24,8 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -35,6 +38,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.luca.sabatini.appello.LoadingDialog;
 import com.luca.sabatini.appello.R;
 
 import com.luca.sabatini.appello.entities.CheckSessionResponse;
@@ -73,6 +77,8 @@ public class CameraActivity extends AppCompatActivity {
     SharedPrefManager sp;
     RequestQueue queue;
     private String action;
+    // Progress dialog popped up when communicating with server.
+    LoadingDialog loadingDialog;
 
     FaceServiceClient faceServiceClient;
 
@@ -81,7 +87,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         faceServiceClient = new FaceServiceRestClient("https://face-subscription.cognitiveservices.azure.com/face/v1.0/","816bb822c29241f5aae719e540404311");
-
+        loadingDialog = new LoadingDialog(this, this);
         sp = new SharedPrefManager(this);
 
         context = this;
@@ -153,6 +159,8 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     public void conferma(View view){
+
+        loadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
 
         if(action.equals("signup")){
             Log.d(TAG, "signup");
@@ -264,7 +272,6 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         protected void onPostExecute(VerifyResult result) {
             if (result != null) {
@@ -284,6 +291,7 @@ public class CameraActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             }
+            loadingDialog.dismiss();
 
         }
     }
@@ -319,6 +327,7 @@ public class CameraActivity extends AppCompatActivity {
             }
             return res;
         }
+
 
         @Override
         protected void onPostExecute(Face[] result) {
