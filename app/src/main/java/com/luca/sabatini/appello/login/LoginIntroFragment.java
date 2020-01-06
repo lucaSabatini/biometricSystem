@@ -48,9 +48,9 @@ public class LoginIntroFragment extends Fragment {
     private Button signInOrCreate;
     private ProgressBar signInProgressBar;
     private TextView textView;
+    private Context context;
 
     private LoginRoutingInterface callback;
-    private Context context;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private SharedPrefManager sp;
     private RequestQueue queue;
@@ -96,14 +96,14 @@ public class LoginIntroFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        context = getContext();
-        sp = new SharedPrefManager(context);
-        queue = Volley.newRequestQueue(context);
+        sp = new SharedPrefManager(getContext());
+        queue = Volley.newRequestQueue(getContext());
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         if(context instanceof LoginRoutingInterface) {
             this.callback = (LoginRoutingInterface) context;
         }
@@ -117,7 +117,6 @@ public class LoginIntroFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         this.callback = null;
-        this.context = null;
     }
 
 
@@ -168,7 +167,7 @@ public class LoginIntroFragment extends Fragment {
 
     public void loginSignInButton(){
         if(isInputBad()) {
-            Toast.makeText(context, getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.not_valid_credentials), Toast.LENGTH_SHORT).show();
             return;
         }
         signInProgressBar.setVisibility(View.VISIBLE);
@@ -176,12 +175,12 @@ public class LoginIntroFragment extends Fragment {
         String password = passwordTextInput.getEditText().getText().toString().trim();
 
         firebaseAuth.signInWithEmailAndPassword(username, password)
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         signInProgressBar.setVisibility(View.INVISIBLE);
                         if (!task.isSuccessful()) {
-                            Toast.makeText(context, R.string.login_error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                         }/*
                         else if(!firebaseAuth.getCurrentUser().isEmailVerified()){
@@ -201,9 +200,9 @@ public class LoginIntroFragment extends Fragment {
                             if(isStudent()){
                                 checkRegistered();
                             }else{
-                                context.startActivity(new Intent(context, ProfessorProfile.class));
+                                startActivity(new Intent(getActivity(), ProfessorProfile.class));
                             }
-                            getActivity().finish();
+                            //getActivity().finish();
                         }
                     }
                 });
@@ -221,12 +220,12 @@ public class LoginIntroFragment extends Fragment {
                         Log.d(TAG, "onResponse: " + result);
                         if(result){
                             sp.writeIsRegistered(true);
-                            context.startActivity(new Intent(context, UserProfile.class));
+                            startActivity(new Intent( getActivity(), UserProfile.class));
                         }
                         else {
-                            Intent intent = new Intent( context , LoginActivity.class);
+                            Intent intent = new Intent( getActivity() , LoginActivity.class);
                             intent.putExtra(EXTRA_ACTION, "signup");
-                            context.startActivity(intent);
+                            startActivity(intent);
                         }
                     }
                 },
