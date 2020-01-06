@@ -61,6 +61,7 @@ public class CorsoAdapter extends RealmRecyclerViewAdapter<Corso, CorsoAdapter.C
             imageCorso.setImageResource(R.drawable.image_corso);
             nomeCorso.setText("" + corso.name);
             nomeCorso.setTag(corso);
+            annoCorso.setText("" + corso.year);
         }
 
         public CorsoViewHolder(@NonNull View itemView, OnItemClickListener listener) {

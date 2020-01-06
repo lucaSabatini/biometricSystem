@@ -66,8 +66,8 @@ public class LoginIntroFragment extends Fragment {
         signInOrCreate = inflate.findViewById(R.id.login_button);
         passwordTextInput = inflate.findViewById(R.id.password);
         usernameTextInput = inflate.findViewById(R.id.username);
-        sp = new SharedPrefManager(context);
-        queue = Volley.newRequestQueue(getContext());
+
+
 
         newAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +94,14 @@ public class LoginIntroFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        context = getContext();
+        sp = new SharedPrefManager(context);
+        queue = Volley.newRequestQueue(context);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if(context instanceof LoginRoutingInterface) {
@@ -102,7 +110,6 @@ public class LoginIntroFragment extends Fragment {
         else {
             this.callback = null;
         }
-        this.context = context;
 
     }
 
@@ -113,13 +120,6 @@ public class LoginIntroFragment extends Fragment {
         this.context = null;
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        sp = new SharedPrefManager(context);
-
-    }
 
     public void loginNewAccount(){
         if(callback != null)

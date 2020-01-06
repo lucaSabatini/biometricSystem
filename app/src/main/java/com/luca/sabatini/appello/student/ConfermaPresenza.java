@@ -75,7 +75,7 @@ public class ConfermaPresenza extends AppCompatActivity {
 
     public void apriCameraActivityRiprovaOnClick(View view){
         Intent intent = new Intent(this, CameraActivity.class);
-        intent.putExtra("verification", EXTRA_ACTION);
+        intent.putExtra(EXTRA_ACTION, "verification");
         startActivity(intent);
     }
 

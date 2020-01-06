@@ -71,6 +71,7 @@ public class Session extends AppCompatActivity {
     public void closeAttendanceSession(View v){
         students.clear();
         closeAttendanceSessionBackend();
+        finish();
     }
 
     @Subscribe
@@ -78,7 +79,12 @@ public class Session extends AppCompatActivity {
         //Update RecyclerViews
         Log.d(TAG, "onDatasetUpdated: " + s);
         students.add(s);
-        sessionAdapter.notifyItemInserted(students.size() - 1);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                sessionAdapter.notifyItemInserted(students.size() - 1);
+            }
+        });
 
     }
 
@@ -93,8 +99,6 @@ public class Session extends AppCompatActivity {
         super.onPause();
         BusHolder.getInstance().unregister(this);
     }
-
-
 
     private void closeAttendanceSessionBackend(){
         Log.d(TAG, "closeAttendanceSessionBackend: " + sp.readSessionId());
@@ -125,7 +129,6 @@ public class Session extends AppCompatActivity {
             //Long id = new Gson().fromJson(response, Long.class);
             sp.writeSessionId(0L);
             //startActivity(new Intent(context, ProfessorMain.class));
-            finish();
         }
     };
 }

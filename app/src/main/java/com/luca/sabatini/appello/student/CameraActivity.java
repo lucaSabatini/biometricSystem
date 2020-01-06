@@ -154,8 +154,13 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     public void riprova(View view){
-        visibleNotVisible("try_again");
-        camera.open();
+        //visibleNotVisible("try_again");
+        //camera.open();
+        Intent i = new Intent(this, CameraActivity.class);
+        Log.d(TAG, "riprova: " + action);
+        i.putExtra(EXTRA_ACTION, action);
+        startActivity(i);
+        finish();
     }
 
     public void conferma(View view){

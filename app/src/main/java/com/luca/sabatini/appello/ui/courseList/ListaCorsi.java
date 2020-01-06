@@ -43,11 +43,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class ListaCorsi extends AppCompatActivity {
-
     private static final String TAG = "ListaCorsi";
-    public static final String EXTRA_TEXT = "com.example.luca.biometricsystem.list.EXTRA_TEXT";
-    public static final String EXTRA_DATE = "com.example.luca.biometricsystem.list.EXTRA_DATE";
-
 
     private RecyclerView listaCorsiRecycler;
     private CorsoAdapter listaCorsiAdapter;
@@ -160,7 +156,6 @@ public class ListaCorsi extends AppCompatActivity {
         }
     }
 
-
     private Response.ErrorListener callbackError = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
@@ -224,73 +219,6 @@ public class ListaCorsi extends AppCompatActivity {
         return isAvailable;
     }
 
-
-    /*public void removeItem(Corso c){
-        RemoveAlert removeAlert = new RemoveAlert(this, c);
-        removeAlert.show(getSupportFragmentManager(), "RemoveAlert");
-    }*/
-
-    public void removeItemFromMap(Corso c){
-        Log.d(TAG, "removeItemFromMap: " + c);
-        StringRequest postRequest = new StringRequest(
-                Request.Method.DELETE,
-                RestConstants.deleteCourseUrl("noncista", sp.readFirebaseId(), c.id),
-                callbackDelete,
-                callbackError);
-        queue.add(postRequest);
-    }
-
-    private Response.Listener<String> callbackDelete = new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            Long id = Long.parseLong(response);
-            mRealm.beginTransaction();
-            Corso c = mRealm.where(Corso.class).equalTo("id", id).findFirst();
-            c.deleteFromRealm();
-            mRealm.commitTransaction();
-        }
-    };
-
-    public void openActivity(String corso, Long year){
-
-
-
-        Intent intent = new Intent(this, ProfessorMain.class);
-        //intent.putExtra(EXTRA_TEXT, corso);
-        //intent.putExtra(EXTRA_DATE, year);
-        startActivity(intent);
-    }
-
-    public void changeNameItem(String nomeCorso, Long year, Long id){
-
-        StringRequest postRequest = new StringRequest(
-                Request.Method.PUT,
-                RestConstants.updateCourseUrl("noncista", sp.readFirebaseId()),
-                callbackUpdate,
-                callbackError){
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() {
-                try {
-                    Corso c = new Corso();
-                    c.name = nomeCorso;
-                    c.year = year;
-                    c.id = id;
-                    c.uid = sp.readFirebaseId();
-                    Log.d(TAG, "getBody: "+ c);
-                    return new Gson().toJson(c).getBytes();
-                } catch (Exception e) {
-                    Log.d(TAG, "getBody: " + e.toString());
-                    return null;
-                }
-            }
-        };
-        queue.add(postRequest);
-    }
     private Response.Listener<String> callbackUpdate = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
@@ -307,17 +235,6 @@ public class ListaCorsi extends AppCompatActivity {
             }
         }
     };
-    /*public void openRenameAlert(Corso c){
-        RenameAlert renameAlert = new RenameAlert(this, c);
-        renameAlert.show(getSupportFragmentManager(), "RenameAlert");
-    }*/
-
-
-   /* public void openAddCourseAlert(View view){
-        AddCourseAlert addCourseAlert = new AddCourseAlert();
-        addCourseAlert.show(getSupportFragmentManager(), "alert");
-    }*/
-
 
     private Response.Listener<String> callbackPost = new Response.Listener<String>() {
         @Override
@@ -338,53 +255,6 @@ public class ListaCorsi extends AppCompatActivity {
         }
     };
 
-
-    public void getTextAndYear(String nomeCorso, int year) {
-        Log.d(TAG, "getTextAndYear: "+ isOnline());
-        if (isOnline()) {
-            StringRequest postRequest = new StringRequest(
-                    Request.Method.POST,
-                    RestConstants.postCourseUrl("nono", sp.readFirebaseId()),
-                    callbackPost,
-                    callbackError) {
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
-
-                @Override
-                public byte[] getBody() {
-                    try {
-                        //Log.d(TAG, "getBody: " + buildPostFlightObject().toString());
-                        Corso c = new Corso();
-                        c.name = nomeCorso;
-                        c.year = Long.valueOf(year);
-                        c.uid = sp.readFirebaseId();
-                        return new Gson().toJson(c).getBytes();
-                    } catch (Exception e) {
-                        Log.d(TAG, "getBody: " + e.toString());
-                        return null;
-                    }
-                }
-            };
-            queue.add(postRequest);
-        }
-         else {
-            mRealm.beginTransaction();
-
-            Corso c = new Corso();
-            c.name = nomeCorso;
-            c.year = Long.valueOf(year);
-            c.uid = sp.readFirebaseId();
-            mRealm.insertOrUpdate(c);
-            mRealm.commitTransaction();
-
-        }
-
-        //insertItem(position, name, year);
-        Log.d(TAG, "getTextAndYear: " + year);
-        Log.d("nomeC", "getText: " + nomeCorso);
-    }
 
     @Override
     public void onDestroy() {

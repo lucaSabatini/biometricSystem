@@ -26,14 +26,13 @@ public class FirebaseService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Student s = new StudentBuilder().createStudent();
 
+        Student s = new StudentBuilder().createStudent();
         s.matricola = Long.parseLong(remoteMessage.getData().get("matricola"));
         s.surname = remoteMessage.getData().get("surname");
 
         BusHolder.getInstance().post(s);
 
         Log.d(TAG, "notificationfirebase onMessageReceived: " + remoteMessage.getData());
-
     }
 }
