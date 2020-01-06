@@ -43,17 +43,6 @@ public class Session extends AppCompatActivity {
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         students = new ArrayList<>();
 
-        Student luca = new Student();
-        luca.surname = "sab";
-        luca.matricola = 123L;
-
-        Student francesco = new Student();
-        francesco.surname = "sas";
-        francesco.matricola = 321L;
-
-        students.add(luca);
-        students.add(francesco);
-
         attendanceRecycler = findViewById(R.id.attendanceRecycle);
 
         sessionAdapter = new SessionAdapter(students);
@@ -65,12 +54,10 @@ public class Session extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        closeAttendanceSession(null);
+        closeAttendanceSessionBackend();
     }
 
     public void closeAttendanceSession(View v){
-        students.clear();
-        closeAttendanceSessionBackend();
         finish();
     }
 
@@ -127,7 +114,7 @@ public class Session extends AppCompatActivity {
         @Override
         public void onResponse(String response) {
             //Long id = new Gson().fromJson(response, Long.class);
-            sp.writeSessionId(0L);
+
             //startActivity(new Intent(context, ProfessorMain.class));
         }
     };
