@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,16 +50,19 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.Attendan
 
         public TextView matricola;
         public TextView cognome;
+        public ImageView imageView;
 
         public AttendanceHolder(@NonNull View itemView) {
             super(itemView);
             matricola = itemView.findViewById(R.id.matricola);
             cognome = itemView.findViewById(R.id.nome_studente);
+            imageView = itemView.findViewById(R.id.image_presente);
         }
 
         private void bind(Student student){
             matricola.setText("" + student.matricola);
             cognome.setText(student.surname);
+            imageView.setImageResource(R.drawable.ic_correct);
         }
     }
 }

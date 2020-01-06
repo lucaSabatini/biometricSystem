@@ -165,18 +165,18 @@ public class CameraActivity extends AppCompatActivity {
 
     public void conferma(View view){
 
-        loadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
-
         if(action.equals("signup")){
             Log.d(TAG, "signup");
             registerUser(Base64.getEncoder().encodeToString(data));
         }
         else if(action.equals("verification")) {
             Log.d(TAG, "verification");
+            loadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
             verifyUser();
         }
         else if(action.equals("changePhoto")){
             Log.d(TAG, "changePhoto");
+            loadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
             postNewRegistrationPhoto(data);
             //startActivity(new Intent(context, UserProfile.class));
         }else{
@@ -193,6 +193,7 @@ public class CameraActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: " + response);
                         //startActivity(new Intent(context, UserProfile.class));
                         Toast.makeText(context, "Foto profilo aggiornata", Toast.LENGTH_LONG).show();
+                        loadingDialog.dismiss();
                         finish();
                     }
                 }, callbackError){
