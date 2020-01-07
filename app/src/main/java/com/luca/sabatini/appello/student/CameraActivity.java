@@ -12,8 +12,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -57,10 +59,20 @@ import com.otaliastudios.cameraview.CameraView;
 import com.otaliastudios.cameraview.PictureResult;
 import com.otaliastudios.cameraview.controls.Facing;
 import com.otaliastudios.cameraview.controls.Mode;
+import com.otaliastudios.cameraview.size.AspectRatio;
+import com.otaliastudios.cameraview.size.SizeSelectors;
+import com.tzutalin.dlib.Constants;
+import com.tzutalin.dlib.FaceDet;
+import com.tzutalin.dlib.VisionDetRet;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.AbstractMap;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 public class CameraActivity extends AppCompatActivity {
@@ -112,7 +124,7 @@ public class CameraActivity extends AppCompatActivity {
         camera.setLifecycleOwner(this);
         camera.setFacing(Facing.FRONT);
         camera.setMode(Mode.PICTURE); // for pictures
-
+        camera.setPictureSize((SizeSelectors.aspectRatio(AspectRatio.of(3, 4), 0)));
         camera.addCameraListener(new CameraListener() {
             @Override
             public void onPictureTaken(PictureResult result) {
@@ -124,8 +136,8 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onBitmapReady(@Nullable Bitmap bitmap) {
                         Log.d(TAG, "onBitmapReady: " + bitmap.getByteCount());
-
-                        fotoCamera.setImageBitmap(bitmap);
+                        dlib(bitmap);
+                        //fotoCamera.setImageBitmap(bitmap);
                         visibleNotVisible("show_photo");
 
                     }
@@ -146,6 +158,40 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void dlib(Bitmap bitmap){
+        FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
+        List<VisionDetRet> results = faceDet.detect(bitmap);
+        HashMap<VisionDetRet, Integer> rectangles = new HashMap<>();
+        for (final VisionDetRet ret : results) {
+            int rectLeft = ret.getLeft();
+            int rectTop = ret.getTop();
+            int rectRight = ret.getRight();
+            int rectBottom = ret.getBottom();
+            rectangles.put(ret, (rectRight - rectLeft) * (rectBottom - rectTop));
+            
+        }
+        Log.d(TAG, "dlib: number of returned faces " + results.size());
+        if(results.size() == 0){
+            Log.d(TAG, "dlib: Nessuna faccia trovata");
+        }
+        Map.Entry<VisionDetRet,Integer> biggestFace = new AbstractMap.SimpleEntry<>(null, 0);
+        for(Map.Entry<VisionDetRet,Integer> entry : rectangles.entrySet()) {
+            if(entry.getValue() > biggestFace.getValue()){
+                biggestFace = entry;
+            }
+        }
+        VisionDetRet res = biggestFace.getKey();
+        Canvas cnvs=new Canvas(bitmap);
+        Paint paint=new Paint();
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(8);
+        paint.setStyle(Paint.Style.STROKE);
+        cnvs.drawRect(res.getLeft(), res.getTop(), res.getRight(), res.getBottom(), paint);
+        fotoCamera.setImageBitmap(bitmap);
+        
+        faceDet.release();
     }
 
 

@@ -40,16 +40,16 @@ public class LoginActivity extends AppCompatActivity implements LoginRoutingInte
         if(isLogged()){
             if(isStudent()){
                 if(sp.readIsRegistered()) {
-                    context.startActivity(new Intent(context, UserProfile.class));
+                    startActivity(new Intent(context, UserProfile.class));
                 }
                 else {
                     Intent intent = new Intent( context , CameraActivity.class);
                     intent.putExtra(EXTRA_ACTION, "signup");
-                    context.startActivity(intent);
+                    startActivity(intent);
                 }
             }
             else{
-                context.startActivity(new Intent(context, ProfessorProfile.class));
+                startActivity(new Intent(context, ProfessorProfile.class));
             }
         }
     }
