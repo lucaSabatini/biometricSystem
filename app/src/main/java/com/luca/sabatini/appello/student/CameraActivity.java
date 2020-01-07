@@ -26,7 +26,6 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,9 +98,8 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         faceServiceClient = new FaceServiceRestClient("https://face-subscription.cognitiveservices.azure.com/face/v1.0/","816bb822c29241f5aae719e540404311");
-        loadingDialog = new LoadingDialog(this, this);
+        loadingDialog = new LoadingDialog(this);
         sp = new SharedPrefManager(this);
-
         context = this;
         if(Build.VERSION.SDK_INT >= 23){
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -211,18 +209,18 @@ public class CameraActivity extends AppCompatActivity {
 
     public void conferma(View view){
 
-        loadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
-
         if(action.equals("signup")){
             Log.d(TAG, "signup");
             registerUser(Base64.getEncoder().encodeToString(data));
         }
         else if(action.equals("verification")) {
             Log.d(TAG, "verification");
+            loadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
             verifyUser();
         }
         else if(action.equals("changePhoto")){
             Log.d(TAG, "changePhoto");
+            loadingDialog.show(getSupportFragmentManager(), "LoadingDialog");
             postNewRegistrationPhoto(data);
             //startActivity(new Intent(context, UserProfile.class));
         }else{
@@ -239,6 +237,7 @@ public class CameraActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: " + response);
                         //startActivity(new Intent(context, UserProfile.class));
                         Toast.makeText(context, "Foto profilo aggiornata", Toast.LENGTH_LONG).show();
+                        loadingDialog.dismiss();
                         finish();
                     }
                 }, callbackError){
@@ -443,6 +442,7 @@ public class CameraActivity extends AppCompatActivity {
     private Response.ErrorListener callbackError = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
+            loadingDialog.dismiss();
             if(error.networkResponse != null) {
                 Log.e(TAG, "onErrorResponse: callbackError: " + new String(error.networkResponse.data));
                 Log.e(TAG, "onErrorResponse: callbackError: " + error.networkResponse.statusCode);

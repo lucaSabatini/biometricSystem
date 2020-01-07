@@ -12,8 +12,8 @@
 
 
     <string name="login_welcome_title">Welcome!</string>
-    <string name="login_welcome_text">Hai già un account? Esegui il login!</string>
-    <string name="sign_in">sign in</string>
+    <string name="login_welcome_text">Do you already have an account? Log in!</string>
+    <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_up_underlined">Don\'t have an account? <u>Sign up</u></string>
     <string name="sign_in_facebook">sign in with facebook</string>
@@ -21,7 +21,7 @@
     <string name="login_signin_text">Effettua il login!</string>
     <string name="login_signup_text">Non hai un account? Registrati!</string>
     <string name="password">Password</string>
-    <string name="nome_corso">course name</string>
+    <string name="nome_corso">Course name</string>
     <string name="email">E-mail</string>
     <string name="tutorial_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dolore magna aliquam erat volutpat.</string>
     <string name="next">next</string>
@@ -34,7 +34,7 @@
     <string name="loading">Caricamento mappa in corso. Attendere...</string>
     <string name="controllo_credenziali">Controllo credenziali in corso</string>
     <string name="not_valid_credentials">Credenziali non valide</string>
-    <string name="anno_corso">anno corso</string>
+    <string name="anno_corso">Course year</string>
     <string name="statistiche">Statistics</string>
     <string name="appello">Appello</string>
     <string name="rinomina">Rename</string>
@@ -42,12 +42,12 @@
     <string name="to_reset_password_enter_your_email_press_the_button_and_check_mail_to_follow_instruction">To reset password, enter your email, press the button and check mail to follow instruction.</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset_password">Reset password</string>
-    <string name="riprova">riprova</string>
-    <string name="conferma">conferma</string>
+    <string name="riprova">Try again</string>
+    <string name="conferma">Confirm</string>
     <string name="ricerca_appello">Scanning for beacons...</string>
-    <string name="title_activity_profilo_utente">Profilo</string>
-    <string name="open_navigation_drawer">open Navigation Drawer</string>
-    <string name="close_navigation_drawer">close Navigation Drawer</string>
+    <string name="title_activity_profilo_utente">Profile</string>
+    <string name="open_navigation_drawer">Open Navigation Drawer</string>
+    <string name="close_navigation_drawer">Close Navigation Drawer</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -159,10 +159,10 @@
     <string name="student_list">Student List</string>
     <string name="close_appello">Close appello</string>
     <string name="change_password_text">To change the password you must first enter the current password, and then type the new password twice</string>
-    <string name="new_password">new password</string>
-    <string name="new_password_again">new password (again)</string>
-    <string name="change_password">change password</string>
-    <string name="current_password">current password</string>
+    <string name="new_password">New password</string>
+    <string name="new_password_again">New password (again)</string>
+    <string name="change_password">Change password</string>
+    <string name="current_password">Current password</string>
     
     <string name="altbeacon_pattern">m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25</string>
     <string name="ibeacon_pattern">m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24</string>
