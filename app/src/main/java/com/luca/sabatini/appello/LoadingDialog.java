@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,13 +21,10 @@ import org.w3c.dom.Text;
 public class LoadingDialog extends DialogFragment {
 
     private final static String TAG = "LoadingDialog";
-    private TextView textView;
-    private Activity activity;
     private AlertDialog dialog;
     private Context context;
 
-    public LoadingDialog(Activity activity, Context context){
-        this.activity = activity;
+    public LoadingDialog(Context context){
         this.context = context;
     }
 
@@ -41,5 +39,4 @@ public class LoadingDialog extends DialogFragment {
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
-
 }

@@ -24,7 +24,6 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,9 +86,8 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         faceServiceClient = new FaceServiceRestClient("https://face-subscription.cognitiveservices.azure.com/face/v1.0/","816bb822c29241f5aae719e540404311");
-        loadingDialog = new LoadingDialog(this, this);
+        loadingDialog = new LoadingDialog(this);
         sp = new SharedPrefManager(this);
-
         context = this;
         if(Build.VERSION.SDK_INT >= 23){
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -398,6 +396,7 @@ public class CameraActivity extends AppCompatActivity {
     private Response.ErrorListener callbackError = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
+            loadingDialog.dismiss();
             if(error.networkResponse != null) {
                 Log.e(TAG, "onErrorResponse: callbackError: " + new String(error.networkResponse.data));
                 Log.e(TAG, "onErrorResponse: callbackError: " + error.networkResponse.statusCode);
