@@ -73,13 +73,13 @@ public class BeaconScanStudent extends BeaconScan {
             if(response.equals("")){
                 Toast.makeText(context, "nessun appello trovato", Toast.LENGTH_LONG).show();
                 finish();
-                return;
             }
             CheckSessionResponse sessionResponse = new Gson().fromJson(response, CheckSessionResponse.class);
             sp.writeRegistrationId(sessionResponse.getRegistrationId());
             Log.d(TAG, "onResponse: " + sessionResponse);
             ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(sessionResponse.getNomeCorso());
             confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
+
         }
     };
 

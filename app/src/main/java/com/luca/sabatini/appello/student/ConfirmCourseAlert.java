@@ -52,6 +52,8 @@ public class ConfirmCourseAlert extends DialogFragment {
                         Intent intent = new Intent(getContext(), CameraActivity.class);
                         intent.putExtra(EXTRA_ACTION, "verification");
                         startActivity(intent);
+                        getActivity().finish();
+
                     }
                 })
                 .setNegativeButton(nameNegativeButton, new DialogInterface.OnClickListener() {

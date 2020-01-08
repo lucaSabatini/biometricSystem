@@ -38,6 +38,7 @@ public class ConfermaPresenza extends AppCompatActivity {
     SharedPrefManager sp;
     RequestQueue queue;
     Context context;
+    private boolean happy;
     private static final String TAG = "ConfermaPresenza";
 
     @Override
@@ -51,12 +52,12 @@ public class ConfermaPresenza extends AppCompatActivity {
         sp = new SharedPrefManager(this);
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         context = this;
-        boolean action = getIntent().getBooleanExtra("happy", false);
-        animation(action);
+        happy = getIntent().getBooleanExtra("happy", false);
+        animation();
     }
 
 
-    public void animation(boolean happy){
+    public void animation(){
         if(happy){
             faccina.setImageResource(R.drawable.ic_sentiment_satisfied_green_300dp);
             scritta.setText("Presenza confermata!");
@@ -77,6 +78,7 @@ public class ConfermaPresenza extends AppCompatActivity {
         Intent intent = new Intent(this, CameraActivity.class);
         intent.putExtra(EXTRA_ACTION, "verification");
         startActivity(intent);
+        finish();
     }
 
     public void apriProfiloUtenteOkOnClick(View view){
@@ -114,4 +116,21 @@ public class ConfermaPresenza extends AppCompatActivity {
             Log.d(TAG, "onCreate: " + response);
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(happy){
+            sendAttendanceToServer();
+            startActivity(new Intent(this, UserProfile.class));
+            finish();
+
+        }else{
+            Intent intent = new Intent(this, CameraActivity.class);
+            intent.putExtra(EXTRA_ACTION, "verification");
+            startActivity(intent);
+            finish();
+        }
+
+    }
 }
