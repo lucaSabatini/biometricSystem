@@ -60,7 +60,7 @@ public class ConfermaPresenza extends AppCompatActivity {
     public void animation(){
         if(happy){
             faccina.setImageResource(R.drawable.ic_sentiment_satisfied_green_300dp);
-            scritta.setText("Presenza confermata!");
+            scritta.setText(R.string.presenza_confermata);
             conferma.setVisibility(View.VISIBLE);
             riprova.setVisibility(View.GONE);
             //TODO: manda attendance al server
@@ -68,7 +68,7 @@ public class ConfermaPresenza extends AppCompatActivity {
 
         }else{
             faccina.setImageResource(R.drawable.ic_sentiment_dissatisfied_red_300dp);
-            scritta.setText("Presenza non confermata!");
+            scritta.setText(R.string.presenza_non_confermata);
             conferma.setVisibility(View.GONE);
             riprova.setVisibility(View.VISIBLE);
         }

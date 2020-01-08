@@ -1,34 +1,26 @@
 package com.luca.sabatini.appello.student;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,11 +33,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.luca.sabatini.appello.LoadingDialog;
 import com.luca.sabatini.appello.R;
-
-import com.luca.sabatini.appello.entities.CheckSessionResponse;
 import com.luca.sabatini.appello.entities.Student;
 import com.luca.sabatini.appello.entities.StudentBuilder;
-import com.luca.sabatini.appello.login.LoginActivity;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 import com.microsoft.projectoxford.face.FaceServiceClient;
@@ -71,7 +60,6 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 
 public class CameraActivity extends AppCompatActivity {
@@ -134,7 +122,8 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onBitmapReady(@Nullable Bitmap bitmap) {
                         Log.d(TAG, "onBitmapReady: " + bitmap.getByteCount());
-                        dlib(bitmap);
+                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        dlib(mutableBitmap);
                         //fotoCamera.setImageBitmap(bitmap);
                         visibleNotVisible("show_photo");
 

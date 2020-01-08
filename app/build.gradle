@@ -91,6 +91,7 @@ dependencies {
     //beacons
     implementation 'org.altbeacon:android-beacon-library:2.16.3'
 
+
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation project(path: ':dlib')
 
