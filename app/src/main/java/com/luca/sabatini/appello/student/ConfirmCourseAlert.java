@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -30,10 +31,10 @@ public class ConfirmCourseAlert extends DialogFragment {
     private String message;
 
     public ConfirmCourseAlert(String corso){
-        title = "Trovata sessione di appello per il corso: " + corso;
-        message = "Avviare riconoscimento biometrico?";
+        title = "Attendance session found for course: " + corso;
+        message = "Starting biometric recognition?";
         nameNegativeButton = "No";
-        namePositiveButton = "Si";
+        namePositiveButton = "Yes";
     }
 
     @NonNull
@@ -64,8 +65,21 @@ public class ConfirmCourseAlert extends DialogFragment {
                         ((Activity) getContext()).finish();
                     }
                 });
-
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.KEYCODE_BACK) {
+                    Log.d("alert", "onClick: annulla");
+                    dialogInterface.cancel();
+                    ((Activity) getContext()).finish();
+                }
+                return true;
+            }
+        });
+        return dialog;
     }
 
 }
