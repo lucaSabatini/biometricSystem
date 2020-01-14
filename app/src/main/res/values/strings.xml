@@ -12,14 +12,14 @@
 
 
     <string name="login_welcome_title">Welcome!</string>
-    <string name="login_welcome_text">Do you already have an account? Log in!</string>
+    <string name="login_welcome_text">Already a user? Log in!</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_up_underlined">Don\'t have an account? <u>Sign up</u></string>
     <string name="sign_in_facebook">sign in with facebook</string>
     <string name="login_new_account">Nuovo account?</string>
     <string name="login_signin_text">Effettua il login!</string>
-    <string name="login_signup_text">Non hai un account? Registrati!</string>
+    <string name="login_signup_text">Don\'t have an account? Sign up!</string>
     <string name="password">Password</string>
     <string name="nome_corso">Course name</string>
     <string name="email">E-mail</string>
