@@ -146,6 +146,10 @@ public class LoginIntroFragment extends Fragment {
         if (passwordValue.isEmpty()){
             passwordTextInput.setError("Field can't be empty");
             return false;
+        }
+        else if(passwordValue.length() < 6){
+            passwordTextInput.setError("password is too short");
+            return false;
         }else{
             passwordTextInput.setError(null);
             return true;

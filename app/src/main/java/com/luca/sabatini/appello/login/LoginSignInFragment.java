@@ -29,6 +29,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.luca.sabatini.appello.student.CameraActivity.EXTRA_ACTION;
 
 
 public class LoginSignInFragment extends Fragment {
@@ -145,7 +146,9 @@ public class LoginSignInFragment extends Fragment {
                                 sp.writeFirebaseId(firebaseAuth.getCurrentUser().getUid());
 
                                 if(isStudent()){
-                                    context.startActivity(new Intent(context, UserProfile.class));
+                                    Intent intent = new Intent(context, CameraActivity.class);
+                                    intent.putExtra(EXTRA_ACTION, "signup" );
+                                    context.startActivity(intent);
                                 }else{
                                     context.startActivity(new Intent(context, ProfessorProfile.class));
                                 }
@@ -175,6 +178,9 @@ public class LoginSignInFragment extends Fragment {
         String passwordValue = passwordTextInput.getEditText().getText().toString().trim();
         if (passwordValue.isEmpty()){
             passwordTextInput.setError("Field can't be empty");
+            return false;
+        }else if(passwordValue.length() < 6){
+            passwordTextInput.setError("password is too short");
             return false;
         }else{
             passwordTextInput.setError(null);
