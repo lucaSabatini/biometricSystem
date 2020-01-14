@@ -77,7 +77,7 @@ public class BeaconScanStudent extends BeaconScan {
                 ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(sessionResponse.getNomeCorso());
                 confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
             } else {
-                Toast.makeText(context, "nessun appello trovato", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "No active attendance session found.", Toast.LENGTH_LONG).show();
                 finish();
             }
 
