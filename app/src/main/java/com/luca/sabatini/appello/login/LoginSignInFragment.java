@@ -180,7 +180,7 @@ public class LoginSignInFragment extends Fragment {
             passwordTextInput.setError("Field can't be empty");
             return false;
         }else if(passwordValue.length() < 6){
-            passwordTextInput.setError("password is too short");
+            passwordTextInput.setError("Password is too short");
             return false;
         }else{
             passwordTextInput.setError(null);
