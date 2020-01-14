@@ -70,15 +70,17 @@ public class BeaconScanStudent extends BeaconScan {
         @Override
         public void onResponse(String response) {
             Log.d(TAG, "onCreate: " + response);
-            if(response.equals("")){
+            if(!response.equals("")){
+                CheckSessionResponse sessionResponse = new Gson().fromJson(response, CheckSessionResponse.class);
+                sp.writeRegistrationId(sessionResponse.getRegistrationId());
+                Log.d(TAG, "onResponse: " + sessionResponse);
+                ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(sessionResponse.getNomeCorso());
+                confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
+            } else {
                 Toast.makeText(context, "nessun appello trovato", Toast.LENGTH_LONG).show();
                 finish();
             }
-            CheckSessionResponse sessionResponse = new Gson().fromJson(response, CheckSessionResponse.class);
-            sp.writeRegistrationId(sessionResponse.getRegistrationId());
-            Log.d(TAG, "onResponse: " + sessionResponse);
-            ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(sessionResponse.getNomeCorso());
-            confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
+
 
         }
     };
