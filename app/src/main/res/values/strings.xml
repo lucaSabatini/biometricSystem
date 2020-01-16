@@ -79,4 +79,6 @@
     <string name="altbeacon_pattern">m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25</string>
     <string name="ibeacon_pattern">m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24</string>
     <string name="no_course">No courses found</string>
+    <string name="closing_application">Closing the application</string>
+    <string name="closing_application_question">Are you sure you want to close the application?</string>
 </resources>
