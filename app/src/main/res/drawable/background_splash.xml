@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/colorAccent"/>
-    <item android:width="200dp"
+    <item android:width="280dp"
     android:height="200dp"
-    android:drawable="@drawable/logo_appello"
+    android:drawable="@drawable/appellogo_blue_3"
     android:gravity="center"/>
 </layer-list>

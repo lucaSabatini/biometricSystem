@@ -3,6 +3,7 @@ package com.luca.sabatini.appello.login;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -49,7 +51,7 @@ public class LoginIntroFragment extends Fragment {
     private ProgressBar signInProgressBar;
     private TextView textView;
     private Context context;
-
+    private TextView appName;
     private LoginRoutingInterface callback;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private SharedPrefManager sp;
@@ -67,7 +69,10 @@ public class LoginIntroFragment extends Fragment {
         passwordTextInput = inflate.findViewById(R.id.password);
         usernameTextInput = inflate.findViewById(R.id.username);
 
-
+        TextView appName = (TextView) inflate.findViewById(R.id.appName);
+        //Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "font/candal.ttf");
+        Typeface tf = ResourcesCompat.getFont(context, R.font.candal);
+        appName.setTypeface(tf);
 
         newAccount.setOnClickListener(new View.OnClickListener() {
             @Override
