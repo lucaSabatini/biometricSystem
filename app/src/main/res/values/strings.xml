@@ -19,7 +19,7 @@
     <string name="sign_in_facebook">sign in with facebook</string>
     <string name="login_new_account">Nuovo account?</string>
     <string name="login_signin_text">Effettua il login!</string>
-    <string name="login_signup_text">Don\'t have an account? Sign up!</string>
+    <string name="login_signup_text"><b>Important</b>: you must signup using the istitutional mail</string>
     <string name="password">Password</string>
     <string name="nome_corso">Course name</string>
     <string name="email">E-mail</string>
