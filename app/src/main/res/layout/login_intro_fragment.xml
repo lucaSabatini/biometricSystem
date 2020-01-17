@@ -185,7 +185,7 @@
                     android:inputType="textPassword"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimaryDark"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
