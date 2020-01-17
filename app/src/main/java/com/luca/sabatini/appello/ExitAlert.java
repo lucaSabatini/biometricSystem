@@ -28,8 +28,8 @@ public class ExitAlert extends DialogFragment {
     private String message;
 
     public ExitAlert(Context context, Activity activity){
-        title = getString(R.string.closing_application);
-        message = getString(R.string.closing_application_question);
+        title = "Closing the application";
+        message = "Are you sure you want to close the application?";
         nameNegativeButton = "No";
         namePositiveButton = "Yes";
         this.context = context;
