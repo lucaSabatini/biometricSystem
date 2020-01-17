@@ -125,13 +125,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="4dp"
+                android:theme="@style/EditTextThemeLogin"
                 android:textColor="@color/colorPrimaryDark"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:boxBackgroundColor="@color/colorAccent"
@@ -142,25 +143,28 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:ems="10"
                     android:hint="@string/email"
+                    android:textColorHighlight="@color/light_cyan"
                     android:inputType="textEmailAddress"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textColorHint="@color/colorPrimaryDark" />
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:textColorLink="@color/colorPrimaryDark" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="4dp"
+                android:theme="@style/EditTextThemeLogin"
                 android:inputType="textPassword"
                 android:textColor="@color/colorPrimaryDark"
                 android:textColorHint="@color/colorPrimaryDark"
@@ -174,9 +178,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:ems="10"
                     android:hint="@string/password"
+                    android:textColorHighlight="@color/light_cyan"
                     android:inputType="textPassword"
                     android:scrollHorizontally="true"
                     android:singleLine="true"

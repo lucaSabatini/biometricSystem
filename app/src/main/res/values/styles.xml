@@ -11,6 +11,18 @@
         <item name="actionMenuTextColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="EditTextThemeLogin" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">#C4C4C4</item>
+    </style>
+
+    <style name="EditTextThemeSignup" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">#C4C4C4</item>
+    </style>
+
     <style name="MyTitleTheme">
         <item name="android:textColor">@android:color/transparent</item>
     </style>
@@ -54,7 +66,10 @@
     </style>
 
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">#fff</item>
+        <item name="boxStrokeColor">@color/colorPrimaryDark</item>
+        <item name="android:colorFocusedHighlight">@color/colorPrimaryDark</item>
+        <item name="android:colorActivatedHighlight">@color/colorPrimaryDark</item>
+        <item name="android:textCursorDrawable">@color/colorPrimaryDark</item>
         <item name="boxStrokeWidth">4dp</item>
     </style>
 
