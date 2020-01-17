@@ -58,17 +58,6 @@
         <item name="boxStrokeWidth">4dp</item>
     </style>
 
-    <style name="EditTextThemeLogin" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlHighlight">#C4C4C4</item>
-    </style>
-
-    <style name="EditTextThemeSignup" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/light_cyan</item>
-    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

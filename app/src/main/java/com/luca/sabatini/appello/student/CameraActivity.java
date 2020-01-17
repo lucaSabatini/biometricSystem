@@ -150,26 +150,22 @@ public class CameraActivity extends AppCompatActivity {
     public void dlib(Bitmap bitmap){
         FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
         List<VisionDetRet> results = faceDet.detect(bitmap);
-        HashMap<VisionDetRet, Integer> rectangles = new HashMap<>();
-        for (final VisionDetRet ret : results) {
-            int rectLeft = ret.getLeft();
-            int rectTop = ret.getTop();
-            int rectRight = ret.getRight();
-            int rectBottom = ret.getBottom();
-            rectangles.put(ret, (rectRight - rectLeft) * (rectBottom - rectTop));
-            
-        }
+
         Log.d(TAG, "dlib: number of returned faces " + results.size());
         if(results.size() == 0){
             Log.d(TAG, "dlib: Nessuna faccia trovata");
+            Toast.makeText(this, "No face found", Toast.LENGTH_LONG).show();
+            riprova(null);
+            return;
         }
-        Map.Entry<VisionDetRet,Integer> biggestFace = new AbstractMap.SimpleEntry<>(null, 0);
-        for(Map.Entry<VisionDetRet,Integer> entry : rectangles.entrySet()) {
-            if(entry.getValue() > biggestFace.getValue()){
-                biggestFace = entry;
-            }
+        if(results.size() > 1){
+            Log.d(TAG, "dlib: Trovata più di una faccia");
+            Toast.makeText(this, "More than one face found", Toast.LENGTH_LONG).show();
+            riprova(null);
+            return;
         }
-        VisionDetRet res = biggestFace.getKey();
+
+        VisionDetRet res = results.get(0);
         Canvas cnvs=new Canvas(bitmap);
         Paint paint=new Paint();
         paint.setColor(Color.RED);
