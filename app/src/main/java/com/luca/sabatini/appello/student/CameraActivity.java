@@ -123,10 +123,12 @@ public class CameraActivity extends AppCompatActivity {
                     public void onBitmapReady(@Nullable Bitmap bitmap) {
                         Log.d(TAG, "onBitmapReady: " + bitmap.getByteCount());
                         Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                        dlib(mutableBitmap);
+                        boolean isFaceOk = dlib(mutableBitmap);
                         //fotoCamera.setImageBitmap(bitmap);
-                        visibleNotVisible("show_photo");
-
+                        if(isFaceOk) {
+                            visibleNotVisible("show_photo");
+                            camera.close();
+                        }
                     }
                 });
                 // If planning to save a file on a background thread,
@@ -141,13 +143,13 @@ public class CameraActivity extends AppCompatActivity {
                 output.putExtra(EXTRA_BITMAP, data);
                 setResult(100,output);*/
 
-                camera.close();
+
             }
         });
 
     }
 
-    public void dlib(Bitmap bitmap){
+    public boolean dlib(Bitmap bitmap){
         FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
         List<VisionDetRet> results = faceDet.detect(bitmap);
 
@@ -155,14 +157,14 @@ public class CameraActivity extends AppCompatActivity {
         if(results.size() == 0){
             Log.d(TAG, "dlib: Nessuna faccia trovata");
             Toast.makeText(this, "No face found", Toast.LENGTH_LONG).show();
-            riprova(null);
-            return;
+            //riprova(null);
+            return false;
         }
         if(results.size() > 1){
             Log.d(TAG, "dlib: Trovata più di una faccia");
             Toast.makeText(this, "More than one face found", Toast.LENGTH_LONG).show();
-            riprova(null);
-            return;
+            //riprova(null);
+            return false;
         }
 
         VisionDetRet res = results.get(0);
@@ -175,6 +177,7 @@ public class CameraActivity extends AppCompatActivity {
         fotoCamera.setImageBitmap(bitmap);
         
         faceDet.release();
+        return true;
     }
 
 
