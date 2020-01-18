@@ -122,8 +122,13 @@ public class CourseListFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                ExitAlert exitAlert = new ExitAlert(root.getContext(),getActivity());
-                exitAlert.show(getFragmentManager(), "ExitAlert");
+                if(sp.readExitIsChecked()) {
+                    getActivity().finishAffinity();
+                }
+                else {
+                    ExitAlert exitAlert = new ExitAlert(root.getContext(), getActivity());
+                    exitAlert.show(getFragmentManager(), "ExitAlert");
+                }
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);

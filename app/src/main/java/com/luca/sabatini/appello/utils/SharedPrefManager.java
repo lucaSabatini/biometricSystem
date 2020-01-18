@@ -22,6 +22,7 @@ public class SharedPrefManager {
     private static final String NOMECORSO = "nomecorso";
     private static final String CORSOID = "corsoid";
     private static final String REGISTRATIONID = "registrationid";
+    private static final String EXIT_IS_CHECKED ="exit_is_checked";
 
     public SharedPrefManager (Context context){
         this.context = context;
@@ -75,6 +76,7 @@ public class SharedPrefManager {
         return sharedPref.getBoolean(key, false);
     }
 
+
     public void writeSurname(String surname){writeString(SURNAME, surname);}
 
     public String readSurname(){return readString(SURNAME);}
@@ -90,6 +92,10 @@ public class SharedPrefManager {
     public void writeIsRegistered(Boolean isRegistered){writeBool(IS_REGISTERED, isRegistered);}
 
     public Boolean readIsRegistered(){return readBool(IS_REGISTERED);}
+
+    public void writeExitIsChecked(Boolean isRegistered){writeBool(EXIT_IS_CHECKED, isRegistered);}
+
+    public Boolean readExitIsChecked(){return readBool(EXIT_IS_CHECKED);}
 
     public void writeSessionId(Long sessionId){writeLong(SESSIONID, sessionId);}
 
