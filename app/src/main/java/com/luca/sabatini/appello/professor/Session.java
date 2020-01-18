@@ -52,8 +52,17 @@ public class Session extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        Intent i = new Intent(this, ClosingService.class);
+        i.putExtra("session_id", sp.readSessionId());
+        startService(i);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "onDestroy: called");
         closeAttendanceSessionBackend();
     }
 
@@ -118,4 +127,6 @@ public class Session extends AppCompatActivity {
             //startActivity(new Intent(context, ProfessorMain.class));
         }
     };
+
+    
 }

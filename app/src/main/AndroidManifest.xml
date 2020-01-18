@@ -68,6 +68,9 @@
             </intent-filter>
         </service>
 
+        <service android:name=".professor.ClosingService"
+            android:stopWithTask="false"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
