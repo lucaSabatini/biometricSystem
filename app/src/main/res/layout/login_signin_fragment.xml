@@ -23,7 +23,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="64dp"
-        android:text="Important: you must signup using the istitutional mail"
+        android:text="@string/login_signup_text"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
@@ -42,53 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0">
-
-        <!--<EditText
-            android:id="@+id/username"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:drawablePadding="4dp"
-            android:background="@drawable/bg_login_edittext"
-            android:drawableStart="@drawable/ic_icon_mail"
-            android:ems="10"
-            android:hint="@string/email"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:inputType="textEmailAddress"
-            android:padding="4dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" /> -->
-
-        <!-- <EditText
-            android:id="@+id/password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/bg_login_edittext"
-            android:drawableStart="@drawable/ic_icon_password"
-            android:drawablePadding="4dp"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:padding="4dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/colorPrimaryDark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username" /> -->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -98,7 +51,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent"
+            android:textColorHint="#9AFFFFFF"
             android:theme="@style/EditTextThemeSignup"
             app:boxBackgroundColor="@color/colorPrimaryDark"
             app:boxStrokeColor="@color/colorAccent"
@@ -115,13 +68,13 @@
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:ems="10"
                 android:hint="@string/email"
+                android:textColorHint="#9AFFFFFF"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="10dp"
                 android:textColorHighlight="#83C4C4C4"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorPrimaryDark" />
+                android:textColor="@color/colorAccent" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -135,7 +88,7 @@
             android:layout_marginEnd="32dp"
             android:inputType="textPassword"
             android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent"
+            android:textColorHint="#9AFFFFFF"
             android:theme="@style/EditTextThemeSignup"
             app:boxBackgroundColor="@color/colorPrimaryDark"
             app:boxStrokeColor="@color/colorAccent"
@@ -154,6 +107,7 @@
                 android:background="@color/colorAccent"
                 android:backgroundTint="@color/colorAccent"
                 android:ems="10"
+                android:textColorHint="#9AFFFFFF"
                 android:hint="@string/password"
                 android:textColorHighlight="#83C4C4C4"
                 android:inputType="textPassword"
@@ -181,11 +135,13 @@
             android:onClick="lo"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
+            android:textSize="18sp"
             android:text="@string/sign_in"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            />
 
         <ProgressBar
             android:id="@+id/sign_up_progress_bar"
