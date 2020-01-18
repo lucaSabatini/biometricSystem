@@ -186,10 +186,11 @@ public class CameraActivity extends AppCompatActivity {
         //visibleNotVisible("try_again");
         //camera.open();
         Intent i = new Intent(this, CameraActivity.class);
+        finish();
         Log.d(TAG, "riprova: " + action);
         i.putExtra(EXTRA_ACTION, action);
         startActivity(i);
-        finish();
+
     }
 
     public void conferma(View view){
