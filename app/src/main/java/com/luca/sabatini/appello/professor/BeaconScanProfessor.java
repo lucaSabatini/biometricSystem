@@ -50,7 +50,6 @@ public class BeaconScanProfessor extends BeaconScan {
                 callbackGet,
                 callbackError);
         queue.add(postRequest);
-
     }
 
 

@@ -50,9 +50,24 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CANCELED && requestCode == REQUEST_ENABLE_BT) {
-            finish();
+        if (requestCode == REQUEST_ENABLE_BT){
+            if (resultCode == RESULT_CANCELED) {
+                finish();
+            } else if (resultCode == RESULT_OK){
+                bindBeacon();
+            }
         }
+
+    }
+
+    private void bindBeacon(){
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout(getString(R.string.altbeacon_pattern)));
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout(getString(R.string.ibeacon_pattern)));
+        beaconConsumer = this;
+        beaconManager.bind(this);
     }
 
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
@@ -61,22 +76,6 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ricerca_appelli);
-
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth doesn't work", Toast.LENGTH_SHORT).show();
-        }
-        else if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-
-
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout(getString(R.string.altbeacon_pattern)));
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout(getString(R.string.ibeacon_pattern)));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -95,8 +94,17 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
                 });
                 builder.show();
             } else{
-                beaconConsumer = this;
-                beaconManager.bind(this);
+                BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (bluetoothAdapter == null) {
+                    Toast.makeText(this, "Bluetooth doesn't work", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else if (!bluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                } else {
+                    bindBeacon();
+                }
             }
         } else{
             beaconConsumer = this;
@@ -104,12 +112,21 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d(TAG, "coarse location permission granted");
+                    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (bluetoothAdapter == null) {
+                        Toast.makeText(this, "Bluetooth doesn't work", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (!bluetoothAdapter.isEnabled()) {
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    }
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Functionality limited");
