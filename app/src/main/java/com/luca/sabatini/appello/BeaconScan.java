@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,6 +46,15 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
     private final String TAG = "BeaconScan";
     private BeaconManager beaconManager;
     BeaconConsumer beaconConsumer;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED && requestCode == REQUEST_ENABLE_BT) {
+            finish();
+        }
+    }
+
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     @Override
