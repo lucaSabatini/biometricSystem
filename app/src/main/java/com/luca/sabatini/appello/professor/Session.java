@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.luca.sabatini.appello.R;
 import com.luca.sabatini.appello.entities.Student;
+import com.luca.sabatini.appello.entities.StudentBuilder;
 import com.luca.sabatini.appello.utils.RestConstants;
 import com.luca.sabatini.appello.utils.SharedPrefManager;
 
@@ -42,7 +43,9 @@ public class Session extends AppCompatActivity {
         setContentView(R.layout.attendance_session);
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         students = new ArrayList<>();
-
+        StudentBuilder sb = new StudentBuilder();
+        students.add(sb.setSurname("peppo").setMatricola(1231231L).createStudent());
+        students.add(sb.setSurname("giampi").setMatricola(12312351L).createStudent());
         attendanceRecycler = findViewById(R.id.attendanceRecycle);
 
         sessionAdapter = new SessionAdapter(students);
