@@ -1,8 +1,10 @@
 package com.luca.sabatini.appello;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ import java.util.Objects;
 
 
 public abstract class BeaconScan extends AppCompatActivity implements BeaconConsumer{
+    private static final int REQUEST_ENABLE_BT = 127 ;
     private final String TAG = "BeaconScan";
     private BeaconManager beaconManager;
     BeaconConsumer beaconConsumer;
@@ -48,6 +51,16 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ricerca_appelli);
+
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth doesn't work", Toast.LENGTH_SHORT).show();
+        }
+        else if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.getBeaconParsers().add(new BeaconParser().
