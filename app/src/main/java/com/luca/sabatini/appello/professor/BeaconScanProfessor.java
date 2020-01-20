@@ -1,6 +1,5 @@
 package com.luca.sabatini.appello.professor;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
