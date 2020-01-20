@@ -39,7 +39,7 @@ public class BeaconScanProfessor extends BeaconScan {
         sp = new SharedPrefManager(this);
 
         //TODO:commentare qui
-        //onBeaconIdReceived("beacondefault");
+        onBeaconIdReceived("beacondefault");
     }
 
     @Override

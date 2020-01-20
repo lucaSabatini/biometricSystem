@@ -54,6 +54,7 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
                 setBeaconLayout(getString(R.string.altbeacon_pattern)));
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout(getString(R.string.ibeacon_pattern)));
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 LayoutInflater layoutInflater = getLayoutInflater();
