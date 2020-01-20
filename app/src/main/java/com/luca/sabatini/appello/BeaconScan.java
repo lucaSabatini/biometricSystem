@@ -126,6 +126,8 @@ public abstract class BeaconScan extends AppCompatActivity implements BeaconCons
                     else if (!bluetoothAdapter.isEnabled()) {
                         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                         startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    } else {
+                        bindBeacon();
                     }
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
