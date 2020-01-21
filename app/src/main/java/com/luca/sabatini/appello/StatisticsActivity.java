@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.AutoText;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,8 +47,9 @@ public class StatisticsActivity extends AppCompatActivity {
 
     public RequestQueue queue;
     private Context context;
+    private TextView textView;
     SharedPrefManager sp;
-    private String TAG = "StatisticsActivity";
+    private static final String TAG = "StatisticsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_statistics);
 
+        textView = findViewById(R.id.no_attendance_textView);
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         sp = new SharedPrefManager(this);
         context = this;
@@ -88,6 +92,7 @@ public class StatisticsActivity extends AppCompatActivity {
                     JSONArray items = new JSONArray(response);
                     if (items.length() == 0) {
                         Log.d(TAG, "onResponse:  nessuna presenza trovata");
+                        textView.setVisibility(View.VISIBLE);
                         return;
                     }
 
