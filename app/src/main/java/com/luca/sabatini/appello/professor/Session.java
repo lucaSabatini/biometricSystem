@@ -44,8 +44,8 @@ public class Session extends AppCompatActivity {
         queue = Volley.newRequestQueue(Objects.requireNonNull(this));
         students = new ArrayList<>();
         StudentBuilder sb = new StudentBuilder();
-        students.add(sb.setSurname("peppo").setMatricola(1231231L).createStudent());
-        students.add(sb.setSurname("giampi").setMatricola(12312351L).createStudent());
+        //students.add(sb.setSurname("peppo").setMatricola(1231231L).createStudent());
+        //students.add(sb.setSurname("giampi").setMatricola(12312351L).createStudent());
         attendanceRecycler = findViewById(R.id.attendanceRecycle);
 
         sessionAdapter = new SessionAdapter(students);
