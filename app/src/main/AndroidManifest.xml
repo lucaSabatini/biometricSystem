@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+
     <application
         android:name=".Appello"
         android:allowBackup="true"
@@ -23,30 +24,43 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".login.ChangePassword"/>
-        <activity android:name=".professor.BeaconScanProfessor"/>
+        <activity android:name=".login.ChangePassword"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".professor.BeaconScanProfessor"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ProfessorProfile"
             android:label="@string/title_activity_professor_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".student.UserProfile"
             android:label="@string/title_activity_user_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".StatisticsActivity" />
-        <activity android:name=".student.ConfermaPresenza" />
-        <activity android:name=".student.BeaconScanStudent" />
-        <activity android:name=".student.ui.settings.AboutActivity" />
-        <activity android:name=".student.CameraActivity" />
-        <activity android:name="com.luca.sabatini.appello.professor.Session"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".StatisticsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".student.ConfermaPresenza"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".student.BeaconScanStudent"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".student.ui.settings.AboutActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".student.CameraActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.luca.sabatini.appello.professor.Session"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.luca.sabatini.appello.professor.ProfessorMain"
-            android:parentActivityName="com.luca.sabatini.appello.ui.courseList.ListaCorsi" />
+            android:parentActivityName="com.luca.sabatini.appello.ui.courseList.ListaCorsi"
+            android:screenOrientation="portrait"/>
         <activity android:name="com.luca.sabatini.appello.login.ForgotPassword"
-            android:parentActivityName=".ui.courseList.ListaCorsi" />
+            android:parentActivityName=".ui.courseList.ListaCorsi"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,14 +68,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.LoginActivity"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.courseList.ListaCorsi" />
+        <activity android:name=".ui.courseList.ListaCorsi"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.luca.sabatini.appello.professor.FirebaseService"
