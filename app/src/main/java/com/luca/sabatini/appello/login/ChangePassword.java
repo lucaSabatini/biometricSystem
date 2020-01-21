@@ -44,22 +44,17 @@ public class ChangePassword extends AppCompatActivity {
             String oldPassword = currentPasswordInputLayout.getEditText().getText().toString();
             String newPassword = newPasswordInputLayout.getEditText().getText().toString();
             String newPasswordAgain = newPasswordAgainInputLayout.getEditText().getText().toString();
-            if (user != null && checkNewPassword(newPassword, newPasswordAgain)) {
+            if(!checkNewPassword(newPassword, newPasswordAgain)){
+                newPasswordInputLayout.setError("Password different!");
+                newPasswordAgainInputLayout.setError("Password different!");
+            }
+            else if (user != null) {
                 user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(!task.isSuccessful()){
-                            if (oldPassword.length() < 6) {
-                                currentPasswordInputLayout.setError("Password too short, enter minimum 6 characters!");
-                            }else if(newPassword.length() < 6){
-                                newPasswordInputLayout.setError("Password too short, enter minimum 6 characters!");
-
-                            }else if( newPasswordAgain.length() < 6){
-                                newPasswordAgainInputLayout.setError("Password too short, enter minimum 6 characters!");
-                            }else {
                                 Toast.makeText( getApplicationContext(), "password incorrect", Toast.LENGTH_SHORT).show();
                                 Log.w(TAG, "onClick:failure", task.getException());
-                            }
                         }else{
                             Toast.makeText( getApplicationContext(), "Password changed", Toast.LENGTH_SHORT).show();
                             sp.resetSharedPref();
@@ -68,20 +63,17 @@ public class ChangePassword extends AppCompatActivity {
                         }
                     }
                 });
-            }else if(!checkNewPassword(newPassword, newPasswordAgain)){
-                newPasswordInputLayout.setError("Password different!");
-                newPasswordAgainInputLayout.setError("Password different!");
-
             }
-
         }
-
     }
 
     private boolean validateOldPassword(){
         String passwordValue = currentPasswordInputLayout.getEditText().getText().toString().trim();
         if (passwordValue.isEmpty()){
             currentPasswordInputLayout.setError("Field can't be empty");
+            return false;
+        }else if(passwordValue.length() < 6){
+            currentPasswordInputLayout.setError("Password too short, enter minimum 6 characters!");
             return false;
         }else{
             currentPasswordInputLayout.setError(null);
@@ -94,6 +86,9 @@ public class ChangePassword extends AppCompatActivity {
         if (passwordValue.isEmpty()){
             newPasswordInputLayout.setError("Field can't be empty");
             return false;
+        }else if(passwordValue.length() < 6){
+            newPasswordInputLayout.setError("Password too short, enter minimum 6 characters!");
+            return false;
         }else{
             newPasswordInputLayout.setError(null);
             return true;
@@ -103,6 +98,9 @@ public class ChangePassword extends AppCompatActivity {
         String passwordValue = newPasswordAgainInputLayout.getEditText().getText().toString().trim();
         if (passwordValue.isEmpty()){
             newPasswordAgainInputLayout.setError("Field can't be empty");
+            return false;
+        }else if(passwordValue.length() < 6){
+            newPasswordAgainInputLayout.setError("Password too short, enter minimum 6 characters!");
             return false;
         }else{
             newPasswordAgainInputLayout.setError(null);
