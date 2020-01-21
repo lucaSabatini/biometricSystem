@@ -91,7 +91,7 @@ public class ConfermaPresenza extends AppCompatActivity {
     public void sendAttendanceToServer() {
         StringRequest postRequest = new StringRequest(
                 Request.Method.GET,
-                RestConstants.createAttendanceUrl(sp.readMatricola(),sp.readSurname(), sp.readRegistrationId()),
+                RestConstants.createAttendanceUrl(sp.readSessionId(), sp.readMatricola(),sp.readSurname(), sp.readRegistrationId()),
                 callbackGet,
                 callbackError);
         queue.add(postRequest);

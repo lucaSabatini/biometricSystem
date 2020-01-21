@@ -46,8 +46,8 @@ public class RestConstants {
         return String.format("%s/checkSession?beaconId=%s", ATTENDANCE, beaconId);
     }
 
-    public static String createAttendanceUrl(Long matricola, String surname, String registrationToken){
-        return String.format("%s/createAttendance?matricola=%s&surname=%s&registrationToken=%s", ATTENDANCE, matricola, surname, registrationToken);
+    public static String createAttendanceUrl(Long sessionId, Long matricola, String surname, String registrationToken){
+        return String.format("%s/createAttendance?sessionId=%S&matricola=%s&surname=%s&registrationToken=%s", ATTENDANCE, sessionId, matricola, surname, registrationToken);
     }
 
     public static String getRegistrationPhotoUrl(Long matricola){
@@ -56,5 +56,9 @@ public class RestConstants {
 
     public static String changeRegistrationPhotoUrl(Long matricola){
         return String.format("%s/changeRegistrationPhoto?matricola=%s", STUDENT, matricola);
+    }
+
+    public static String getAttendancesByCourseUrl(Long courseId){
+        return String.format("%s/getAttendancesByCourse?courseId=%s", ATTENDANCE, courseId);
     }
 }

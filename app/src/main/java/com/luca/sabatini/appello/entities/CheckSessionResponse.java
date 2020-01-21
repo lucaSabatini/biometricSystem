@@ -1,10 +1,15 @@
 package com.luca.sabatini.appello.entities;
 
 public class CheckSessionResponse {
+    private Long sessionId;
     private String professorId;
-    private String corsoId;
-    private String corsoName;
+    private String courseId;
+    private String courseName;
     private String registrationId;
+
+    public Long getSessionId() { return sessionId; }
+
+    public void setSessionId(Long sessionId) { this.sessionId = sessionId; }
 
     public String getProfessorId() {
         return professorId;
@@ -14,28 +19,20 @@ public class CheckSessionResponse {
         this.professorId = professorId;
     }
 
-    public String getNomeCorso() {
-        return corsoName;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setNomeCorso(String corsoName) {
-        this.corsoName = corsoName;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
-    public String getCorsoId() {
-        return corsoId;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCorsoId(String corsoId) {
-        this.corsoId = corsoId;
-    }
-
-    public String getCorsoName() {
-        return corsoName;
-    }
-
-    public void setCorsoName(String corsoName) {
-        this.corsoName = corsoName;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getRegistrationId() {

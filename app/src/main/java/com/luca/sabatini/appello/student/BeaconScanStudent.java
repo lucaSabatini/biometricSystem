@@ -1,6 +1,5 @@
 package com.luca.sabatini.appello.student;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -40,7 +39,7 @@ public class BeaconScanStudent extends BeaconScan {
         sp = new SharedPrefManager(this);
 
         //TODO:commentare qui
-        //onBeaconIdReceived("beacondefault");
+        onBeaconIdReceived("beacondefault");
     }
 
     @Override
@@ -72,9 +71,10 @@ public class BeaconScanStudent extends BeaconScan {
             Log.d(TAG, "onCreate: " + response);
             if(!response.equals("")){
                 CheckSessionResponse sessionResponse = new Gson().fromJson(response, CheckSessionResponse.class);
-                sp.writeRegistrationId(sessionResponse.getRegistrationId());
                 Log.d(TAG, "onResponse: " + sessionResponse);
-                ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(sessionResponse.getNomeCorso());
+                sp.writeRegistrationId(sessionResponse.getRegistrationId());
+                sp.writeSessionId(sessionResponse.getSessionId());
+                ConfirmCourseAlert confirmCourseAlert = new ConfirmCourseAlert(sessionResponse.getCourseName());
                 confirmCourseAlert.show(getSupportFragmentManager(), "confirm");
             } else {
                 Toast.makeText(context, "No active attendance session found.", Toast.LENGTH_LONG).show();
