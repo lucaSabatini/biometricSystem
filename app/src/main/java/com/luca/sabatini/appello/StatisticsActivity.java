@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.AutoText;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,6 +93,7 @@ public class StatisticsActivity extends AppCompatActivity {
                     JSONArray items = new JSONArray(response);
                     if (items.length() == 0) {
                         Log.d(TAG, "onResponse:  nessuna presenza trovata");
+                        findViewById(R.id.progress_bar).setVisibility(View.GONE);
                         textView.setVisibility(View.VISIBLE);
                         return;
                     }
