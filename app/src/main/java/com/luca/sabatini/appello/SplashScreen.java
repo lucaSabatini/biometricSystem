@@ -28,7 +28,6 @@ public class SplashScreen extends AppCompatActivity {
                 Log.d(TAG, " notificationfirebase onSuccess: " + instanceIdResult.getToken());
             }
         });
-
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
